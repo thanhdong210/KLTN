@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_employee_view" model="ir.actions.act_window">
+            <field name="name">Employee Profiles</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.employee</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban'}),
+                (0, 0, {'view_mode': 'tree'}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('employee_form_inherit')})]"/>
+        </record>
+    </data>
+</odoo>
