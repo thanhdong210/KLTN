@@ -14,7 +14,7 @@
             parent="KLTN.human_resource_menu"
             groups="base.group_user"/>
 
-        <menuitem id="employee_profiles_menu"
+        <menuitem id="employee_contracts_menu"
             name="Employee Contract"
             action="hr_contract.action_hr_contract"
             sequence="30"
