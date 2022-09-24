@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="human_resource_menu"
+            name="Human Resource"
+            sequence="10"
+            parent="KLTN.employee_dashboard_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="employee_profiles_menu"
+            name="Employee Profiles"
+            action="action_employee_profiles_view"
+            sequence="20"
+            parent="KLTN.human_resource_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="employee_profiles_menu"
+            name="Employee Contract"
+            action="hr_contract.action_hr_contract"
+            sequence="30"
+            parent="KLTN.human_resource_menu"
+            groups="base.group_user"/>
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="KLTN.HrDashboardMain">
+        <div class="o_dashboards container-fluid hrms_overview1">
+            <button type="object" class="hrms_overview">hello</button>
+        </div>
+    </t>
+</templates>
