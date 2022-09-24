@@ -4,6 +4,7 @@
         <menuitem id="human_resource_menu"
             name="Human Resource"
             sequence="10"
+            web_icon="KLTN/static/description/hcmute.jpg"
             parent="KLTN.employee_dashboard_menu"
             groups="base.group_user"/>
 
