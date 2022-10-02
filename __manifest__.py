@@ -9,13 +9,24 @@
     'depends': [
         'hr',
         'web',
-        'hr_contract'
+        'hr_contract',
+        'hr_holidays',
+        'hr_attendance'
     ],
     'data': [
         'security/ir.model.access.csv',
 
+        'data/ir_actions_server.xml',
+        'data/mail_test_template.xml',
+
+        'report/employee_report.xml',
+
         'views/dashboard_views.xml',
         'views/employee_views.xml',
+        'views/contract_type_views.xml',
+        'views/leave_views.xml',
+        'views/attendance_request_views.xml',
+        'views/overtime_views.xml',
         'views/ir_menu.xml',
     ],
     'installable': True,

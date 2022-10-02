@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="contract_type_form_view_inherit" model="ir.ui.view">
+            <field name="name">contract.type.form.view</field>
+            <field name="model">hr.contract.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="active" class="oe_right" widget="boolean_toggle"/>
+                        <span attrs="{'invisible': [('active', '=', True)]}" class="o_form_label oe_right">Inactive</span>
+                        <span attrs="{'invisible': [('active', '!=', True)]}" class="o_form_label oe_right">Active</span>
+
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="contract_type_tree_view_inherit" model="ir.ui.view">
+            <field name="name">contract.type.tree.view.inherit</field>
+            <field name="model">hr.contract.type</field>
+            <field name="arch" type="xml">
+                <tree string="Contract Type">
+                    <field name="name"/>
+                    <field name="active" widget="boolean_toggle" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="contract_type_action" model="ir.actions.act_window">
+            <field name="name">Contract type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.contract.type</field>
+            <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('contract_type_tree_view_inherit')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('contract_type_form_view_inherit')})]"/>
+        </record>
+    </data>
+</odoo>
