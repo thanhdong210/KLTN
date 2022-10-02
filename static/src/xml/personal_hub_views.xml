@@ -1,7 +1,386 @@
-<templates id="template" xml:space="preserve">
+<?xml version="1.0" encoding="utf-8"?>
+
+<template>
     <t t-name="KLTN.HrDashboardMain">
-        <div class="o_dashboards container-fluid hrms_overview1">
-            <button type="object" class="hrms_overview">hello</button>
+        <div class="app__container">
+            <div class="grid">
+                <nav class="header__nav">
+                    <button class="btn btn--light-primary header__view-btn">
+                        <span class="header__view-text">VIEW ALL EMPLOYEES</span>
+                    </button>
+                    <a class="header__refresh-btn">
+                        <i class="header__refresh-icon fa-solid fa-arrows-rotate"></i>
+                    </a>
+                </nav>
+            </div>
+            <div class="home-admin">
+                <div class="grid">
+                    <div class="grid__row">
+                        <div class="grid__column-4">
+                            <div class="home-admin-info">
+                                <div class="home-admin-info__img">
+                                    <img class="home-admin-info__img-avatar" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                </div>
+                                <div class="home-admin-info__detail">
+                                    <div class="home-admin-info__name">
+                                        <span class="home-admin-info__name-code">[DEFAULT-0002] Mitchell Admin</span>
+                                    </div>
+                                    <span class="home-admin-info__position">Management</span>
+                                    <div class="home-admin-info__official">
+                                        <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                        <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                    </div>
+                                    <div class="home-admin-info__email">
+                                        <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                        <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                    </div>
+                                    <div class="home-admin-info__phone">
+                                        <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                        <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid__column-8">
+                            <div class="home-function">
+                                <div class="grid__row">
+                                    <div class="grid__column-3">
+                                        <div class="home-function-item">
+                                            <div class="home-function-item__ico">
+                                                <i class="home-function-item__icon fa-solid fa-user-check"></i>
+                                            </div>
+                                            <div class="home-function-item-name">
+                                                <span class="home-function-item__name-text">My Attendance</span>
+                                            </div>
+                                            <span class="home-function-item__quantity">
+                                                <span class="home-function-item__quantity-current">0</span>
+                                                <span class="home-function-item__quantity-total">/0</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="grid__column-3">
+                                        <div class="home-function-item">
+                                            <div class="home-function-item__ico">
+                                                <i class="home-function-item__icon fa-solid fa-user-xmark"></i>
+                                            </div>
+                                            <div class="home-function-item-name">
+                                                <span class="home-function-item__name-text">My Leaves</span>
+                                            </div>
+                                            <span class="home-function-item__quantity">
+                                                <span class="home-function-item__quantity-current">0</span>
+                                                <span class="home-function-item__quantity-total">/0</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="grid__column-3">
+                                        <div class="home-function-item">
+                                            <div class="home-function-item__ico">
+                                                <i class="home-function-item__icon fa-solid fa-calendar-days"></i>
+                                            </div>
+                                            <div class="home-function-item-name">
+                                                <span class="home-function-item__name-text">My Timesheets</span>
+                                            </div>
+                                            <span class="home-function-item__quantity">
+                                                <span class="home-function-item__quantity-current">0</span>
+                                                <span class="home-function-item__quantity-total">/0</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="grid__column-3">
+                                        <div class="home-function-item">
+                                            <div class="home-function-item__ico">
+                                                <i class="home-function-item__icon fa-solid fa-business-time"></i>
+                                            </div>
+                                            <div class="home-function-item-name">
+                                                <span class="home-function-item__name-text">My Overtimes</span>
+                                            </div>
+                                            <span class="home-function-item__quantity">
+                                                <span class="home-function-item__quantity-current">0</span>
+                                                <span class="home-function-item__quantity-total">/0</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="home-function-admin">
+                        <div class="home-function__title">
+                            <span class="home-function__title-name">Request to Approve</span>
+                        </div>
+                        <div class="home-function__items">
+                            <div class="grid__row">
+                                <div class="grid__column-3">
+                                    <div class="home-function-item">
+                                        <div class="home-function-item__ico">
+                                            <i class="home-function-item__icon fa-regular fa-calendar-check"></i>
+                                        </div>
+                                        <div class="home-function-item-name">
+                                            <span class="home-function-item__name-text">Attendance Request</span>
+                                        </div>
+                                        <span class="home-function-item__quantity">0</span>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-function-item">
+                                        <div class="home-function-item__ico">
+                                            <i class="home-function-item__icon fa-sharp fa-solid fa-plane-departure"></i>
+                                        </div>
+                                        <div class="home-function-item-name">
+                                            <span class="home-function-item__name-text">Business Trips</span>
+                                        </div>
+                                        <span class="home-function-item__quantity">0</span>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-function-item">
+                                        <div class="home-function-item__ico">
+                                            <i class="home-function-item__icon fa-regular fa-calendar-xmark"></i>
+                                        </div>
+                                        <div class="home-function-item-name">
+                                            <span class="home-function-item__name-text">Leave to Approve</span>
+                                        </div>
+                                        <span class="home-function-item__quantity">0</span>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-function-item">
+                                        <div class="home-function-item__ico">
+                                            <i class="home-function-item__icon fa-solid fa-business-time"></i>
+                                        </div>
+                                        <div class="home-function-item-name">
+                                            <span class="home-function-item__name-text">Overtimes to Approve</span>
+                                        </div>
+                                        <span class="home-function-item__quantity">0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Subordinates  -->
+                    <div class="home-function-admin">
+                        <div class="home-function__title">
+                            <span class="home-function__title-name">Subordinates</span>
+                        </div>
+                        <div class="home-function__items">
+                            <div class="grid__row">
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff none-margin-left">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid__row">
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff none-margin-left">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid__column-3">
+                                    <div class="home-admin-info home-admin-info-staff">
+                                        <div class="home-admin-info__img home-admin-info__img-staff">
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                        </div>
+                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                            <div class="home-admin-info__name">
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                            </div>
+                                            <span class="home-admin-info__position">Management</span>
+                                            <div class="home-admin-info__official">
+                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                            </div>
+                                            <div class="home-admin-info__email">
+                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                <span class="home-admin-info__email-text">18110169@student.hcmute.edu.vn</span>
+                                            </div>
+                                            <div class="home-admin-info__phone">
+                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="KLTN/static/src/assets/css/main.css" />
+                <link rel="stylesheet" href="KLTN/static/src/assets/css/base.css" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+            </xpath>
         </div>
     </t>
-</templates>
+</template>

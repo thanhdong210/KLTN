@@ -1,0 +1,142 @@
+.app__container {
+    height: 100vh;
+    min-height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+.header__nav {
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 18px 22px 0;
+}
+
+.header__view-text {
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.header__refresh-btn {
+    min-width: 40px;
+    border-radius: 2px;
+    background-color: #d9d9d9;
+    cursor: pointer;
+    margin-left: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 1px #bebcbc;
+}
+
+.header__refresh-icon {
+    font-size: 1.4rem;
+}
+
+/* info Admin */
+
+.home-admin-info {
+    display: flex;
+    margin-left: 17px;
+    padding: 12px 12px 8px 12px;
+    background-color: var(--white-color);
+    border-radius: 2px;
+    box-shadow: 0 1px 1.125rem 0 rgb(0 0 0 / 20%);
+}
+
+.home-admin-info-staff {
+    padding: 12px 8px 8px 4px;
+}
+
+.home-admin-info__img {
+    display: flex;
+    align-items: center;
+    transform: translateY(-2px);
+    width: 110px;
+    padding: 12px 4px 12px 12px;
+}
+
+.home-admin-info__img-staff {
+    width: 70px;
+    padding: 8px 6px;
+}
+
+.home-admin-info__img-avatar {
+    width: 90px;
+    height: 90px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+}
+
+.home-admin-info__img-avatar-staff {
+    width: 65px;
+    height: 65px;
+}
+
+.home-admin-info__detail {
+    font-size: 1.2rem;
+}
+
+.home-admin-info__detail-staff {
+    font-size: 1.1rem;
+}
+
+.home-admin-info__name-code {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--light-primary-color);
+}
+
+.home-admin-info__name-code-staff {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+/* function Admin */
+.home-function-item {
+    background-color: var(--white-color);
+    border-radius: 2px;
+    box-shadow: 0 1px 1.125rem 0 rgb(0 0 0 / 20%);
+    text-align: center;
+    padding: 26px 0;
+}
+
+.home-function-item__icon {
+    color: var(--icon-color);
+    font-size: 2.2rem;
+}
+
+.home-function-item-name {
+    padding-top: 4px;
+}
+
+.home-function-item__name-text {
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.home-function-item__quantity {
+    color: var(--light-primary-color);
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+/* request admin */
+.home-function-admin {
+    border: 2px solid var(--border-color);
+    margin: 16px 15px 0 16px;
+}
+
+.home-function__title {
+    border-bottom: 2px solid var(--border-color);
+    background-color: #f5f5f5;
+    padding: 8px 14px;
+}
+
+.home-function__title-name {
+    color: var(--light-primary-color);
+    font-size: 1.4rem;
+}
+
+.home-function__items {
+    padding: 22px 17px 16px 0;
+}
