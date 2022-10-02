@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="test_field"></field>
+                    <button name="get_detail_employee" type="object">Click me</button>
                 </xpath>
             </field>
         </record>

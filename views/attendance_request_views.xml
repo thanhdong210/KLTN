@@ -1,0 +1,66 @@
+<odoo>
+    <record id="hr_attendance_request_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.request.view.form</field>
+        <field name="model">hr.attendance.request</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Attendance Request">
+                <header>    
+                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight"/>
+                    <button string="Validate" name="action_validate" states="validate1" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
+                    <button string="Refuse" name="action_refuse" type="object"/>
+                    <button string="Mark as Draft" name="action_draft" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="confirm,validate"/>
+                </header>
+                <sheet>
+                    <div>
+                        <field name="name"></field>
+                    </div>
+                    <group>
+                        <group name="col_left">
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="is_half"/>
+                            <field name="is_half_selection"/>
+                            <field name="number_of_days"/>
+                        </group>
+                        <group name="col_right">
+                            <field name="target"/>
+                            <field name="employee_id"/>
+                            <field name="employee_ids" widget="many2many_tags"/>
+                            <field name="department_id"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'always'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_attendance_request_tree_view" model="ir.ui.view">
+        <field name="name">attendance.request.tree.view</field>
+        <field name="model">hr.attendance.request</field>
+        <field name="arch" type="xml">
+            <tree string="Attendance Request">
+                <field name="name"/>
+                <field name="date_from" widget='float_time'/>
+                
+                <field name="date_to" widget='float_time'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_attendance_request_action" model="ir.actions.act_window">
+        <field name="name">Attendance Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.attendance.request</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_attendance_request_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_attendance_request_view_form')})]"/>
+    </record>
+</odoo>
