@@ -7,6 +7,7 @@
             parent="KLTN.employee_dashboard_menu"
             groups="base.group_user"/>
 
+        <!-- Employee -->
         <menuitem id="employee_profiles_menu"
             name="Employee Profiles"
             action="action_employee_profiles_view"
@@ -19,6 +20,69 @@
             action="hr_contract.action_hr_contract"
             sequence="30"
             parent="KLTN.human_resource_menu"
+            groups="base.group_user"/>
+
+        <!-- Attendance -->
+        <menuitem id="attendances_menu"
+            name="Attendances"
+            sequence="40"
+            parent="KLTN.employee_dashboard_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="attendance_menu"
+            name="Attendance"
+            action="hr_attendance.hr_attendance_action"
+            sequence="50"
+            parent="KLTN.attendances_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="attendance_request_menu"
+            name="Attendance Request"
+            action="KLTN.hr_attendance_request_action"
+            sequence="60"
+            parent="KLTN.attendances_menu"
+            groups="base.group_user"/>
+
+        <!-- Leave -->
+        <menuitem id="leave_menu"
+            name="Leave"
+            sequence="40"
+            parent="KLTN.employee_dashboard_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="leaves_menu"
+            name="Leaves"
+            action="KLTN.leaves_action"
+            sequence="50"
+            parent="KLTN.leave_menu"
+            groups="base.group_user"/>
+
+        <!-- Overtime -->
+        <menuitem id="overtime_menu"
+            name="Overtime"
+            sequence="40"
+            parent="KLTN.employee_dashboard_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="overtime_request_menu"
+            name="Overtime Request"
+            action="KLTN.hr_overtime_request_action"
+            sequence="50"
+            parent="KLTN.overtime_menu"
+            groups="base.group_user"/>
+
+        <!-- Configuration -->
+        <menuitem id="configuration_menu"
+            name="Configuration"
+            sequence="50"
+            parent="KLTN.employee_dashboard_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="contract_type_menu"
+            name="Contract Type"
+            action="KLTN.contract_type_action"
+            sequence="50"
+            parent="KLTN.configuration_menu"
             groups="base.group_user"/>
     </data>
 </odoo>

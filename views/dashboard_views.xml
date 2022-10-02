@@ -7,9 +7,8 @@
 
     <menuitem id="employee_dashboard_menu"
             name="Personal Hub"
-            web_icon="KLTN,static/src/assets/img/hcmute.jpg"
+            web_icon=""
             action="employee_dashboard_view"
-            sequence="10"
             groups="base.group_user"/>
 
 </odoo>
