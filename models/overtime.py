@@ -73,6 +73,7 @@ class HrContractTypeInherit(models.Model):
         ('21', '9:00 PM'), ('21.5', '9:30 PM'),
         ('22', '10:00 PM'), ('22.5', '10:30 PM'),
         ('23', '11:00 PM'), ('23.5', '11:30 PM')], string='Hour to')
+    test_field = fields.Char(string="test")
 
     def _compute_state(self):
         pass
