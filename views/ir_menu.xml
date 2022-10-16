@@ -50,9 +50,16 @@
             parent="KLTN.employee_dashboard_menu"
             groups="base.group_user"/>
 
-        <menuitem id="leaves_menu"
+        <menuitem id="leaves_request_menu"
             name="Leaves"
-            action="KLTN.leaves_action"
+            action="KLTN.hr_leave_request_action"
+            sequence="50"
+            parent="KLTN.leave_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="leaves_allocation_menu"
+            name="Leaves Allocation"
+            action="KLTN.hr_leave_allocation_action"
             sequence="50"
             parent="KLTN.leave_menu"
             groups="base.group_user"/>

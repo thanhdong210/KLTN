@@ -16,37 +16,49 @@ class HrContractTypeInherit(models.Model):
     employee_id = fields.Many2one('hr.employee', string="Employee")
     department_id = fields.Many2one('hr.department', string="Department")
     employee_ids = fields.Many2many('hr.employee', string="Employees")
+    company_id = fields.Many2one('res.company', string="Company")
     state = fields.Selection([
         ('draft', 'To Submit'),
-        ('confirm', 'To Approve'),
+        ('approve', 'To Approve'),
+        ('second_approve', 'To Second Approve'),
+        ('validate', 'Approved'),
         ('refuse', 'Refused'),
-        ('validate1', 'Second Approval'),
-        ('validate', 'Approved')
-    ], string='Status', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False)
+    ], string='Status', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False, default="draft")
     number_of_days = fields.Float(string="Number of days")
     target = fields.Selection([
         ('employee', 'By Employee'),
         ('department', 'By Department'),
         ('employees', 'By Employees'),
-    ], string='Status', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False)
+        ('company', 'By Conpany'),
+    ], string='Mode', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False)
 
     def _compute_state(self):
         pass
 
     def action_confirm(self):
-        pass
+        self.write({
+            'state': 'approve'
+        })
 
     def action_approve(self):
-        pass
+        self.write({
+            'state': 'second_approve'
+        })
 
     def action_validate(self):
-        pass
+        self.write({
+            'state': 'validate'
+        })
 
     def action_refuse(self):
-        pass
+        self.write({
+            'state': 'refuse'
+        })
 
     def action_draft(self):
-        pass
+        self.write({
+            'state': 'draft'
+        })
 
     def _compute_is_half(self):
         pass

@@ -7,6 +7,8 @@ class HrEmployeeInherit(models.Model):
     _inherit = "hr.employee"
     
     test_field = fields.Char("Total time")
+    total_leaves = fields.Float(string="Total Leaves", compute="_compute_total_leaves")
+    contract_type_id = fields.Many2one('hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
 
     def action_employee_test(self):
         mail_template = self.env.ref("KLTN.mail_template_employee_test")
@@ -24,6 +26,13 @@ class HrEmployeeInherit(models.Model):
             '&',
                 ("check_in", ">=", date_from),
                 ("check_in", "<=", date_to)
+        ])
+
+        attendance_request_data = self.env['hr.attendance.request'].search([
+            ("employee_id", "=", self.env.user.employee_id.id),
+            '&',
+                ("date_from", ">=", date_from),
+                ("date_from", "<=", date_to)
         ])
 
         leave_data = self.env['hr.leave'].search([
@@ -46,10 +55,27 @@ class HrEmployeeInherit(models.Model):
         
         data = {
             "attendance_count": len(attendance_data),
+            "attendance_request_count": len(attendance_request_data),
             "leave_count": len(leave_data),
             "overtime_count": len(overtime_data),
             "overtime_hour_count": number_of_hour_overtime
         }
+
+    def _compute_total_leaves(self):
+        for rec in self:
+            leave_type_for_compute = rec.env['ir.config_parameter'].sudo().get_param('leave_type_for_compute')
+            if leave_type_for_compute:
+                leave_type_for_compute = leave_type_for_compute.split(',')
+            total_leaves = rec.env['hr.leave.allocation.inherit'].search([
+                ('employee_id', '=', rec.id),
+                ('state', '=', 'validate'),
+                ('leave_type_code', 'in', leave_type_for_compute),
+            ])
+
+            total = 0
+            for data in total_leaves:
+                total += data.number_of_day
+            rec.total_leaves = total
 
     
     

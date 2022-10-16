@@ -6,30 +6,31 @@
         <field name="arch" type="xml">
             <form string="Attendance Request">
                 <header>    
-                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
-                    <button string="Approve" name="action_approve" type="object" class="oe_highlight"/>
-                    <button string="Validate" name="action_validate" states="validate1" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
-                    <button string="Refuse" name="action_refuse" type="object"/>
-                    <button string="Mark as Draft" name="action_draft" type="object"/>
-                    <field name="state" widget="statusbar" statusbar_visible="confirm,validate"/>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'approve')]}"/>
+                    <button string="Validate" name="action_validate" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'second_approve')]}"/>
+                    <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': [('state', 'not in', ('validate', 'approve', 'second_approve'))]}"/>
+                    <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'refuse')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validate"/>
                 </header>
                 <sheet>
                     <div>
-                        <field name="name"></field>
+                        <field name="name" required="1"></field>
                     </div>
                     <group>
                         <group name="col_left">
-                            <field name="date_from"/>
-                            <field name="date_to"/>
+                            <field name="date_from" required="1"/>
+                            <field name="date_to" required="1"/>
                             <field name="is_half"/>
-                            <field name="is_half_selection"/>
-                            <field name="number_of_days"/>
+                            <field name="is_half_selection" attrs="{'invisible': [('is_half', '=', True)], 'required': [('is_half', '=', True)]}"/>
+                            <field name="number_of_days" readonly="1"/>
                         </group>
                         <group name="col_right">
-                            <field name="target"/>
-                            <field name="employee_id"/>
-                            <field name="employee_ids" widget="many2many_tags"/>
-                            <field name="department_id"/>
+                            <field name="target" required="1"/>
+                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')]}"/>
+                            <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')]}"/>
+                            <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')]}"/>
+                            <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')]}"></field>
                         </group>
                     </group>
                 </sheet>
