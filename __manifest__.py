@@ -18,6 +18,8 @@
 
         'data/ir_actions_server.xml',
         'data/mail_test_template.xml',
+        'data/ir_config_parameter.xml',
+        'data/data_groups.xml',
 
         'report/employee_report.xml',
 
@@ -27,6 +29,8 @@
         'views/leave_views.xml',
         'views/attendance_request_views.xml',
         'views/overtime_views.xml',
+        'views/hr_leave_allocation_views.xml',
+        'views/hr_leave_type_views.xml',
         'views/ir_menu.xml',
     ],
     'installable': True,
