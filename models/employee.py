@@ -1,7 +1,12 @@
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, ValidationError
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import calendar
+from . import common
+from datetime import time
+import math
+from pytz import timezone
+import pytz
 
 class HrEmployeeInherit(models.Model):
     _inherit = "hr.employee"
@@ -76,6 +81,45 @@ class HrEmployeeInherit(models.Model):
             for data in total_leaves:
                 total += data.number_of_day
             rec.total_leaves = total
+
+    def _get_employee_resource_calendar(self, date_from, date_to, is_half=False):
+        # TODO check if date_from and date_to is in attendance_ids
+        # local = pytz.timezone(str(self.env.user.tz))
+        local = pytz.timezone(self.env.context.get('tz') or self.env.user.tz)
+        print("**************", local)
+        if date_from and date_to:
+            list_data = []
+            for dt in common.daterange(date_from, date_to):
+                for attendance in self.contract_id.resource_calendar_id.attendance_ids:
+                    if int(attendance.dayofweek) == int(dt.weekday()):
+                        check_in = datetime.combine(dt, time(hour=math.floor(attendance.hour_from), minute=int(math.modf(attendance.hour_from)[0]*60)))
+                        check_out = datetime.combine(dt, time(hour=math.floor(attendance.hour_to), minute=int(math.modf(attendance.hour_to)[0]*60)))
+                        value = {
+                            'employee_id': self.id,
+                            'check_in': datetime(check_in, tzinfo=pytz.UTC).astimezone(timezone('utc')),
+                            'check_out': datetime(check_out, tzinfo=pytz.UTC).astimezone(timezone(local))
+                        }
+                        list_data.append(value)
+            return list_data
+        if date_from and is_half:
+            list_data = []
+            for attendance in self.contract_id.resource_calendar_id.attendance_ids:
+                if int(attendance.dayofweek) == int(date_from.weekday()):
+                    check_in_data = datetime.combine(date_from, time(hour=math.floor(attendance.hour_from), minute=int(math.modf(attendance.hour_from)[0]*60)))
+                    check_out_data = datetime.combine(date_from, time(hour=math.floor(attendance.hour_to), minute=int(math.modf(attendance.hour_to)[0]*60)))
+
+                    # check_in = pytz.utc.localize(check_in_data).astimezone('utc').replace(tzinfo=None)
+                    # check_out = pytz.utc.localize(check_out_data).astimezone('utc').replace(tzinfo=None)
+
+                    check_in_data = check_in_data - timedelta(hours=7)
+                    check_out_data = check_out_data - timedelta(hours=7)
+                    value = {
+                        'employee_id': self.id,
+                        'check_in': check_in_data,
+                        'check_out': check_out_data
+                    }
+                    list_data.append(value)
+            return list_data
 
     
     

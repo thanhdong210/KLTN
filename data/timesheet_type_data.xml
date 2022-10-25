@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+    	<record id="attendance_request_timesheet_type" model="hr.timesheet.type">
+            <field name="name">Attendance Request</field>
+            <field name="code">ATR</field>
+        </record>
+    </data>
+</odoo>

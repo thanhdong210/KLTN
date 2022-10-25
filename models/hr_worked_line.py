@@ -1,11 +1,10 @@
 from odoo import fields, models, _
 
-class HrContractTypeInherit(models.Model):
-    _name = "hr.timesheet.line"
+class HrWorkedLine(models.Model):
+    _name = "hr.worked.line"
     
     name = fields.Char(string="Name")
     employee_id = fields.Many2one("hr.employee", string="Employee")
-    date = fields.Date(string="Date")
     timesheet_id = fields.Many2one("hr.timesheet", string="Timesheet", ondelete='cascade')
     number_of_hour = fields.Float(string="Number of hour")
     number_of_day = fields.Float(string="Number of day")

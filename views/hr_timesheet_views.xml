@@ -1,0 +1,72 @@
+<odoo>
+    <record id="hr_timesheet_form_view" model="ir.ui.view">
+        <field name="name">hr.timesheet.form.view</field>
+        <field name="model">hr.timesheet</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Timesheet">
+                <header>
+                    <field name="show_button_confirm" invisible="1"/>    
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Compute sheet" name="action_compute_sheet" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <button string="Test timesheet data" name="create_attendance_data" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validate"/>
+                </header>
+                <sheet>
+                    <div>
+                        <field name="name" required="1" placeholder="Name" attrs="{'readonly': [('state', '!=', 'draft')]}"></field>
+                    </div>
+                    <group>
+                        <group name="col_left">
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                        <group name="col_right">
+                            <field name="employee_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Timesheet Line" name="timesheet_line">
+                            <field name="timesheet_line_ids">
+                                <tree>
+                                    <field name="date"/>
+                                    <field name="code"/>
+                                    <field name="timesheet_type_id"/>
+                                    <field name="number_of_hour"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'always'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_timesheet_tree_view" model="ir.ui.view">
+        <field name="name">hr.timesheet.tree.view</field>
+        <field name="model">hr.timesheet</field>
+        <field name="arch" type="xml">
+            <tree string="Timesheet">
+                <field name="name"/>
+                <field name="date_from" widget='float_time'/>
+                <field name="employee_id"/>
+                <field name="date_to" widget='float_time'/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_timesheet_action" model="ir.actions.act_window">
+        <field name="name">Timesheet</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.timesheet</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_timesheet_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_timesheet_form_view')})]"/>
+    </record>
+</odoo>

@@ -30,8 +30,8 @@
             groups="base.group_user"/>
 
         <menuitem id="attendance_menu"
-            name="Attendance"
-            action="hr_attendance.hr_attendance_action"
+            name="Attendances"
+            action="KLTN.hr_attendance_data_action"
             sequence="50"
             parent="KLTN.attendances_menu"
             groups="base.group_user"/>
@@ -77,6 +77,20 @@
             sequence="50"
             parent="KLTN.overtime_menu"
             groups="base.group_user"/>
+
+        <!-- Timesheet -->
+        <menuitem id="timesheet_menu"
+            name="Timesheet"
+            sequence="40"
+            parent="KLTN.employee_dashboard_menu"
+            groups="KLTN.group_timesheet_manager"/>
+
+        <menuitem id="employee_timesheet_menu"
+            name="Employee Timesheet"
+            action="KLTN.hr_timesheet_action"
+            sequence="50"
+            parent="KLTN.timesheet_menu"
+            groups="KLTN.group_timesheet_manager"/>
 
         <!-- Configuration -->
         <menuitem id="configuration_menu"

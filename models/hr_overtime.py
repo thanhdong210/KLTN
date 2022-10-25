@@ -12,10 +12,10 @@ class HrContractTypeInherit(models.Model):
     employee_ids = fields.Many2many('hr.employee', string="Employees")
     state = fields.Selection([
         ('draft', 'To Submit'),
-        ('confirm', 'To Approve'),
-        ('refuse', 'Refused'),
-        ('validate1', 'Second Approval'),
-        ('validate', 'Approved')
+        ('approve', 'To Approve'),
+        ('second_approve', 'To Second Approve'),
+        ('validate', 'Approved'),
+        ('refuse', 'Refused')
     ], string='Status', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False)
     number_of_hours = fields.Float(string="Number of hours")
     target = fields.Selection([
