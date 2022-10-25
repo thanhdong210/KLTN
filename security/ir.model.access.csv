@@ -3,3 +3,7 @@ access_hr_attendance_request,access_hr_attendance_request,model_hr_attendance_re
 access_hr_overtime_request,access_hr_overtime_request,model_hr_overtime_request,base.group_user,1,1,1,1
 access_hr_leave_allocation_inherit,access_hr_leave_allocation_inherit,model_hr_leave_allocation_inherit,base.group_user,1,1,1,1
 access_hr_leave_inherit,access_hr_leave_inherit,model_hr_leave_inherit,base.group_user,1,1,1,1
+access_hr_timesheet_type,access_hr_timesheet_type,model_hr_timesheet_type,base.group_user,1,1,1,1
+access_hr_attendance_data,access_hr_attendance_data,model_hr_attendance_data,base.group_user,1,1,1,1
+access_hr_timesheet,access_hr_timesheet,model_hr_timesheet,group_timesheet_manager,1,1,1,1
+access_hr_timesheet_line,access_hr_timesheet_line,model_hr_timesheet_line,base.group_user,1,1,1,1

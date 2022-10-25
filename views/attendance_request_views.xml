@@ -5,32 +5,35 @@
         <field name="priority">32</field>
         <field name="arch" type="xml">
             <form string="Attendance Request">
-                <header>    
+                <header>
+                    <field name="show_button_approve" invisible="1"/>    
+                    <field name="show_button_validate" invisible="1"/>
                     <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
-                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'approve')]}"/>
-                    <button string="Validate" name="action_validate" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'second_approve')]}"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('show_button_approve', '=', False)]}"/>
+                    <button string="Validate" name="action_validate" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'second_approve'), ('show_button_validate', '=', False)]}"/>
                     <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': [('state', 'not in', ('validate', 'approve', 'second_approve'))]}"/>
                     <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'refuse')]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validate"/>
                 </header>
                 <sheet>
                     <div>
-                        <field name="name" required="1"></field>
+                        <field name="name" required="1" placeholder="Reason..." attrs="{'readonly': [('state', '!=', 'draft')]}"></field>
                     </div>
                     <group>
                         <group name="col_left">
-                            <field name="date_from" required="1"/>
-                            <field name="date_to" required="1"/>
-                            <field name="is_half"/>
-                            <field name="is_half_selection" attrs="{'invisible': [('is_half', '=', True)], 'required': [('is_half', '=', True)]}"/>
-                            <field name="number_of_days" readonly="1"/>
+                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="date_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="date_to" attrs="{'invisible': [('is_half', '=', True)], 'required': [('is_half', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="is_half" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="is_half_selection" attrs="{'invisible': [('is_half', '=', False)], 'required': [('is_half', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="number_of_days" readonly="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                         <group name="col_right">
-                            <field name="target" required="1"/>
-                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')]}"/>
-                            <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')]}"/>
-                            <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')]}"/>
-                            <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')]}"></field>
+                            <field name="target" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')], 'readonly': [('state', '!=', 'draft')]}"></field>
                         </group>
                     </group>
                 </sheet>

@@ -6,12 +6,14 @@
         <field name="arch" type="xml">
             <form string="Overtime Request">
                 <header>    
-                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
-                    <button string="Approve" name="action_approve" type="object" class="oe_highlight"/>
-                    <button string="Validate" name="action_validate" states="validate1" type="object" groups="hr_holidays.group_hr_holidays_manager" class="oe_highlight"/>
-                    <button string="Refuse" name="action_refuse" type="object"/>
-                    <button string="Mark as Draft" name="action_draft" type="object"/>
-                    <field name="state" widget="statusbar" statusbar_visible="confirm,validate"/>
+                    <!-- <field name="show_button_approve" invisible="1"/>    
+                    <field name="show_button_validate" invisible="1"/>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('show_button_approve', '=', False)]}"/>
+                    <button string="Validate" name="action_validate" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'second_approve'), ('show_button_validate', '=', False)]}"/>
+                    <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': [('state', 'not in', ('validate', 'approve', 'second_approve'))]}"/>
+                    <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'refuse')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validate"/> -->
                 </header>
                 <sheet>
                     <div>

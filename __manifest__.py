@@ -14,23 +14,28 @@
         'hr_attendance'
     ],
     'data': [
+        'data/data_groups.xml',
         'security/ir.model.access.csv',
 
         'data/ir_actions_server.xml',
         'data/mail_test_template.xml',
         'data/ir_config_parameter.xml',
         'data/data_groups.xml',
+        'data/timesheet_type_data.xml',
 
         'report/employee_report.xml',
 
         'views/dashboard_views.xml',
+        'views/hr_attendance_data_views.xml',
         'views/employee_views.xml',
         'views/contract_type_views.xml',
         'views/leave_views.xml',
         'views/attendance_request_views.xml',
-        'views/overtime_views.xml',
+        'views/hr_overtime_views.xml',
         'views/hr_leave_allocation_views.xml',
         'views/hr_leave_type_views.xml',
+        'views/hr_timesheet_views.xml',
+        'views/resource_calendar_views.xml',
         'views/ir_menu.xml',
     ],
     'installable': True,
