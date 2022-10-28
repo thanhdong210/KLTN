@@ -33,7 +33,7 @@
                                     <field name="date"/>
                                     <field name="code"/>
                                     <field name="timesheet_type_id"/>
-                                    <field name="number_of_hour"/>
+                                    <field name="number_of_hours"/>
                                 </tree>
                             </field>
                         </page>

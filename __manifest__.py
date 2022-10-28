@@ -24,6 +24,7 @@
         'data/timesheet_type_data.xml',
 
         'report/employee_report.xml',
+        'report/timesheet_line_report.xml',
 
         'views/dashboard_views.xml',
         'views/hr_attendance_data_views.xml',
