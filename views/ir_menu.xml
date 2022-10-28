@@ -105,5 +105,12 @@
             sequence="50"
             parent="KLTN.configuration_menu"
             groups="base.group_user"/>
+
+        <menuitem id="working_time_menu"
+            name="Working Times"
+            action="resource.action_resource_calendar_form"
+            sequence="50"
+            parent="KLTN.configuration_menu"
+            groups="base.group_user"/>
     </data>
 </odoo>

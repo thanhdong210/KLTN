@@ -7,7 +7,11 @@
             <field name="inherit_id" ref="resource.resource_calendar_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='tz']" position="after">
-                    <h2>hehehehe</h2>
+                    <field name="mode" required="1"/>
+                    <field name="hour_late" attrs="{'invisible': [('mode', '=', 'worked_hours')]}"/>
+                    <field name="hour_soon" attrs="{'invisible': [('mode', '=', 'worked_hours')]}"/>
+                    <field name="hour_to_have_one_work_day" attrs="{'invisible': [('mode', '=', 'begin_end_time')]}"/>
+                    <field name="hour_to_have_half_work_day" attrs="{'invisible': [('mode', '=', 'begin_end_time')]}"/>
                 </xpath>
             </field>
         </record>
