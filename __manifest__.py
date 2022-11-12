@@ -22,6 +22,7 @@
         'data/ir_config_parameter.xml',
         'data/data_groups.xml',
         'data/timesheet_type_data.xml',
+        'data/mail_activity_type.xml',
 
         'report/employee_report.xml',
         'report/timesheet_line_report.xml',

@@ -27,6 +27,7 @@ class HrLeaveAllowcationInherit(models.Model):
     parent_id = fields.Many2one('hr.leave.allocation.inherit', index=True, ondelete='cascade', readonly=True)
     contract_type_id = fields.Many2one('hr.contract.type', string="Contract Type")
     company_id = fields.Many2one('res.company', string="Company")
+    is_child = fields.Boolean(string="Child", default=False)
 
     def action_confirm(self):
         self.allocate_leave()
@@ -61,7 +62,8 @@ class HrLeaveAllowcationInherit(models.Model):
             'number_of_day': self.number_of_day,
             'parent_id': self.id,
             'leave_type_id': self.leave_type_id.id,
-            'name': (_('Allocation leave for ') + employee.name)
+            'name': (_('Allocation leave for ') + employee.name),
+            'is_child': True
         }
         self.create(data)
 

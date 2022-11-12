@@ -1,15 +1,37 @@
 <odoo>
 
-    <template id="report_timesheet_line">
+    <template id="report_timesheet_line_template">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
                         <h2>Report title</h2>
-                        <p>This object's name is <span t-field="o.name"/></p>
-                        <t t-foreach="o.timesheet_line_ids" t-as="line">
-                            <span t-field="line.number_of_days"/>
-                        </t>
+                        <span t-field="o.name"/>
+                        <table>
+                          <tr>
+                            <t t-foreach="week_days" t-as="week_day">
+                              <td>
+                                  <span t-esc="week_day"/>
+                              </td>
+                            </t>
+                          </tr>
+                          
+                          <!-- <tr>
+                            <t t-foreach="num_days" t-as="day_line">
+                              <td>
+                                  <span t-esc="day_line + 1"/>
+                              </td>
+                            </t>
+                          </tr>
+                          
+                          <tr>
+                            <t t-foreach="o.shift_line_ids" t-as="line">
+                              <td>
+                                  <span t-esc="line['number']"/>
+                              </td>
+                            </t> -->
+                          <!-- </tr> -->
+                        </table>
                     </div>
                 </t>
             </t>
@@ -20,8 +42,7 @@
         <field name="name">Timesheet Line Report</field>
         <field name="model">hr.timesheet</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">KLTN.report_timesheet_line</field>
-        <field name="report_file">KLTN.report_timesheet_line</field>
+        <field name="report_name">KLTN.report_timesheet_line_template</field>
         <field name="print_report_name">'Timesheet Report - %s' % (object.name)</field>
         <field name="binding_model_id" ref="model_hr_timesheet"/>
     </record>

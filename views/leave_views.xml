@@ -6,25 +6,33 @@
         <field name="arch" type="xml">
             <form string="Leave Request">
                 <header>    
-                    <button string="Confirm" name="action_confirm" states="draft" type="object" class="oe_highlight"/>
-                    <button string="Approve" name="action_approve" type="object" class="oe_highlight"/>
-                    <button string="Validate" name="action_validate" type="object" class="oe_highlight"/>
-                    <button string="Refuse" name="action_refuse" type="object"/>
-                    <button string="Mark as Draft" name="action_draft" type="object"/>
-                    <field name="state" widget="statusbar" statusbar_visible="confirm,validate,second_validate"/>
+                    <field name="show_button_approve" invisible="1"/>    
+                    <field name="show_button_validate" invisible="1"/>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('show_button_approve', '=', False)]}"/>
+                    <button string="Validate" name="action_validate" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'second_approve'), ('show_button_validate', '=', False)]}"/>
+                    <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': [('state', 'not in', ('validated', 'approve', 'second_approve'))]}"/>
+                    <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'refused')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validated"/>
                 </header>
                 <sheet>
+                    <div>
+                        <field name="name" required="1" placeholder="Reason..." attrs="{'readonly': [('state', '!=', 'draft')]}"></field>
+                    </div>
                     <group>
                         <group name="col_left">
-                            <field name="name"></field>
-                            <field name="is_half_day"></field>
+                            <field name="date_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="date_to" attrs="{'invisible': [('is_half_day', '=', True)], 'required': [('is_half_day', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="is_half_day" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="is_half_selection" attrs="{'invisible': [('is_half_day', '=', False)], 'required': [('is_half_day', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                         <group name="col_right">
-                            <field name="target"></field>
-                            <field name="employee_id"></field>
-                            <field name="department_id"></field>
-                            <field name="employee_ids"></field>
-                            <field name="company_id"></field>
+                            <field name="leave_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="target" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')], 'readonly': [('state', '!=', 'draft')]}"></field>
                         </group>
                     </group>
                 </sheet>

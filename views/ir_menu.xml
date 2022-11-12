@@ -112,5 +112,12 @@
             sequence="50"
             parent="KLTN.configuration_menu"
             groups="base.group_user"/>
+
+        <menuitem id="leave_type_menu"
+            name="Leaves Type"
+            action="hr_holidays.open_view_holiday_status"
+            sequence="50"
+            parent="KLTN.configuration_menu"
+            groups="base.group_user"/>
     </data>
 </odoo>

@@ -11,8 +11,8 @@ class HrAttendanceData(models.Model):
     check_in_display = fields.Datetime(string="Check in")
     check_out_display = fields.Datetime(string="Check in")
     check_out = fields.Datetime(string="Check out")
-    check_in_date = fields.Date(string="Check in date", compute="_compute_date")
-    check_out_date = fields.Date(string="Check out date", compute="_compute_date")
+    check_in_date = fields.Date(string="Check in date", compute="_compute_date", store=True)
+    check_out_date = fields.Date(string="Check out date", compute="_compute_date", store=True)
     timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Timesheet Type")
     employee_id = fields.Many2one('hr.employee', string="Employee")
     attendance_request_id = fields.Many2one('hr.attendance.request')
@@ -28,5 +28,19 @@ class HrAttendanceData(models.Model):
     @api.depends('check_in', 'check_out')
     def _compute_date(self):
         for rec in self:
-            rec.check_in_date = rec.check_in.date()
-            rec.check_out_date = rec.check_out.date()
+            if rec.check_in and rec.check_out:
+                rec.check_in_date = rec.check_in.date()
+                rec.check_out_date = rec.check_out.date()
+
+    @api.onchange('check_in', 'check_out')
+    def _onchange_check_in_check_out(self):
+         for rec in self:
+            
+            attendance_overlap = rec.env['hr.attendance.data'].search([(
+                'employee_id', '=', rec.employee_id.id,
+            )])
+
+            print("===============", attendance_overlap)
+
+            if attendance_overlap and attendance_overlap.check_in <= rec.check_out and rec.check_in <= attendance_overlap.check_out:
+                raise ValidationError(_("Attendance of this employee's duration already exist!"))

@@ -6,14 +6,14 @@
         <field name="arch" type="xml">
             <form string="Overtime Request">
                 <header>    
-                    <!-- <field name="show_button_approve" invisible="1"/>    
+                    <field name="show_button_approve" invisible="1"/>    
                     <field name="show_button_validate" invisible="1"/>
                     <button string="Confirm" name="action_confirm" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <button string="Approve" name="action_approve" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'approve'), ('show_button_approve', '=', False)]}"/>
                     <button string="Validate" name="action_validate" type="object" class="oe_highlight" attrs="{'invisible': ['|', ('state', '!=', 'second_approve'), ('show_button_validate', '=', False)]}"/>
-                    <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': [('state', 'not in', ('validate', 'approve', 'second_approve'))]}"/>
-                    <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'refuse')]}"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validate"/> -->
+                    <button string="Refuse" name="action_refuse" type="object" attrs="{'invisible': [('state', 'not in', ('validated', 'approve', 'second_approve'))]}"/>
+                    <button string="Mark as Draft" name="action_draft" type="object" attrs="{'invisible': [('state', '!=', 'refused')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approve,second_approve,validated"/>
                 </header>
                 <sheet>
                     <div>
@@ -21,16 +21,17 @@
                     </div>
                     <group>
                         <group name="col_left">
-                            <field name="date"/>
-                            <field name="request_hour_from"/>
-                            <field name="request_hour_to"/>
-                            <field name="number_of_hours"/>
+                            <field name="date" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="request_hour_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="request_hour_to" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="number_of_hours" readonly="1"/>
                         </group>
                         <group name="col_right">
-                            <field name="target"/>
-                            <field name="employee_id"/>
-                            <field name="employee_ids" widget="many2many_tags"/>
-                            <field name="department_id"/>
+                            <field name="target" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')], 'readonly': [('state', '!=', 'draft')]}"></field>
                         </group>
                     </group>
                 </sheet>
