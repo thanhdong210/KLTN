@@ -85,7 +85,7 @@ class HrEmployeeInherit(models.Model):
             ('employee_id', 'in', member_ids),
         ]).ids
         
-        employee = self.search([('user_id', '=', self.env.user.id)])
+        employee = self.search_read([('user_id', '=', self.env.user.id)], ['id', 'name', 'code', 'department_id', 'job_title', 'work_email', 'work_phone'], limit=1)
 
         data = {
             "attendance_count": len(attendance_data),
