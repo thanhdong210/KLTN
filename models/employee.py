@@ -66,6 +66,8 @@ class HrEmployeeInherit(models.Model):
             "overtime_hour_count": number_of_hour_overtime
         }
 
+        return [data]
+
     def _compute_total_leaves(self):
         for rec in self:
             leave_type_for_compute = rec.env['ir.config_parameter'].sudo().get_param('leave_type_for_compute')

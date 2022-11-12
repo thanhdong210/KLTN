@@ -10,3 +10,4 @@ from . import attendance_data
 from . import hr_timesheet
 from . import hr_timesheet_line
 from . import hr_worked_line
+from . import resource_calendar
