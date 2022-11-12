@@ -1,6 +1,7 @@
 from odoo import fields, models, _
 from dateutil.relativedelta import relativedelta
 from datetime import timedelta, datetime, time
+from pytz import timezone, UTC
 
 class HrContractTypeInherit(models.Model):
     _name = "hr.timesheet"
@@ -34,19 +35,52 @@ class HrContractTypeInherit(models.Model):
         datas_attendance = self.create_attendance_data()
         timesheet_line = self.env['hr.timesheet.line']
         list_data = []
+        
         for data in datas_attendance.items():
-            vals = {
-                'date': data[1].get("date", False),
-                'number_of_hours': data[1].get("number_of_hour", 0),
-                'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
-                'timesheet_id': self.id,
-                'code': data[1].get("code", ""),
-                'hour_from':  data[1].get("hour_from", False),
-                'hour_to': data[1].get("hour_to", False),
-            }
-            self.filter_timesheet_line(self.employee_id.contract_id, self.employee_id.contract_id.resource_calendar_id, vals)
-            timesheet_line.create(vals)
-            # list_data.append(vals)
+            intervals = self.employee_id.contract_id.resource_calendar_id.attendance_ids.filtered(lambda x: int(x.dayofweek) == data[1].get("hour_from", False).weekday()).sorted(key=lambda x: x.hour_from)
+            hour_from_interval = intervals.mapped("hour_from")
+            hour_to_interval = intervals.mapped("hour_to")
+
+            if (data[1].get("hour_from", False).hour + 7) < min(hour_to_interval) and (data[1].get("hour_to", False).hour + 7) > max(hour_from_interval):
+                number_of_hour_morning = min(hour_to_interval) - (data[1].get("hour_from", False).hour + 7)
+                vals1 = {
+                    'date': data[1].get("date", False),
+                    'number_of_hours': number_of_hour_morning,
+                    'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
+                    'timesheet_id': self.id,
+                    'code': data[1].get("code", ""),
+                    'hour_from':  data[1].get("hour_from", False),
+                    'hour_to': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=min(hour_to_interval) - 7)).time())
+                }
+                list_data.append(vals1)
+                number_of_hour_afternoon = (data[1].get("hour_to", False).hour + 7) - max(hour_from_interval)
+                vals2 = {
+                    'date': data[1].get("date", False),
+                    'number_of_hours': number_of_hour_afternoon,
+                    'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
+                    'timesheet_id': self.id,
+                    'code': data[1].get("code", ""),
+                    'hour_from':  data[1].get("hour_from", False),
+                    'hour_from': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=max(hour_from_interval) - 7)).time()),
+                    'hour_to':  data[1].get("hour_to", False),
+                }
+                list_data.append(vals2)
+            else: 
+                vals = {
+                    'date': data[1].get("date", False),
+                    'number_of_hours': data[1].get("number_of_hour", 0),
+                    'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
+                    'timesheet_id': self.id,
+                    'code': data[1].get("code", ""),
+                    'hour_from':  data[1].get("hour_from", False),
+                    'hour_to': data[1].get("hour_to", False),
+                }
+                list_data.append(vals)
+
+        if list_data:
+            for vals in list_data:
+                self.filter_timesheet_line(self.employee_id.contract_id.resource_calendar_id, intervals, vals)
+                timesheet_line.create(vals)
 
         # datas = {}
         # for data_line in list_data:
@@ -67,8 +101,7 @@ class HrContractTypeInherit(models.Model):
         #     timesheet_line.create(data[1])
         
 
-    def filter_timesheet_line(self, contract, calendar, vals):
-        intervals = contract.resource_calendar_id.attendance_ids.filtered(lambda x: int(x.dayofweek) == vals.get("hour_from", False).weekday())
+    def filter_timesheet_line(self, calendar, intervals, vals):
         from_datetime = datetime.combine(vals.get("hour_from", False), datetime.min.time())
         reality_hours_count = 0
         expect_hours_count = 0
@@ -76,6 +109,7 @@ class HrContractTypeInherit(models.Model):
         if self.employee_id.contract_id and self.employee_id.contract_id.resource_calendar_id.mode == 'begin_end_time':
             if intervals:
                 for idx, item in enumerate(intervals):
+                    
                     calendar_date_start = from_datetime + relativedelta(hours=item.hour_from - 7 + (idx == 0 and calendar.hour_late or 0))
                     calendar_date_end = from_datetime + relativedelta(hours=item.hour_to - 7 - ((idx == len(intervals) -1) and calendar.hour_soon or 0))
                     in_sooner = vals.get("hour_from", False) <= calendar_date_start
@@ -84,12 +118,11 @@ class HrContractTypeInherit(models.Model):
                     
                     if (in_sooner and out_later):
                         reality_hours_count += (item.hour_to - item.hour_from)
-                    
                 number_of_days = 0
                 if reality_hours_count:
                     number_of_days += reality_hours_count/expect_hours_count
                 if number_of_days:
-                    vals['number_of_days'] = 0.5
+                    vals['number_of_days'] = number_of_days
 
     def compute_worked_day(self):
         for rec in self:

@@ -32,8 +32,10 @@
                                 <tree>
                                     <field name="date"/>
                                     <field name="code"/>
-                                    <field name="timesheet_type_id"/>
+                                    <field name="hour_from"/>
+                                    <field name="hour_to"/>
                                     <field name="number_of_hours"/>
+                                    <field name="number_of_days"/>
                                 </tree>
                             </field>
                         </page>
