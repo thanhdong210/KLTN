@@ -1,0 +1,29 @@
+.check-form {
+    /* background-color: var(--white-color); */
+}
+
+.check-form__container {}
+
+.check-form__header {
+    background-image: linear-gradient(90, var(--light-primary-color), var(--primary-color));
+}
+
+.check-form__image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+}
+
+.check-form__form {}
+
+.check-form__name {
+    color: red;
+    font-size: 30px;
+}
+
+.check-form__label {}
+
+.check-form__icon {}
+
+.check-form__checkin {}

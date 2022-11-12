@@ -97,6 +97,8 @@ class HrEmployeeInherit(models.Model):
             "overtime_request_to_approve": overtime_request_to_approve,
         }
 
+        return [data]
+
     def _compute_total_leaves(self):
         for rec in self:
             leave_type_for_compute = rec.env['ir.config_parameter'].sudo().get_param('leave_type_for_compute')
