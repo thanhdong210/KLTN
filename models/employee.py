@@ -85,6 +85,8 @@ class HrEmployeeInherit(models.Model):
             ('employee_id', 'in', member_ids),
         ]).ids
         
+        employee = self.search([('user_id', '=', self.env.user.id)])
+
         data = {
             "attendance_count": len(attendance_data),
             "attendance_request_count": len(attendance_request_data),
@@ -95,6 +97,7 @@ class HrEmployeeInherit(models.Model):
             "attendance_request_to_approve": attendance_request_to_approve,
             "leave_request_to_approve": leave_request_to_approve,
             "overtime_request_to_approve": overtime_request_to_approve,
+            "employee": employee
         }
 
         return [data]
