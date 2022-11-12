@@ -79,7 +79,7 @@ class HrContractTypeInherit(models.Model):
                 rec.show_button_validate = False
 
     def check_button_approve(self):
-        if self.user_has_groups('KLTN.group_attendance_request'):
+        if self.user_has_groups('kltn.group_attendance_request'):
             return True
         employee_manager = self.create_uid.employee_id.parent_id.user_id
         if self.create_uid.employee_id.coach_id:
@@ -89,7 +89,7 @@ class HrContractTypeInherit(models.Model):
         return False
 
     def check_button_validate(self):
-        if self.user_has_groups('KLTN.group_attendance_request'):
+        if self.user_has_groups('kltn.group_attendance_request'):
             return True
         employee_coach = self.create_uid.employee_id.coach_id.user_id
         if employee_coach and self.env.user in employee_coach:
@@ -116,13 +116,13 @@ class HrContractTypeInherit(models.Model):
             note = _("%s had requested an attendance", self.employee_id.name)
             if rec.state == 'draft':
                 rec.activity_schedule(
-                    'KLTN.mail_activity_attendance_request',
+                    'kltn.mail_activity_attendance_request',
                     note=note,
                     user_id=rec.sudo().get_employee_manager().id)
             elif rec.state == 'approve':
-                rec.activity_feedback(['KLTN.mail_activity_attendance_request'])
+                rec.activity_feedback(['kltn.mail_activity_attendance_request'])
                 rec.activity_schedule(
-                    'KLTN.mail_activity_attendance_request',
+                    'kltn.mail_activity_attendance_request',
                     note=note,
                     user_id=rec.sudo().get_employee_manager().id)
             elif rec.state == 'second_approve':
@@ -132,9 +132,9 @@ class HrContractTypeInherit(models.Model):
             elif rec.state == 'refuse':
                 to_clean |= rec
         if to_clean:
-            to_clean.activity_unlink(['KLTN.mail_activity_attendance_request', 'KLTN.mail_activity_attendance_request'])
+            to_clean.activity_unlink(['kltn.mail_activity_attendance_request', 'kltn.mail_activity_attendance_request'])
         if to_do:
-            to_do.activity_feedback(['KLTN.mail_activity_attendance_request', 'KLTN.mail_activity_attendance_request'])
+            to_do.activity_feedback(['kltn.mail_activity_attendance_request', 'kltn.mail_activity_attendance_request'])
 
     def _compute_state(self):
         pass

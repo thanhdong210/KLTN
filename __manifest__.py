@@ -44,11 +44,11 @@
     'application': True,
     'assets': {
         'web.assets_backend': [
-            'KLTN/static/src/js/dashboard_views.js',
+            'kltn/static/src/js/dashboard_views.js',
         ],
         'web.assets_qweb': [
-            'KLTN/static/src/xml/personal_hub_views.xml',
-            'KLTN/static/src/xml/*.xml'
+            'kltn/static/src/xml/personal_hub_views.xml',
+            'kltn/static/src/xml/*.xml'
         ],
     },
     

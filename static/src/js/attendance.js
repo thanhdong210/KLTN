@@ -1,4 +1,4 @@
-odoo.define('KLTN.attendance', function (require) {
+odoo.define('kltn.attendance', function (require) {
     "use strict";
 
 
@@ -8,7 +8,7 @@ odoo.define('KLTN.attendance', function (require) {
     var QWeb = core.qweb;
 
     var HrAttendanceMode = AbstractAction.extend({
-        template: "KLTN.HrAttendanceMode",
+        template: "kltn.HrAttendanceMode",
         events: {
             'click .display': 'raise_alert',
         },

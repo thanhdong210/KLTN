@@ -7,7 +7,7 @@
 
     <menuitem id="employee_dashboard_menu"
         name="Personal Hub"
-        web_icon="KLTN,static/description/personal_hub.png"
+        web_icon="kltn,static/description/personal_hub.png"
         action="employee_dashboard_view"
         groups="base.group_user" />
 </odoo>

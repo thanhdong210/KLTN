@@ -18,7 +18,7 @@ class HrEmployeeInherit(models.Model):
     code = fields.Char(string="Code")
 
     def action_employee_test(self):
-        mail_template = self.env.ref("KLTN.mail_template_employee_test")
+        mail_template = self.env.ref("kltn.mail_template_employee_test")
         mail_template.sudo().send_mail(self.id, force_send=True)
 
     def get_detail_employee(self):

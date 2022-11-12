@@ -69,7 +69,7 @@ class HrLeaveInherit(models.Model):
                 rec.show_button_validate = False
 
     def check_button_approve(self):
-        if self.user_has_groups('KLTN.group_hr_leaves_manager'):
+        if self.user_has_groups('kltn.group_hr_leaves_manager'):
             return True
         employee_manager = self.create_uid.employee_id.parent_id.user_id
         if self.create_uid.employee_id.coach_id:
@@ -79,7 +79,7 @@ class HrLeaveInherit(models.Model):
         return False
 
     def check_button_validate(self):
-        if self.user_has_groups('KLTN.group_attendance_request'):
+        if self.user_has_groups('kltn.group_attendance_request'):
             return True
         employee_coach = self.create_uid.employee_id.coach_id.user_id
         if employee_coach and self.env.user in employee_coach:

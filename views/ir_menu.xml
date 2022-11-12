@@ -4,7 +4,7 @@
         <menuitem id="human_resource_menu"
             name="Human Resource"
             sequence="10"
-            parent="KLTN.employee_dashboard_menu"
+            parent="kltn.employee_dashboard_menu"
             groups="base.group_user"/>
 
         <!-- Employee -->
@@ -12,112 +12,112 @@
             name="Employee Profiles"
             action="action_employee_profiles_view"
             sequence="20"
-            parent="KLTN.human_resource_menu"
+            parent="kltn.human_resource_menu"
             groups="base.group_user"/>
 
         <menuitem id="employee_contracts_menu"
             name="Employee Contract"
             action="hr_contract.action_hr_contract"
             sequence="30"
-            parent="KLTN.human_resource_menu"
+            parent="kltn.human_resource_menu"
             groups="base.group_user"/>
 
         <!-- Attendance -->
         <menuitem id="attendances_menu"
             name="Attendances"
             sequence="40"
-            parent="KLTN.employee_dashboard_menu"
+            parent="kltn.employee_dashboard_menu"
             groups="base.group_user"/>
 
         <menuitem id="attendance_menu"
             name="Attendances"
-            action="KLTN.hr_attendance_data_action"
+            action="kltn.hr_attendance_data_action"
             sequence="50"
-            parent="KLTN.attendances_menu"
+            parent="kltn.attendances_menu"
             groups="base.group_user"/>
 
         <menuitem id="attendance_request_menu"
             name="Attendance Request"
-            action="KLTN.hr_attendance_request_action"
+            action="kltn.hr_attendance_request_action"
             sequence="60"
-            parent="KLTN.attendances_menu"
+            parent="kltn.attendances_menu"
             groups="base.group_user"/>
 
         <!-- Leave -->
         <menuitem id="leave_menu"
             name="Leave"
             sequence="40"
-            parent="KLTN.employee_dashboard_menu"
+            parent="kltn.employee_dashboard_menu"
             groups="base.group_user"/>
 
         <menuitem id="leaves_request_menu"
             name="Leaves"
-            action="KLTN.hr_leave_request_action"
+            action="kltn.hr_leave_request_action"
             sequence="50"
-            parent="KLTN.leave_menu"
+            parent="kltn.leave_menu"
             groups="base.group_user"/>
 
         <menuitem id="leaves_allocation_menu"
             name="Leaves Allocation"
-            action="KLTN.hr_leave_allocation_action"
+            action="kltn.hr_leave_allocation_action"
             sequence="50"
-            parent="KLTN.leave_menu"
+            parent="kltn.leave_menu"
             groups="base.group_user"/>
 
         <!-- Overtime -->
         <menuitem id="overtime_menu"
             name="Overtime"
             sequence="40"
-            parent="KLTN.employee_dashboard_menu"
+            parent="kltn.employee_dashboard_menu"
             groups="base.group_user"/>
 
         <menuitem id="overtime_request_menu"
             name="Overtime Request"
-            action="KLTN.hr_overtime_request_action"
+            action="kltn.hr_overtime_request_action"
             sequence="50"
-            parent="KLTN.overtime_menu"
+            parent="kltn.overtime_menu"
             groups="base.group_user"/>
 
         <!-- Timesheet -->
         <menuitem id="timesheet_menu"
             name="Timesheet"
             sequence="40"
-            parent="KLTN.employee_dashboard_menu"
-            groups="KLTN.group_timesheet_manager"/>
+            parent="kltn.employee_dashboard_menu"
+            groups="kltn.group_timesheet_manager"/>
 
         <menuitem id="employee_timesheet_menu"
             name="Employee Timesheet"
-            action="KLTN.hr_timesheet_action"
+            action="kltn.hr_timesheet_action"
             sequence="50"
-            parent="KLTN.timesheet_menu"
-            groups="KLTN.group_timesheet_manager"/>
+            parent="kltn.timesheet_menu"
+            groups="kltn.group_timesheet_manager"/>
 
         <!-- Configuration -->
         <menuitem id="configuration_menu"
             name="Configuration"
             sequence="50"
-            parent="KLTN.employee_dashboard_menu"
+            parent="kltn.employee_dashboard_menu"
             groups="base.group_user"/>
 
         <menuitem id="contract_type_menu"
             name="Contract Type"
-            action="KLTN.contract_type_action"
+            action="kltn.contract_type_action"
             sequence="50"
-            parent="KLTN.configuration_menu"
+            parent="kltn.configuration_menu"
             groups="base.group_user"/>
 
         <menuitem id="working_time_menu"
             name="Working Times"
             action="resource.action_resource_calendar_form"
             sequence="50"
-            parent="KLTN.configuration_menu"
+            parent="kltn.configuration_menu"
             groups="base.group_user"/>
 
         <menuitem id="leave_type_menu"
             name="Leaves Type"
             action="hr_holidays.open_view_holiday_status"
             sequence="50"
-            parent="KLTN.configuration_menu"
+            parent="kltn.configuration_menu"
             groups="base.group_user"/>
     </data>
 </odoo>

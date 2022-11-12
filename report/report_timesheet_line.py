@@ -3,7 +3,7 @@ import datetime, calendar
 
 
 class HrTimesheetLineReport(models.AbstractModel):
-    _name = 'report.kltn_2.report_timesheet_line_template'
+    _name = 'report.kltn.report_timesheet_line_template'
 
     @api.model
     def _get_report_values(self, docids, data=None):

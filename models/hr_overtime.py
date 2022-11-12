@@ -116,7 +116,7 @@ class HrContractTypeInherit(models.Model):
                 rec.show_button_validate = False
 
     def check_button_approve(self):
-        if self.user_has_groups('KLTN.group_hr_overtime_manager'):
+        if self.user_has_groups('kltn.group_hr_overtime_manager'):
             return True
         employee_manager = self.create_uid.employee_id.parent_id.user_id
         if self.create_uid.employee_id.coach_id:
@@ -126,7 +126,7 @@ class HrContractTypeInherit(models.Model):
         return False
 
     def check_button_validate(self):
-        if self.user_has_groups('KLTN.group_hr_overtime_manager'):
+        if self.user_has_groups('kltn.group_hr_overtime_manager'):
             return True
         employee_coach = self.create_uid.employee_id.coach_id.user_id
         if employee_coach and self.env.user in employee_coach:

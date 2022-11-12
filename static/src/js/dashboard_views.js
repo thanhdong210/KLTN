@@ -1,4 +1,4 @@
-odoo.define('KLTN.Dashboard', function (require) {
+odoo.define('kltn.Dashboard', function (require) {
     "use strict";
 
 
@@ -8,14 +8,14 @@ odoo.define('KLTN.Dashboard', function (require) {
     var QWeb = core.qweb;
 
     var HrDashboard = AbstractAction.extend({
-        template: "KLTN.HrDashboardMain",
+        template: "kltn.HrDashboardMain",
         events: {
             'click .display_attendance': 'display_attendance',
         },
 
         display_attendance: function (event) {
             var self = this;
-            self.$el.html(QWeb.render('KLTN.HrAttendanceMode'));
+            self.$el.html(QWeb.render('kltn.HrAttendanceMode'));
         },
 
         init: function (parent, context) {
@@ -61,7 +61,7 @@ odoo.define('KLTN.Dashboard', function (require) {
         start: function () {
             var self = this;
             if (self.login_employee) {
-                self.$el.html(QWeb.render('KLTN.HrDashboardMain', { widget: self.login_employee }));
+                self.$el.html(QWeb.render('kltn.HrDashboardMain', { widget: self.login_employee }));
             }
         }
 

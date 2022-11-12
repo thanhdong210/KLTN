@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <template xml:space="preserve">
-    <t t-name="KLTN.HrAttendanceMode">
+    <t t-name="kltn.HrAttendanceMode">
         <div class="app__container">
             <div class="modal">
                 <div class="modal__overlay"></div>
@@ -11,7 +11,7 @@
                     <div class="check-form">
                         <div class="check-form__container">
                             <div class="check-form__header">
-                                <img class="check-form__image" src="KLTN/static/src/assets/img/avatar_1.jpg"></img>
+                                <img class="check-form__image" src="kltn/static/src/assets/img/avatar_1.jpg"></img>
                             </div>
                             <div class="check-form__form">
                                 <h1 class="check-form__name">Mitchell Admin</h1>
@@ -31,11 +31,11 @@
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/responsive.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/grid.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/base.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/attendance_main.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/main.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/responsive.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/grid.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/base.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/attendance_main.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/main.css" />
 
             </xpath>
         </div>

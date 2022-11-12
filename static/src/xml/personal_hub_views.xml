@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/css" href="KLTN/static/src/assets/css/attendance_main.css"?>
+<?xml-stylesheet type="text/css" href="kltn/static/src/assets/css/attendance_main.css"?>
 <?xml-stylesheet type="text/css" href="attendance_main.css"?>
 
 
 <template>
-    <t t-name="KLTN.HrDashboardMain">
+    <t t-name="kltn.HrDashboardMain">
         <!-- Home personal page -->
         <div class="app__container">
             <div class="grid wide">
@@ -23,7 +23,7 @@
                         <div class="col l-4 m-0 c-0">
                             <div class="home-admin-info">
                                 <div class="home-admin-info__img">
-                                    <img class="home-admin-info__img-avatar" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                    <img class="home-admin-info__img-avatar" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                 </div>
                                 <div class="home-admin-info__detail">
                                     <div class="home-admin-info__name">
@@ -194,7 +194,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -219,7 +219,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -244,7 +244,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -269,7 +269,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -294,7 +294,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -319,7 +319,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -344,7 +344,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -369,7 +369,7 @@
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="KLTN/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
@@ -398,10 +398,10 @@
             </div>
 
             <xpath expr="." position="inside">
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/main.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/base.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/grid.css" />
-                <link rel="stylesheet" href="KLTN/static/src/assets/css/responsive.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/main.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/base.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/grid.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/responsive.css" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
