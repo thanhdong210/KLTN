@@ -1,0 +1,5 @@
+<template>
+    <t t-name="kltn.AttendanceDataTemplate">
+        <h2>ajfaja</h2>
+    </t>
+</template>

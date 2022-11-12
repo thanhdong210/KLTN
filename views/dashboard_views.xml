@@ -5,6 +5,11 @@
         <field name="tag">hr_dashboard</field>
     </record>
 
+    <record id="attendance_data_view" model="ir.actions.client">
+        <field name="name">Attendance Data</field>
+        <field name="tag">hr_attendance_data</field>
+    </record>
+
     <menuitem id="employee_dashboard_menu"
         name="Personal Hub"
         web_icon="kltn,static/description/personal_hub.png"

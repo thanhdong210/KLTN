@@ -45,6 +45,7 @@
     'assets': {
         'web.assets_backend': [
             'kltn/static/src/js/dashboard_views.js',
+            'kltn/static/src/js/attendance_data.js',
         ],
         'web.assets_qweb': [
             'kltn/static/src/xml/personal_hub_views.xml',

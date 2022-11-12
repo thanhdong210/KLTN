@@ -43,6 +43,13 @@
             parent="kltn.attendances_menu"
             groups="base.group_user"/>
 
+        <menuitem id="attendance_data_menu"
+            name="Attendance Data"
+            action="kltn.attendance_data_view"
+            sequence="60"
+            parent="kltn.attendances_menu"
+            groups="base.group_user"/>
+
         <!-- Leave -->
         <menuitem id="leave_menu"
             name="Leave"
