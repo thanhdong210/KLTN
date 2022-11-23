@@ -7,6 +7,7 @@ from datetime import time
 import math
 from pytz import timezone
 import pytz
+from odoo.addons.kltn.models import common
 
 class HrEmployeeInherit(models.Model):
     _inherit = "hr.employee"
@@ -177,6 +178,27 @@ class HrEmployeeInherit(models.Model):
                     }
                     list_data.append(value)
             return list_data
+
+    def compute_worked_day_data(self, date):
+        employee_calendar = self.contract_id.resource_calendar_id
+        days = common.compute_days_in_month(date.year, date.month)
+        avai_day_in_week = employee_calendar.attendance_ids.mapped('dayofweek')
+        avai_day_in_week_value = list(dict.fromkeys(avai_day_in_week))
+        number_of_days = 0
+        number_of_hours = 0
+        data = {}
+        
+        for day in days:
+            if str(day.weekday()) in avai_day_in_week_value:
+                number_of_days += 1
+                number_of_hours += employee_calendar.hours_per_day
+
+        data.update({
+            'number_of_days': number_of_days,
+            'number_of_hours': number_of_hours,
+        })
+
+        return data
 
     
 

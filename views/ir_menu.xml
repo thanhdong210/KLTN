@@ -99,6 +99,27 @@
             parent="kltn.timesheet_menu"
             groups="kltn.group_timesheet_manager"/>
 
+        <!-- Payroll -->
+        <menuitem id="payroll_menu"
+            name="Payroll"
+            sequence="40"
+            parent="kltn.employee_dashboard_menu"
+            groups="kltn.group_payroll_manager"/>
+
+        <menuitem id="employee_payroll_menu"
+            name="Employee Payroll"
+            sequence="50"
+            parent="kltn.payroll_menu"
+            action="kltn.hr_payroll_action"
+            groups="kltn.group_payroll_manager"/>
+
+        <menuitem id="employee_payroll_run_menu"
+            name="Employee Payroll Run"
+            sequence="50"
+            parent="kltn.payroll_menu"
+            action="kltn.hr_payroll_run_action"
+            groups="kltn.group_payroll_manager"/>
+
         <!-- Configuration -->
         <menuitem id="configuration_menu"
             name="Configuration"

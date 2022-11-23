@@ -27,6 +27,16 @@
                         </group>
                     </group>
                     <notebook>
+                        <page string="Worked Line" name="worked_line">
+                            <field name="worked_line_ids">
+                                <tree>
+                                    <field name="timesheet_type_id"/>
+                                    <field name="code"/>
+                                    <field name="number_of_days"/>
+                                    <field name="number_of_hours"/>
+                                </tree>
+                            </field>
+                        </page>
                         <page string="Timesheet Line" name="timesheet_line">
                             <field name="timesheet_line_ids">
                                 <tree>
