@@ -13,6 +13,11 @@ class HrContractTypeInherit(models.Model):
     code = fields.Char(string="Code")
     hour_from = fields.Datetime(string="Hour from")
     hour_to = fields.Datetime(string="Hour to")
+    day_state = fields.Selection([
+        ('morning', 'Morning'),
+        ('afternoon', 'Afternoon'),
+    ], string='Day state', store=True, tracking=True, copy=False, readonly=False)
+    date = fields.Date(string="Date")
     
 
 

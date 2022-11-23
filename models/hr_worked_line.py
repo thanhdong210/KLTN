@@ -6,10 +6,13 @@ class HrWorkedLine(models.Model):
     name = fields.Char(string="Name")
     employee_id = fields.Many2one("hr.employee", string="Employee")
     timesheet_id = fields.Many2one("hr.timesheet", string="Timesheet", ondelete='cascade')
-    number_of_hour = fields.Float(string="Number of hour")
-    number_of_day = fields.Float(string="Number of day")
+    number_of_hours = fields.Float(string="Number of hour")
+    number_of_days = fields.Float(string="Number of day")
     timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Timesheet Type")
     code = fields.Char(string="Code")
+    date = fields.Date(string="Date")
+    payroll_id = fields.Many2one('hr.payroll', string="Payroll")
+    contract_id = fields.Many2one('hr.contract', string="Contract")
     
 
 

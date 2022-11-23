@@ -16,7 +16,7 @@
                             </t>
                           </tr>
                           
-                          <!-- <tr>
+                          <tr>
                             <t t-foreach="num_days" t-as="day_line">
                               <td>
                                   <span t-esc="day_line + 1"/>
@@ -25,12 +25,20 @@
                           </tr>
                           
                           <tr>
-                            <t t-foreach="o.shift_line_ids" t-as="line">
+                            <t t-foreach="data_for_morning" t-as="line_morning">
                               <td>
-                                  <span t-esc="line['number']"/>
+                                  <span t-esc="line_morning"/>
                               </td>
-                            </t> -->
-                          <!-- </tr> -->
+                            </t>
+                          </tr>
+
+                          <tr>
+                            <t t-foreach="data_for_afternoon" t-as="line_afternoon">
+                              <td>
+                                  <span t-esc="line_afternoon"/>
+                              </td>
+                            </t>
+                          </tr>
                         </table>
                     </div>
                 </t>

@@ -28,6 +28,7 @@ class HrContractTypeInherit(models.Model):
 
     def action_compute_sheet(self):
         self.timesheet_line_ids.unlink()
+        self.worked_line_ids.unlink()
         self._create_timesheet_line()
         self.compute_worked_day()
 
@@ -50,7 +51,8 @@ class HrContractTypeInherit(models.Model):
                     'timesheet_id': self.id,
                     'code': data[1].get("code", ""),
                     'hour_from':  data[1].get("hour_from", False),
-                    'hour_to': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=min(hour_to_interval) - 7)).time())
+                    'hour_to': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=min(hour_to_interval) - 7)).time()),
+                    'day_state': 'morning'
                 }
                 list_data.append(vals1)
                 number_of_hour_afternoon = (data[1].get("hour_to", False).hour + 7) - max(hour_from_interval)
@@ -60,9 +62,9 @@ class HrContractTypeInherit(models.Model):
                     'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
                     'timesheet_id': self.id,
                     'code': data[1].get("code", ""),
-                    'hour_from':  data[1].get("hour_from", False),
                     'hour_from': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=max(hour_from_interval) - 7)).time()),
                     'hour_to':  data[1].get("hour_to", False),
+                    'day_state': 'afternoon'
                 }
                 list_data.append(vals2)
             else: 
@@ -75,30 +77,20 @@ class HrContractTypeInherit(models.Model):
                     'hour_from':  data[1].get("hour_from", False),
                     'hour_to': data[1].get("hour_to", False),
                 }
+                if vals['hour_from'].hour + 7 <= 12:
+                    vals.update({
+                        'day_state': 'morning'
+                    })
+                elif vals['hour_from'].hour + 7 > 12:
+                    vals.update({
+                        'day_state': 'afternoon'
+                    })
                 list_data.append(vals)
 
         if list_data:
             for vals in list_data:
                 self.filter_timesheet_line(self.employee_id.contract_id.resource_calendar_id, intervals, vals)
                 timesheet_line.create(vals)
-
-        # datas = {}
-        # for data_line in list_data:
-        #     date_date = datas.setdefault(data_line.get("date", False), {
-        #         'date': data_line.get("date", False),
-        #         'number_of_hours': 0.0,
-        #         'number_of_days': 0.0,
-        #         'timesheet_type_id': data_line.get("timesheet_type_id", False),
-        #         'code': data_line.get("code", False),
-        #         'timesheet_id': data_line.get("timesheet_id", False),
-        #     })
-
-        #     date_date['number_of_hours'] += data_line.get("number_of_hour", 0.0)
-        #     date_date['number_of_days'] += data_line.get("number_of_days", 0.0)
-
-        # for data in datas.items():
-        #     print("==============", data[1])
-        #     timesheet_line.create(data[1])
         
 
     def filter_timesheet_line(self, calendar, intervals, vals):
@@ -126,13 +118,26 @@ class HrContractTypeInherit(models.Model):
 
     def compute_worked_day(self):
         for rec in self:
+            worked_days = []
             data = {}
-            # for line in rec.timesheet_line_ids:
-            #     data_line = data.setdefault(line.get('timesheet_type_id', False), {
-            #         'timesheet_type_id': line.get('timesheet_type_id', False),
-            #         'number_of_hour': 0.0
-            #     })
-            pass
+            for line in rec.timesheet_line_ids:
+                data_line = data.setdefault(line.timesheet_type_id, {
+                    'timesheet_type_id': line.timesheet_type_id.id,
+                    'number_of_hours': 0.0,
+                    'number_of_days': 0.0,
+                    'timesheet_id': line.timesheet_id.id,
+                    'code': line.code,
+                    'date': line.date,
+                })
+
+                data_line['number_of_hours'] += line.number_of_hours
+                data_line['number_of_days'] += line.number_of_days
+            for val in data.values():
+                worked_days.append(val)
+
+            for worked_day in worked_days:
+                rec.worked_line_ids.create(worked_day)
+
 
     def action_draft(self):
         datas = self.env['hr.timesheet.line'].search([
@@ -141,6 +146,8 @@ class HrContractTypeInherit(models.Model):
 
         for data in datas:
             data.unlink()
+
+        self.worked_line_ids.unlink()
 
         self.write({
             'state': 'draft'

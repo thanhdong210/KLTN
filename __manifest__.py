@@ -27,6 +27,8 @@
         'report/employee_report.xml',
         'report/timesheet_line_report.xml',
 
+        'wizard/hr_payroll_generate_views.xml',
+
         'views/dashboard_views.xml',
         'views/hr_attendance_data_views.xml',
         'views/employee_views.xml',
@@ -37,6 +39,8 @@
         'views/hr_leave_allocation_views.xml',
         'views/hr_leave_type_views.xml',
         'views/hr_timesheet_views.xml',
+        'views/hr_payroll_views.xml',
+        'views/hr_payroll_run_views.xml',
         'views/resource_calendar_views.xml',
         'views/ir_menu.xml',
     ],

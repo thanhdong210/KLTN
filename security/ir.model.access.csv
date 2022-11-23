@@ -7,3 +7,7 @@ access_hr_timesheet_type,access_hr_timesheet_type,model_hr_timesheet_type,base.g
 access_hr_attendance_data,access_hr_attendance_data,model_hr_attendance_data,base.group_user,1,1,1,1
 access_hr_timesheet,access_hr_timesheet,model_hr_timesheet,group_timesheet_manager,1,1,1,1
 access_hr_timesheet_line,access_hr_timesheet_line,model_hr_timesheet_line,base.group_user,1,1,1,1
+access_hr_worked_line,access_hr_worked_line,model_hr_worked_line,base.group_user,1,1,1,1
+access_hr_payroll,access_hr_payroll,model_hr_payroll,group_payroll_manager,1,1,1,1
+access_hr_payroll_run,access_hr_payroll_run,model_hr_payroll_run,group_payroll_manager,1,1,1,1
+access_hr_payroll_generate,access_hr_payroll_generate,model_hr_payroll_generate,base.group_user,1,1,1,1

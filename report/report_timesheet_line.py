@@ -40,13 +40,13 @@ class HrTimesheetLineReport(models.AbstractModel):
                 data_for_afternoon.append("")
                 data_for_morning.append("")
 
-            # for day in range(num_days + 1):
-            #     for line in timesheet.timesheet_line_ids:
-            #         if line.day.day == day and line.day_state == 'afternoon':
-            #             data_for_afternoon[day - 1] = line.number
+            for day in range(num_days + 1):
+                for line in timesheet.timesheet_line_ids:
+                    if line.date.day == day and line.day_state == 'afternoon':
+                        data_for_afternoon[day - 1] = line.number_of_days
 
-            #         elif line.day.day == day and line.day_state == 'morning':
-            #             data_for_morning[day - 1] = line.number
+                    elif line.date.day == day and line.day_state == 'morning':
+                        data_for_morning[day - 1] = line.number_of_days
             
         data = {
             'num_days': num_days,

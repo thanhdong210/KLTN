@@ -5,5 +5,10 @@
             <field name="name">Attendance Request</field>
             <field name="code">ATR</field>
         </record>
+
+        <record id="work_day_rule_timesheet_type" model="hr.timesheet.type">
+            <field name="name">Default Work Day</field>
+            <field name="code">NCQD</field>
+        </record>
     </data>
 </odoo>
