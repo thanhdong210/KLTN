@@ -9,12 +9,15 @@ from pytz import timezone
 import pytz
 from odoo.addons.kltn.models import common
 
+
 class HrEmployeeInherit(models.Model):
     _inherit = "hr.employee"
-    
+
     test_field = fields.Char("Total time")
-    total_leaves = fields.Float(string="Total Leaves", compute="_compute_total_leaves", store=True)
-    contract_type_id = fields.Many2one('hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
+    total_leaves = fields.Float(
+        string="Total Leaves", compute="_compute_total_leaves", store=True)
+    contract_type_id = fields.Many2one(
+        'hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
     leave_taken = fields.Float(string="Leave Taken")
     code = fields.Char(string="Code")
 
@@ -31,29 +34,29 @@ class HrEmployeeInherit(models.Model):
         attendance_data = self.env['hr.attendance'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
-                ("check_in", ">=", date_from),
-                ("check_in", "<=", date_to)
+            ("check_in", ">=", date_from),
+            ("check_in", "<=", date_to)
         ])
 
         attendance_request_data = self.env['hr.attendance.request'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
-                ("date_from", ">=", date_from),
-                ("date_from", "<=", date_to)
+            ("date_from", ">=", date_from),
+            ("date_from", "<=", date_to)
         ])
 
         leave_data = self.env['hr.leave.inherit'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
-                ("date_from", ">=", date_from),
-                ("date_from", "<=", date_to)
+            ("date_from", ">=", date_from),
+            ("date_from", "<=", date_to)
         ])
 
         overtime_data = self.env['hr.overtime.request'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
-                ("date", ">=", date_from),
-                ("date", "<=", date_to)
+            ("date", ">=", date_from),
+            ("date", "<=", date_to)
         ])
 
         number_of_hour_overtime = 0
@@ -62,7 +65,8 @@ class HrEmployeeInherit(models.Model):
 
         employee = self.search([('user_id', '=', self._uid)], limit=1)
 
-        result = self.search_read([('parent_id', '=', employee.id)], ['id', 'name', 'code', 'department_id', 'job_title', 'work_email', 'work_phone'])
+        result = self.search_read([('parent_id', '=', employee.id)], [
+                                  'id', 'name', 'code', 'department_id', 'job_title', 'work_email', 'work_phone'])
 
         member_ids = []
         for emp in result:
@@ -85,9 +89,9 @@ class HrEmployeeInherit(models.Model):
             ('state', 'in', ['approve']),
             ('employee_id', 'in', member_ids),
         ]).ids
-        
-        employee = self.search_read([('user_id', '=', self.env.user.id)], ['id', 'name', 'code', 'department_id', 'job_title', 'work_email', 'work_phone'], limit=1)
 
+        employee = self.search_read([('user_id', '=', self.env.user.id)], [
+                                    'id', 'name', 'code', 'department_id', 'job_title', 'work_email', 'work_phone'], limit=1)
         data = {
             "attendance_count": len(attendance_data),
             "attendance_request_count": len(attendance_request_data),
@@ -95,17 +99,17 @@ class HrEmployeeInherit(models.Model):
             "overtime_count": len(overtime_data),
             "overtime_hour_count": number_of_hour_overtime,
             "team_member": result,
-            "attendance_request_to_approve": attendance_request_to_approve,
-            "leave_request_to_approve": leave_request_to_approve,
-            "overtime_request_to_approve": overtime_request_to_approve,
+            "attendance_request_to_approve": len(attendance_request_to_approve),
+            "leave_request_to_approve": len(leave_request_to_approve),
+            "overtime_request_to_approve": len(overtime_request_to_approve),
             "employee": employee
         }
-
         return [data]
 
     def _compute_total_leaves(self):
         for rec in self:
-            leave_type_for_compute = rec.env['ir.config_parameter'].sudo().get_param('leave_type_for_compute')
+            leave_type_for_compute = rec.env['ir.config_parameter'].sudo(
+            ).get_param('leave_type_for_compute')
             if leave_type_for_compute:
                 leave_type_for_compute = leave_type_for_compute.split(',')
             total_leaves = rec.env['hr.leave.allocation.inherit'].search([
@@ -147,8 +151,10 @@ class HrEmployeeInherit(models.Model):
             for dt in common.daterange(date_from, date_to):
                 for attendance in self.contract_id.resource_calendar_id.attendance_ids:
                     if int(attendance.dayofweek) == int(dt.weekday()):
-                        check_in = datetime.combine(dt, time(hour=math.floor(attendance.hour_from), minute=int(math.modf(attendance.hour_from)[0]*60)))
-                        check_out = datetime.combine(dt, time(hour=math.floor(attendance.hour_to), minute=int(math.modf(attendance.hour_to)[0]*60)))
+                        check_in = datetime.combine(dt, time(hour=math.floor(
+                            attendance.hour_from), minute=int(math.modf(attendance.hour_from)[0]*60)))
+                        check_out = datetime.combine(dt, time(hour=math.floor(
+                            attendance.hour_to), minute=int(math.modf(attendance.hour_to)[0]*60)))
 
                         check_in_data = check_in - timedelta(hours=7)
                         check_out_data = check_out - timedelta(hours=7)
@@ -163,8 +169,10 @@ class HrEmployeeInherit(models.Model):
             list_data = []
             for attendance in self.contract_id.resource_calendar_id.attendance_ids:
                 if int(attendance.dayofweek) == int(date_from.weekday()):
-                    check_in_data = datetime.combine(date_from, time(hour=math.floor(attendance.hour_from), minute=int(math.modf(attendance.hour_from)[0]*60)))
-                    check_out_data = datetime.combine(date_from, time(hour=math.floor(attendance.hour_to), minute=int(math.modf(attendance.hour_to)[0]*60)))
+                    check_in_data = datetime.combine(date_from, time(hour=math.floor(
+                        attendance.hour_from), minute=int(math.modf(attendance.hour_from)[0]*60)))
+                    check_out_data = datetime.combine(date_from, time(hour=math.floor(
+                        attendance.hour_to), minute=int(math.modf(attendance.hour_to)[0]*60)))
 
                     # check_in = pytz.utc.localize(check_in_data).astimezone('utc').replace(tzinfo=None)
                     # check_out = pytz.utc.localize(check_out_data).astimezone('utc').replace(tzinfo=None)
@@ -199,21 +207,3 @@ class HrEmployeeInherit(models.Model):
         })
 
         return data
-
-    
-
-
-
-    
-    
-
-
-
-    
-
-    
-
-
-    
-
-

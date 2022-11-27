@@ -23,24 +23,36 @@
                         <div class="col l-4 m-0 c-0">
                             <div class="home-admin-info">
                                 <div class="home-admin-info__img">
-                                    <img class="home-admin-info__img-avatar" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                    <a>
+                                        <img class="home-admin-info__img-avatar" alt="" t-attf-src="/web/image?model=hr.employee&amp;field=image_1920&amp;id=#{employee_id}" />
+                                    </a>
                                 </div>
                                 <div class="home-admin-info__detail">
                                     <div class="home-admin-info__name">
-                                        <span class="home-admin-info__name-code">[DEFAULT-0002] Mitchell Admin</span>
+                                        <span class="home-admin-info__name-code">
+                                            <t t-esc="employee_name"></t>
+                                        </span>
                                     </div>
-                                    <span class="home-admin-info__position">Management</span>
+                                    <span class="home-admin-info__position">
+                                        <t t-esc="employee_department"></t>
+                                    </span>
                                     <div class="home-admin-info__official">
                                         <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                        <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                        <span class="home-admin-info__official-name">
+                                            <t t-esc="employee_job"></t>
+                                        </span>
                                     </div>
                                     <div class="home-admin-info__email">
                                         <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                        <span class="home-admin-info__email-text">18110169@gmail.com</span>
+                                        <span class="home-admin-info__email-text">
+                                            <t t-esc="employee_email"></t>
+                                        </span>
                                     </div>
                                     <div class="home-admin-info__phone">
                                         <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                        <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                        <span class="home-admin-info__phone-num">
+                                            <t t-esc="employee_phone"></t>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -114,13 +126,13 @@
                                             <span class="home-function-item__quantity">
                                                 <span class="home-function-item__quantity-current">
                                                     <t t-if="widget">
-                                                        <t t-esc="widget['overtime_count'] or 0" />
+                                                        <t t-esc="widget['overtime_hour_count'] or 0" />
                                                     </t>
                                                 </span>
                                                 <span class="home-function-item__quantity-total">
                                                     /
                                                     <t t-if="widget">
-                                                        <t t-esc="widget['overtime_hour_count'] or 0" />
+                                                        <t t-esc="widget['overtime_count'] or 0" />
                                                     </t>
                                                 </span>
                                             </span>
@@ -144,7 +156,11 @@
                                         <div class="home-function-item-name">
                                             <span class="home-function-item__name-text">Attendance Request</span>
                                         </div>
-                                        <span class="home-function-item__quantity">0</span>
+                                        <span class="home-function-item__quantity">
+                                            <t t-if="widget">
+                                                <t t-esc="widget['attendance_request_to_approve'] or 0" />
+                                            </t>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col l-3 c-6">
@@ -166,7 +182,11 @@
                                         <div class="home-function-item-name">
                                             <span class="home-function-item__name-text">Leave to Approve</span>
                                         </div>
-                                        <span class="home-function-item__quantity">0</span>
+                                        <span class="home-function-item__quantity">
+                                            <t t-if="widget">
+                                                <t t-esc="widget['leave_request_to_approve'] or 0" />
+                                            </t>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col l-3 c-6">
@@ -177,7 +197,11 @@
                                         <div class="home-function-item-name">
                                             <span class="home-function-item__name-text">Overtimes to Approve</span>
                                         </div>
-                                        <span class="home-function-item__quantity">0</span>
+                                        <span class="home-function-item__quantity">
+                                            <t t-if="widget">
+                                                <t t-esc="widget['overtime_request_to_approve'] or 0" />
+                                            </t>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -191,202 +215,38 @@
                         </div>
                         <div class="home-function__items">
                             <div class="row">
+                                <!-- <t t-foreach="widget.team_member_id" t-as="team"> -->
                                 <div class="col l-3">
                                     <div class="home-admin-info home-admin-info-staff">
                                         <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
+                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" alt="" t-attf-src="/web/image?model=hr.employee&amp;field=image_1920&amp;id=#{team_member_id}" />
                                         </div>
                                         <div class="home-admin-info__detail home-admin-info__detail-staff">
                                             <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
+                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">
+                                                    <t t-esc="team_member_name"></t>
+                                                </span>
                                             </div>
-                                            <span class="home-admin-info__position">Management</span>
+                                            <span class="home-admin-info__position">
+                                                <t t-esc="team_member_job"></t>
+                                            </span>
                                             <div class="home-admin-info__official">
                                                 <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
+                                                <span class="home-admin-info__official-name">
+                                                    <t t-esc="team_member_department"></t>
+                                                </span>
                                             </div>
                                             <div class="home-admin-info__email">
                                                 <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
+                                                <span class="home-admin-info__email-text home-admin-info__email-text-staff">
+                                                    <t t-esc="team_member_email"></t>
+                                                </span>
                                             </div>
                                             <div class="home-admin-info__phone">
                                                 <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" src="kltn/static/src/assets/img/avatar_1.jpg" alt=""></img>
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">[DEFAULT-0002] Mitchell Admin</span>
-                                            </div>
-                                            <span class="home-admin-info__position">Management</span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">Chief Executive Officier</span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text">18110169@gmail.com</span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">(237)-125-2389</span>
+                                                <span class="home-admin-info__phone-num">
+                                                    <t t-esc="team_member_phone"></t>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>

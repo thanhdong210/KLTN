@@ -1,29 +1,138 @@
+/* check in */
 .check-form {
-    /* background-color: var(--white-color); */
+    background-color: #f7f7f7;
+    width: 550px;
+    border-radius: 3px;
+
 }
 
 .check-form__container {}
 
 .check-form__header {
-    background-image: linear-gradient(90, var(--light-primary-color), var(--primary-color));
+    background-image: linear-gradient(162deg, #71639E, #B4A3B9);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 
 .check-form__image {
+    position: relative;
+    top: 35px;
+    left: 50%;
+    transform: translateX(-50px);
     width: 80px;
     height: 80px;
     border-radius: 50%;
-
+    border: 2px solid var(--border-color);
 }
 
-.check-form__form {}
+.check-form__form {
+    text-align: center;
+    color: var(--text-color);
+}
 
 .check-form__name {
-    color: red;
-    font-size: 30px;
+    margin-top: 45px;
+    font-size: 28px;
 }
 
-.check-form__label {}
+.check-form__label {
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+}
 
-.check-form__icon {}
+.check-form__icon-link {
+    background-color: var(--white-color);
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    width: 159px;
+    height: 142px;
+    margin-top: 12px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+}
 
-.check-form__checkin {}
+
+.check-form__icon {
+    font-size: 100px;
+    color: #495057;
+}
+
+.check-form__icon-link:hover {
+    background-color: #e1dcdc86;
+}
+
+.check-form__icon-link:hover .check-form__icon {
+    color: var(--primary-color);
+}
+
+.check-form__checkin {
+    color: #626465cb;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 0 35px 0;
+}
+
+.check-form__checkin strong {
+    color: var(--text-color);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* check out */
+.check-form__work-hour {
+    font-size: 16px;
+    color: #737575b6;
+    margin: 26px 0 0 0;
+}
+
+.check-form__icon-link-checkout {
+    background-color: #ffac00;
+}
+
+.check-form__icon-link-checkout:hover {
+    background-color: #ffac00;
+    opacity: 0.9;
+}
+
+.check-form__icon-link-checkout:hover .check-form__icon-checkout {
+    color: #495057;
+}
+
+/* form check in details */
+
+.check-form__container {
+    border: 4px solid var(--border-color);
+}
+
+.check-form__label-check-in {
+    display: block;
+    margin: 0 auto;
+    border-radius: 4px;
+    border: 1px solid #68bbb892;
+    padding: 6px 0;
+    width: 460px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #0c5460;
+    background-color: #d1ecf1;
+}
+
+.check-form__btn {
+    width: 460px;
+    font-size: 22px;
+    padding: 22px 0;
+    margin: 28px 0 32px 0;
+}
+
+.check-form__btn-total {
+    font-size: 18px;
+    font-weight: 700;
+    background-color: #d4edda;
+    color: #165731;
+    border: 1px solid #44c56296;
+    margin: 12px 0 0 0;
+}

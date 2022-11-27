@@ -1,11 +1,11 @@
 :root {
     --white-color: #fff;
     --black-color: #000;
-    --text-color: #93a1b0;
+    --text-color: #444546eb;
     --icon-color: #9B63AB;
     --primary-color: #71639E;
     --light-primary-color: #6379AB;
-    --border-color: #ebebeb;
+    --border-color: #d4cfcf8f;
 
     --nav-height: 46px;
     --header-height: 120px;
@@ -103,7 +103,7 @@ html .o_web_client>.o_action_manager {
 
 .modal {
     position: fixed;
-    top: 0;
+    top: var(--nav-height);
     right: 0;
     bottom: 0;
     left: 0;

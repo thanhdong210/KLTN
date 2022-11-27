@@ -9,7 +9,15 @@ odoo.define('kltn.AttendanceDataTemplate', function (require) {
 
     var AttendanceDataTemplate = AbstractAction.extend({
         template: "kltn.AttendanceDataTemplate",
-        
+        events: {
+            'click .display_attendance-check-out': 'display_attendance',
+        },
+
+        display_attendance: function (event) {
+            var self = this;
+            self.$el.html(QWeb.render('kltn.AttendanceDataCheckOut'));
+        },
+
 
         start: function () {
             var self = this;
