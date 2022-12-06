@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='allocation_validation_type']" position="after">
                     <field name="code"/>
+                    <field name="timesheet_type_id" domain="[('mode', '=', 'leave')]"/>
                 </xpath>
             </field>
         </record>

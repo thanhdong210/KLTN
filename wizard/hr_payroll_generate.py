@@ -40,6 +40,9 @@ class HrPayrollGenerate(models.TransientModel):
                 'state': 'draft',
                 'company_id': employee.company_id.id,
                 'timesheet_id': employee_timesheet.id or False,
+                'is_standard_line': False,
+                'real_worked_day': employee_timesheet.total_day,
+                'benefit_ids':employee.contract_id.benefit_ids
             }
 
             payroll = self.env['hr.payroll'].create(data)
@@ -53,8 +56,11 @@ class HrPayrollGenerate(models.TransientModel):
                 'number_of_days': worked_day_data.get("number_of_days", 0),
                 'timesheet_type_id': timesheet_type_id,
                 'code': timesheet_type.code,
-                'payroll_id': payroll.id
+                'payroll_id': payroll.id,
+                'is_standard_line': True
             })]
+
+            payroll.base_worked_day = worked_day_data.get("number_of_days", 0)
 
             for worked_line in employee_timesheet.worked_line_ids:
                 worked_line_data = [(0, 0, {

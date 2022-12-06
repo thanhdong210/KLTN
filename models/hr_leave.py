@@ -92,8 +92,8 @@ class HrLeaveInherit(models.Model):
         if leave_type_for_compute:
             leave_type_for_compute = leave_type_for_compute.split(',')
         total_leave = self.number_of_days + self.employee_id.leave_taken
-        print("===============", employee_total_leave)
-        print("===============", total_leave)
+        print("==========", total_leave)
+        print("==========", employee_total_leave)
         if total_leave > employee_total_leave and self.leave_type_id.code in leave_type_for_compute:
             raise ValidationError(_("This employee don't have enough remaining leave"))
         self.write({

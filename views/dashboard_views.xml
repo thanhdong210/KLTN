@@ -10,6 +10,11 @@
         <field name="tag">hr_attendance_data</field>
     </record>
 
+    <record id="chart_view" model="ir.actions.client">
+        <field name="name">Chart</field>
+        <field name="tag">hr_chart</field>
+    </record>
+
     <menuitem id="employee_dashboard_menu"
         name="Personal Hub"
         web_icon="kltn,static/description/personal_hub.png"
