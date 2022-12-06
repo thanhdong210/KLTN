@@ -78,11 +78,13 @@
 }
 
 .home-admin-info__detail {
+    max-width: 220px;
     font-size: 1.2rem;
 }
 
 .home-admin-info__detail-staff {
     font-size: 1.1rem;
+    max-width: 200px;
 }
 
 .home-admin-info__name-code {
@@ -107,15 +109,17 @@
 .home-admin-info__email {
     display: flex;
     align-items: center;
-    max-width: 200px;
 }
+
+
+
 
 .home-admin-info__official-name,
 .home-admin-info__email-text {
     --line-height: 2rem;
     padding-left: 4px;
+    max-height: var(--line-height);
     line-height: var(--line-height);
-    height: var(--line-height);
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -171,35 +175,3 @@
 .home-function__items {
     padding: 16px 14px;
 }
-
-
-/* form check input */
-.check-form {
-    /* background-color: var(--white-color); */
-}
-
-.check-form__container {}
-
-.check-form__header {
-    background-image: linear-gradient(90, var(--light-primary-color), var(--primary-color));
-}
-
-.check-form__image {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-
-}
-
-.check-form__form {}
-
-.check-form__name {
-    color: red;
-    font-size: 30px;
-}
-
-.check-form__label {}
-
-.check-form__icon {}
-
-.check-form__checkin {}

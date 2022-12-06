@@ -1,5 +1,203 @@
 <template>
+    <!-- form check in -->
     <t t-name="kltn.AttendanceDataTemplate">
-        <h2>ajfaja</h2>
+        <div class="app__container">
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__body">
+
+                    <!-- form check in -->
+                    <!-- <div class="check-form">
+                        <div class="check-form__container">
+                            <div class="check-form__header">
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
+                            </div>
+                            <div class="check-form__form">
+                                <h1 class="check-form__name">Mitchell Admin</h1>
+                                <h3 class="check-form__label">Welcome!</h3>
+                                <a href="" class="check-form__icon-link" title="Sign in">
+                                    <i class="check-form__icon fa-solid fa-right-to-bracket"></i>
+                                </a>
+                                <h3 class="check-form__checkin">
+                                    Click to
+                                    <strong class="check-form__checkin-check">check in</strong>
+                                </h3>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- form check out details -->
+                    <div class="check-form">
+                        <div class="check-form__container">
+                            <div class="check-form__header">
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
+                            </div>
+                            <div class="check-form__form">
+                                <h1 class="check-form__name">Goodbye Mitchell Admin!</h1>
+                                <h3 class="check-form__label">Have a good evening</h3>
+                                <div class="check-form__label-check-in">
+                                    Checked out at
+                                    <b>
+                                        &#160;23:25:39
+                                    </b>
+                                    <br />
+                                    <b>
+                                        0 hours, 42 minutes
+                                    </b>
+                                </div>
+                                <button class="btn check-form__btn check-form__btn-total">Total extra hours: 278:39</button>
+                                <button class="btn btn--primary check-form__btn">Goodbye</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <xpath expr="." position="inside">
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/responsive.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/grid.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/base.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/main.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/attendance_main.css" />
+            </xpath>
+        </div>
+    </t>
+
+    <!-- form check out -->
+    <t t-name="kltn.AttendanceDataCheckOut">
+        <div class="app__container">
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__body">
+
+                    <!-- form check out -->
+                    <div class="check-form">
+                        <div class="check-form__container">
+                            <div class="check-form__header">
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
+                            </div>
+                            <div class="check-form__form">
+                                <h1 class="check-form__name">Mitchell Admin</h1>
+                                <h3 class="check-form__label">Want to check out?</h3>
+                                <h4 class="check-form__work-hour">Today's work hours: 00:00</h4>
+                                <a href="" class="check-form__icon-link check-form__icon-link-checkout display_attendance-check-out" title="Sign out">
+                                    <i
+                                        class="check-form__icon check-form__icon-checkout fa-solid fa-right-from-bracket"></i>
+                                </a>
+                                <h3 class="check-form__checkin">
+                                    Click to
+                                    <strong class="check-form__checkin-check">check out</strong>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <xpath expr="." position="inside">
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/responsive.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/grid.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/base.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/main.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/attendance_main.css" />
+
+            </xpath>
+        </div>
+    </t>
+
+    <!-- Form check in detail -->
+    <t t-name="kltn.AttendanceCheckInDetail">
+        <div class="app__container">
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__body">
+
+                    <!-- form check in details -->
+                    <div class="check-form">
+                        <div class="check-form__container">
+                            <div class="check-form__header">
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
+                            </div>
+                            <div class="check-form__form">
+                                <h1 class="check-form__name">Welcome Mitchell Admin!</h1>
+                                <h3 class="check-form__label">Good night</h3>
+                                <div class="check-form__label-check-in">
+                                    Checked in at
+                                    <b>&#160;23:25:39</b>
+                                </div>
+                                <button class="btn btn--primary check-form__btn">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <xpath expr="." position="inside">
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/responsive.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/grid.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/base.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/main.css" />
+                <link rel="stylesheet" href="kltn/static/src/assets/css/attendance_main.css" />
+
+            </xpath>
+        </div>
+    </t>
+
+    <!-- form check out details -->
+    <t t-name="kltn.AttendanceCheckOutDetail">
+        <div class="app__container">
+            <div class="modal">
+                <div class="modal__overlay"></div>
+                <div class="modal__body">
+
+                    <!-- form check out details -->
+                    <div class="check-form">
+                        <div class="check-form__container">
+                            <div class="check-form__header">
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
+                            </div>
+                            <div class="check-form__form">
+                                <h1 class="check-form__name">Goodbye Mitchell Admin!</h1>
+                                <h3 class="check-form__label">Have a good evening</h3>
+                                <div class="check-form__label-check-in">
+                                    Checked out at
+                                    <b>
+                                        &#160;23:25:39
+                                    </b>
+                                    <br />
+                                    <b>
+                                        0 hours, 42 minutes
+                                    </b>
+                                </div>
+                                <button class="btn check-form__btn check-form__btn-total">Total extra hours: 278:39</button>
+                                <button class="btn btn--primary check-form__btn">Goodbye</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <xpath expr="." position="inside">
+                    <link rel="preconnect" href="https://fonts.googleapis.com" />
+                    <link rel="preconnect" href="https://fonts.gstatic.com" />
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+                    <link rel="stylesheet" href="kltn/static/src/assets/css/responsive.css" />
+                    <link rel="stylesheet" href="kltn/static/src/assets/css/grid.css" />
+                    <link rel="stylesheet" href="kltn/static/src/assets/css/base.css" />
+                    <link rel="stylesheet" href="kltn/static/src/assets/css/main.css" />
+                    <link rel="stylesheet" href="kltn/static/src/assets/css/attendance_main.css" />
+
+                </xpath>
+            </div>
+        </div>
     </t>
 </template>
