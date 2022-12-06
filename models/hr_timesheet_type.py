@@ -6,3 +6,8 @@ class HrTimesheetType(models.Model):
 
     name = fields.Char(string="Name")
     code = fields.Char(string="Code")
+    mode = fields.Selection([
+        ('leave', 'Leave'),
+        ('attendance', 'Attendance'),
+        ('attendance_request', 'Attendance Request'),
+    ], string='Mode', tracking=True, copy=False, readonly=False,)

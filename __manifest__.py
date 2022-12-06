@@ -25,6 +25,7 @@
         'data/mail_activity_type.xml',
 
         'report/employee_report.xml',
+        'report/payroll_report.xml',
         'report/timesheet_line_report.xml',
 
         'wizard/hr_payroll_generate_views.xml',
@@ -33,6 +34,7 @@
         'views/hr_attendance_data_views.xml',
         'views/employee_views.xml',
         'views/contract_type_views.xml',
+        'views/contract_views.xml',
         'views/leave_views.xml',
         'views/attendance_request_views.xml',
         'views/hr_overtime_views.xml',
@@ -42,6 +44,8 @@
         'views/hr_payroll_views.xml',
         'views/hr_payroll_run_views.xml',
         'views/resource_calendar_views.xml',
+        'views/hr_timesheet_type_views.xml',
+        'views/hr_benefit_views.xml',
         'views/ir_menu.xml',
     ],
     'installable': True,

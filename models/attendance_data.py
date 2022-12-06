@@ -36,11 +36,10 @@ class HrAttendanceData(models.Model):
     def _onchange_check_in_check_out(self):
          for rec in self:
             
-            attendance_overlap = rec.env['hr.attendance.data'].search([(
+            attendance_overlaps = rec.env['hr.attendance.data'].search([(
                 'employee_id', '=', rec.employee_id.id,
             )])
 
-            print("===============", attendance_overlap)
-
-            if attendance_overlap and attendance_overlap.check_in <= rec.check_out and rec.check_in <= attendance_overlap.check_out:
-                raise ValidationError(_("Attendance of this employee's duration already exist!"))
+            for attendance_overlap in attendance_overlaps:
+                if attendance_overlap.check_in <= rec.check_out and rec.check_in >= attendance_overlap.check_out:
+                    raise ValidationError(_("Attendance of this employee's duration already exist!"))

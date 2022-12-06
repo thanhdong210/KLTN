@@ -119,6 +119,14 @@
             parent="kltn.payroll_menu"
             action="kltn.hr_payroll_run_action"
             groups="kltn.group_payroll_manager"/>
+        
+        <!-- Chart -->
+        <menuitem id="chart_menu"
+            name="Chart"
+            sequence="40"
+            parent="kltn.employee_dashboard_menu"
+            action="employee_dashboard_view"
+            groups="base.group_user"/>
 
         <!-- Configuration -->
         <menuitem id="configuration_menu"
@@ -144,6 +152,20 @@
         <menuitem id="leave_type_menu"
             name="Leaves Type"
             action="hr_holidays.open_view_holiday_status"
+            sequence="50"
+            parent="kltn.configuration_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="timesheet_type_menu"
+            name="Timesheet Type Menu"
+            action="kltn.hr_timesheet_type_action"
+            sequence="50"
+            parent="kltn.configuration_menu"
+            groups="base.group_user"/>
+
+        <menuitem id="benefit_menu"
+            name="Benefit"
+            action="kltn.hr_benefit_action"
             sequence="50"
             parent="kltn.configuration_menu"
             groups="base.group_user"/>

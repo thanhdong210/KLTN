@@ -5,7 +5,7 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <h2>Report title</h2>
+                        <h2>Payroll</h2>
                         <span t-field="o.name"/>
                         <table>
                           <tr>

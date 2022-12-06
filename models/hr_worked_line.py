@@ -13,6 +13,7 @@ class HrWorkedLine(models.Model):
     date = fields.Date(string="Date")
     payroll_id = fields.Many2one('hr.payroll', string="Payroll")
     contract_id = fields.Many2one('hr.contract', string="Contract")
+    is_standard_line = fields.Boolean(string="Standard line")
     
 
 

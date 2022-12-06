@@ -1,7 +1,8 @@
-from odoo import fields, models, _
+from odoo import fields, models, _, api
 from dateutil.relativedelta import relativedelta
 from datetime import timedelta, datetime, time
 from pytz import timezone, UTC
+from odoo.addons.kltn.models import common
 
 class HrContractTypeInherit(models.Model):
     _name = "hr.timesheet"
@@ -19,6 +20,16 @@ class HrContractTypeInherit(models.Model):
         ('confirmed', 'To Approve'),
     ], string='Status', store=True, tracking=True, copy=False, readonly=False, default="draft")
     show_button_confirm = fields.Boolean()
+    total_day = fields.Float(string="Total Day", compute="_compute_total_day", store=True)
+
+    @api.depends("worked_line_ids")
+    def _compute_total_day(self):
+        for rec in self:
+            if rec.worked_line_ids:
+                total_day = sum(rec.worked_line_ids.mapped("number_of_days"))
+                rec.total_day = total_day
+            else:
+                self.total_day = 0
 
     def action_confirm(self):
         for rec in self:
@@ -27,18 +38,25 @@ class HrContractTypeInherit(models.Model):
             })
 
     def action_compute_sheet(self):
+        self.get_leave_data()
         self.timesheet_line_ids.unlink()
         self.worked_line_ids.unlink()
         self._create_timesheet_line()
         self.compute_worked_day()
 
+    # def get_employee_intervals_filter(self, employee, date):
+
+    def get_employee_intervals(self, employee, date):
+        return employee.contract_id.resource_calendar_id.attendance_ids.filtered(lambda x: int(x.dayofweek) == date.weekday()).sorted(key=lambda x: x.hour_from)
+
     def _create_timesheet_line(self):
         datas_attendance = self.create_attendance_data()
+        datas_leave = self.get_leave_data()
         timesheet_line = self.env['hr.timesheet.line']
         list_data = []
         
         for data in datas_attendance.items():
-            intervals = self.employee_id.contract_id.resource_calendar_id.attendance_ids.filtered(lambda x: int(x.dayofweek) == data[1].get("hour_from", False).weekday()).sorted(key=lambda x: x.hour_from)
+            intervals = self.get_employee_intervals(self.employee_id, data[1].get("hour_from", False))
             hour_from_interval = intervals.mapped("hour_from")
             hour_to_interval = intervals.mapped("hour_to")
 
@@ -86,6 +104,9 @@ class HrContractTypeInherit(models.Model):
                         'day_state': 'afternoon'
                     })
                 list_data.append(vals)
+
+        for data in datas_leave:
+            list_data.append(data)
 
         if list_data:
             for vals in list_data:
@@ -173,7 +194,92 @@ class HrContractTypeInherit(models.Model):
 
             date_date['number_of_hour'] += data_attendance.number_of_hour
         return data
-    
+
+    def get_leave_data(self):
+        # leave_type_for_compute = self.env['ir.config_parameter'].sudo().get_param('leave_type_for_compute')
+        # if leave_type_for_compute:
+        #     leave_type_for_compute = leave_type_for_compute.split(',')
+        datas_leave = self.env['hr.leave.inherit'].search([
+            ('employee_id', '=', self.employee_id.id),
+            ('date_from', '>=', self.date_from),
+            ('date_to', '<=', self.date_to),
+            ('state', '=', 'validated'),
+        ])
+        
+        leave_data_list = []
+        for data in datas_leave:
+            leave_data = {}
+            if data.is_half_day:
+                leave_data = {
+                    'timesheet_id': self.id,
+                    'date': data.date_from,
+                    'timesheet_type_id': data.leave_type_id.timesheet_type_id.id,
+                    'code': data.leave_type_id.timesheet_type_id.code,
+                }
+                if data.is_half_selection == 'morning':
+                    interval_data = self.get_employee_intervals(data.employee_id, data.date_from)
+                    interval = interval_data.filtered(lambda x: x.day_period == 'morning')
+                    check_in = datetime.combine(data.date_from, time(int(interval.hour_from), 0, 0))
+                    check_out = datetime.combine(data.date_from, time(int(interval.hour_to), 0, 0))
+
+                    leave_data.update({
+                        'hour_from': check_in,
+                        'hour_to': check_out,
+                        'number_of_hours': interval.hour_to - interval.hour_from,
+                        'number_of_days': 0.5,
+                        'day_state': 'morning'
+                    })
+                elif data.is_half_selection == 'afternoon':
+                    interval_data = self.get_employee_intervals(data.employee_id, data.date_from)
+                    interval = interval_data.filtered(lambda x: x.day_period == 'afternoon')
+                    check_in = datetime.combine(data.date_from, time(int(interval.hour_from), 0, 0))
+                    check_out = datetime.combine(data.date_from, time(int(interval.hour_to), 0, 0))
+                    
+                    leave_data.update({
+                        'hour_from': check_in,
+                        'hour_to': check_out,
+                        'number_of_hours': interval.hour_to - interval.hour_from,
+                        'number_of_days': 0.5,
+                        'day_state': 'afternoon'
+                    })
+                leave_data_list.append(leave_data)
+            else:
+                for dt in common.daterange(data.date_from, data.date_to):
+                    interval_data = self.get_employee_intervals(data.employee_id, dt)
+                    for interval in interval_data:
+                        check_in = datetime.combine(dt, time(int(interval.hour_from), 0, 0))
+                        check_out = datetime.combine(dt, time(int(interval.hour_to), 0, 0))
+                        leave_data = {
+                            'timesheet_id': self.id,
+                            'date': dt,
+                            'timesheet_type_id': data.leave_type_id.timesheet_type_id.id,
+                            'code': data.leave_type_id.timesheet_type_id.code,
+                            'hour_from': check_in,
+                            'hour_to': check_out,
+                            'number_of_hours': interval.hour_to - interval.hour_from,
+                            'number_of_days': 0.5,
+                        }
+                        if interval.hour_from <= 12 and interval.hour_to <= 12:
+                            leave_data.update({
+                                'day_state': 'morning'
+                            })
+                        else:
+                            leave_data.update({
+                                'day_state': 'afternoon'
+                            })
+                        leave_data_list.append(leave_data)
+        return leave_data_list
+
+    def get_overtime_data(self):
+        overtime_datas = self.env['hr.overtime.request'].search([
+            ('employee_id', '=', self.employee_id.id),
+            ('date', '>=', self.date_from),
+            ('date', '<=', self.date_to),
+            ('state', '=', 'validated'),
+        ])
+
+        for data in overtime_datas:
+            pass
     
 
     
