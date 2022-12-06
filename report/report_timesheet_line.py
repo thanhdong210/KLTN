@@ -9,15 +9,10 @@ class HrTimesheetLineReport(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         docs = self.env['hr.timesheet'].browse(docids)
 
-        data = {
-            'the_string': "hrhehee",
-        }
-
         return {
             'doc_ids': docids,
             'doc_model': 'hr.timesheet',
             'docs': docs,
-            'data': data,
             'num_days': self.get_timesheet_line_data(docids)['num_days'],
             'week_days': self.get_timesheet_line_data(docids)['week_days'],
             'data_for_morning': self.get_timesheet_line_data(docids)['data_for_morning'],

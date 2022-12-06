@@ -21,6 +21,7 @@
                         <group name="col_left">
                             <field name="date_from"/>
                             <field name="date_to"/>
+                            <field name="total_day" invisible="1"/>
                         </group>
                         <group name="col_right">
                             <field name="employee_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>

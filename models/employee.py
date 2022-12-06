@@ -14,10 +14,8 @@ class HrEmployeeInherit(models.Model):
     _inherit = "hr.employee"
 
     test_field = fields.Char("Total time")
-    total_leaves = fields.Float(
-        string="Total Leaves", compute="_compute_total_leaves", store=True)
-    contract_type_id = fields.Many2one(
-        'hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
+    total_leaves = fields.Float(string="Total Leaves", compute="_compute_total_leaves")
+    contract_type_id = fields.Many2one('hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
     leave_taken = fields.Float(string="Leave Taken")
     code = fields.Char(string="Code")
 
@@ -118,11 +116,14 @@ class HrEmployeeInherit(models.Model):
                 ('leave_type_code', 'in', leave_type_for_compute),
                 ('is_child', '=', True),
             ])
-
+            
             total = 0
             for data in total_leaves:
                 total += data.number_of_day
-            rec.total_leaves = total
+            rec.write({
+                'total_leaves': total
+            })
+            print("@@@@@@@@@", total)
 
     # def write(self, vals):
     #     for rec in self:

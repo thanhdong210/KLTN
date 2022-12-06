@@ -36,7 +36,7 @@
 
                     <notebook>
                         <page string="Payrolls" name="payrolls">
-                            <field name="payroll_ids">
+                            <field name="payroll_ids" readonly="1">
                                 <tree>
                                     <field name="employee_id"/>
                                     <field name="name"/>

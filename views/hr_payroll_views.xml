@@ -34,19 +34,38 @@
                             <field name="department_id" readonly="1"/>
                             <field name="job_id" readonly="1"/>
                         </group>
-
+                        <group>
+                            <field name="contract_id" readonly="1" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
 
                     </group>
 
                     <notebook>
                         <page string="Worked Line" name="worked_line">
-                            <field name="worked_line_ids">
+                            <field name="worked_line_ids" readonly="1" options="{'no_open': True, 'no_create': True}">
                                 <tree>
                                     <field name="timesheet_type_id"/>
                                     <field name="code"/>
                                     <field name="number_of_days"/>
                                     <field name="number_of_hours"/>
                                 </tree>
+                            </field>
+                            <group>
+                                <group>
+                                    <field name="base_worked_day" readonly="1"></field>
+                                    <field name="real_worked_day" readonly="1"></field>
+                                </group>
+                                <group>
+                                    <field name="wage" readonly="1"></field>
+                                    <field name="real_wage" readonly="1"></field>
+                                    <field name="total_benefit" readonly="1"></field>
+                                    <field name="take_home_pay" readonly="1"></field>
+                                    <field name="take_home_pay_word" readonly="1"></field>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Benefit" name="benefit">
+                            <field name="benefit_ids" readonly="1" options="{'no_open': True, 'no_create': True}">
                             </field>
                         </page>
                     </notebook>

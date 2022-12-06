@@ -81,16 +81,17 @@ class HrContractTypeInherit(models.Model):
     @api.depends("request_hour_from", "request_hour_to")
     def _compute_number_of_hour(self):
         for rec in self:
-            if rec.request_hour_from < rec.request_hour_to:
-                rec.number_of_hours = float(rec.request_hour_to) - float(rec.request_hour_from)
-            else:
-                rec.number_of_hours = 0
+            if rec.request_hour_from and rec.request_hour_to:
+                if rec.request_hour_from < rec.request_hour_to:
+                    rec.number_of_hours = float(rec.request_hour_to) - float(rec.request_hour_from)
+                else:
+                    rec.number_of_hours = 0
 
     @api.onchange("request_hour_from", "request_hour_to", "date")
     def _onchange_hour_from_hour_to(self):
         for rec in self:
-            if rec.request_hour_from and rec.request_hour_to:
-                intervals = self.employee_id.contract_id.resource_calendar_id.attendance_ids
+            if rec.request_hour_from and rec.request_hour_to and rec.employee_id:
+                intervals = rec.employee_id.contract_id.resource_calendar_id.attendance_ids
                 list_weekday = []
                 for interval in intervals:
                     if int(interval.dayofweek) == int(rec.date.weekday()):
