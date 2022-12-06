@@ -7,7 +7,7 @@
                 <div class="modal__body">
 
                     <!-- form check in -->
-                    <div class="check-form">
+                    <!-- <div class="check-form">
                         <div class="check-form__container">
                             <div class="check-form__header">
                                 <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
@@ -24,7 +24,33 @@
                                 </h3>
                             </div>
                         </div>
+                    </div> -->
+
+                    <!-- form check out details -->
+                    <div class="check-form">
+                        <div class="check-form__container">
+                            <div class="check-form__header">
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
+                            </div>
+                            <div class="check-form__form">
+                                <h1 class="check-form__name">Goodbye Mitchell Admin!</h1>
+                                <h3 class="check-form__label">Have a good evening</h3>
+                                <div class="check-form__label-check-in">
+                                    Checked out at
+                                    <b>
+                                        &#160;23:25:39
+                                    </b>
+                                    <br />
+                                    <b>
+                                        0 hours, 42 minutes
+                                    </b>
+                                </div>
+                                <button class="btn check-form__btn check-form__btn-total">Total extra hours: 278:39</button>
+                                <button class="btn btn--primary check-form__btn">Goodbye</button>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
@@ -52,7 +78,7 @@
                     <div class="check-form">
                         <div class="check-form__container">
                             <div class="check-form__header">
-                                <img class="check-form__image" src="./assets/img/avatar_1.jpg"></img>
+                                <img class="check-form__image" src="kltn/static/description/avatar_1.jpg"></img>
                             </div>
                             <div class="check-form__form">
                                 <h1 class="check-form__name">Mitchell Admin</h1>

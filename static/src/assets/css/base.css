@@ -108,6 +108,7 @@ html .o_web_client>.o_action_manager {
     bottom: 0;
     left: 0;
     display: flex;
+    z-index: 0;
     animation: fadeIn linear 0.1s;
 }
 
