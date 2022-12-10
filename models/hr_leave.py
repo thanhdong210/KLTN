@@ -34,6 +34,13 @@ class HrLeaveInherit(models.Model):
     show_button_approve = fields.Boolean(string="Check Button Approve", compute="_compute_show_button_approve")
     show_button_validate = fields.Boolean(string="Check Button Validate", compute="_compute_show_button_validate")
     number_of_days = fields.Float(string="Number of days", compute="_compute_number_of_day")
+    is_personalhub = fields.Boolean(string="Is Personal Hub")
+
+    @api.onchange("is_personalhub")
+    def onchange_user(self):
+        for rec in self:
+            if rec.is_personalhub:
+                rec.employee_id = rec.env.user.employee_id
 
     @api.onchange("date_from", "date_to")
     def _onchange_date_from_to(self):

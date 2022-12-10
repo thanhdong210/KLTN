@@ -36,9 +36,14 @@ class HrAttendanceData(models.Model):
     def _onchange_check_in_check_out(self):
          for rec in self:
             
-            attendance_overlaps = rec.env['hr.attendance.data'].search([(
-                'employee_id', '=', rec.employee_id.id,
-            )])
+            # attendance_overlaps = rec.env['hr.attendance.data'].search([(
+            #     'employee_id', '=', rec.employee_id.id,
+            # )])
+
+            attendance_overlaps = rec.env['hr.attendance.data'].search([
+                ('employee_id', '=', rec.employee_id.id),
+                ('id', '!=', self._origin.id)
+            ])
 
             for attendance_overlap in attendance_overlaps:
                 if attendance_overlap.check_in <= rec.check_out and rec.check_in >= attendance_overlap.check_out:

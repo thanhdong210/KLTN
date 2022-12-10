@@ -21,14 +21,16 @@
                     </div>
                     <group>
                         <group name="col_left">
+                            <field name="is_personalhub" invisible="1"/>
+                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="date" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="request_hour_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="request_hour_to" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="number_of_hours" readonly="1"/>
                         </group>
                         <group name="col_right">
-                            <field name="target" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="target" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}"/>
+                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}"/>
                             <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')], 'readonly': [('state', '!=', 'draft')]}"></field>
@@ -64,5 +66,19 @@
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_overtime_request_tree_view')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('hr_overtime_request_view_form')})]"/>
+    </record>
+
+    <record id="hr_overtime_request_personalhub_action" model="ir.actions.act_window">
+        <field name="name">Overtime Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.overtime.request</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_overtime_request_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_overtime_request_view_form')})]"/>
+        <field name="context">{
+            'default_is_personalhub': True,
+            'default_target': 'employee',
+        }
+        </field>
     </record>
 </odoo>
