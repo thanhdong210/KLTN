@@ -16,8 +16,14 @@
     </record>
 
     <menuitem id="employee_dashboard_menu"
-        name="Personal Hub"
+        name="Human Resource"
         web_icon="kltn,static/description/personal_hub.png"
+        action="employee_dashboard_view"
+        groups="base.group_user" />
+
+    <menuitem id="personal_dashboard_menu"
+        name="Personal Hub"
+        web_icon="kltn,static/description/icon.png"
         action="employee_dashboard_view"
         groups="base.group_user" />
 </odoo>

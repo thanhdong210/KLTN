@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from datetime import timedelta, datetime, time
 from pytz import timezone, UTC
 from odoo.addons.kltn.models import common
+import math
 
 class HrContractTypeInherit(models.Model):
     _name = "hr.timesheet"
@@ -38,6 +39,7 @@ class HrContractTypeInherit(models.Model):
             })
 
     def action_compute_sheet(self):
+        self.get_overtime_data()
         self.get_leave_data()
         self.timesheet_line_ids.unlink()
         self.worked_line_ids.unlink()
@@ -52,6 +54,7 @@ class HrContractTypeInherit(models.Model):
     def _create_timesheet_line(self):
         datas_attendance = self.create_attendance_data()
         datas_leave = self.get_leave_data()
+        datas_overtime = self.get_overtime_data()
         timesheet_line = self.env['hr.timesheet.line']
         list_data = []
         
@@ -106,6 +109,9 @@ class HrContractTypeInherit(models.Model):
                 list_data.append(vals)
 
         for data in datas_leave:
+            list_data.append(data)
+
+        for data in datas_overtime:
             list_data.append(data)
 
         if list_data:
@@ -247,8 +253,8 @@ class HrContractTypeInherit(models.Model):
                 for dt in common.daterange(data.date_from, data.date_to):
                     interval_data = self.get_employee_intervals(data.employee_id, dt)
                     for interval in interval_data:
-                        check_in = datetime.combine(dt, time(int(interval.hour_from), 0, 0))
-                        check_out = datetime.combine(dt, time(int(interval.hour_to), 0, 0))
+                        check_in = datetime.combine(dt, time(int(interval.hour_from) - 7, 0, 0))
+                        check_out = datetime.combine(dt, time(int(interval.hour_to) - 7, 0, 0))
                         leave_data = {
                             'timesheet_id': self.id,
                             'date': dt,
@@ -271,15 +277,48 @@ class HrContractTypeInherit(models.Model):
         return leave_data_list
 
     def get_overtime_data(self):
-        overtime_datas = self.env['hr.overtime.request'].search([
+        overtime_datas = self.env['hr.overtime.request'].search_read([
             ('employee_id', '=', self.employee_id.id),
             ('date', '>=', self.date_from),
             ('date', '<=', self.date_to),
             ('state', '=', 'validated'),
-        ])
+        ], ['date', 'employee_id', 'timesheet_type_id', 'request_hour_from', 'request_hour_to', 'number_of_hours'])
+
+        list_data = []
 
         for data in overtime_datas:
-            pass
+            timesheet_type = self.env['hr.timesheet.type'].browse(data.get("timesheet_type_id")[0])
+            frac_from, whole_from = math.modf(float(data.get('request_hour_from')))
+            frac_to, whole_to = math.modf(float(data.get('request_hour_to')))
+
+            hour_from = int(whole_from) - 7
+            hour_to = int(whole_to) - 7
+            from_date = data.get('date')
+            to_date = data.get('date')
+            if hour_from < 0:
+                hour_from += 24
+                from_date -= timedelta(days=1)
+
+            if hour_to < 0:
+                hour_to += 24 
+                to_date -= timedelta(days=1)
+
+            date_from = datetime.combine(from_date, time(hour_from, int(60 * frac_from), 0))
+            date_to = datetime.combine(to_date, time(hour_to, int(60 * frac_to), 0))
+            data_dict = {
+                'timesheet_id': self.id,
+                'date': data.get("date", False),
+                'timesheet_type_id': timesheet_type.id,
+                'code': timesheet_type.code,
+                'hour_from': date_from,
+                'hour_to': date_to,
+                'number_of_hours': data.get('number_of_hours', 0),
+                'number_of_days': 0,
+            }
+
+            list_data.append(data_dict)
+        
+        return list_data
     
 
     

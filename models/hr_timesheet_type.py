@@ -10,4 +10,5 @@ class HrTimesheetType(models.Model):
         ('leave', 'Leave'),
         ('attendance', 'Attendance'),
         ('attendance_request', 'Attendance Request'),
-    ], string='Mode', tracking=True, copy=False, readonly=False,)
+        ('business_trip', 'Business Trip'),
+    ], string='Mode', tracking=True, copy=False, readonly=False)

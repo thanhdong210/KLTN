@@ -1,7 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError, ValidationError
 
-class HrContractTypeInherit(models.Model):
+class HrAttendanceRequest(models.Model):
     _name = "hr.attendance.request"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _mail_post_access = 'read'
@@ -36,6 +36,32 @@ class HrContractTypeInherit(models.Model):
     show_button_approve = fields.Boolean(string="Check Button Approve", compute="_compute_show_button_approve")
     show_button_validate = fields.Boolean(string="Check Button Validate", compute="_compute_show_button_validate")
     timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Timesheet Type")
+    is_personalhub = fields.Boolean(string="Is Personal Hub")
+    attendance_option = fields.Selection([
+        ('attendance_request', 'Attendance Request'),
+        ('business_trip', 'Business Trip'),
+    ], string='Attendance Option', store=True, tracking=True, copy=True, readonly=False)
+    location_id = fields.Many2one('hr.location', string="Location")
+    timesheet_type_domain_ids = fields.Many2many('hr.timesheet.type', string="Timesheet type domain", compute="_compute_timesheet_type_domain")
+
+    @api.onchange('attendance_option')
+    def _compute_timesheet_type_domain(self):
+        for rec in self:
+            if rec.attendance_option == 'attendance_request':
+                rec.timesheet_type_domain_ids = rec.env['hr.timesheet.type'].search([
+                    ('mode', '=', 'attendance_request'),
+                ])
+            elif rec.attendance_option == 'business_trip':
+                rec.timesheet_type_domain_ids = rec.env['hr.timesheet.type'].search([
+                    ('mode', '=', 'business_trip'),
+                ])
+
+
+    @api.onchange("is_personalhub")
+    def onchange_user(self):
+        for rec in self:
+            if rec.is_personalhub:
+                rec.employee_id = rec.env.user.employee_id
 
     @api.onchange("date_from", "date_to")
     def _onchange_date_from_to(self):

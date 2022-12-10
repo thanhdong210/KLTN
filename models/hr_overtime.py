@@ -25,6 +25,7 @@ class HrContractTypeInherit(models.Model):
         ('department', 'By Department'),
         ('employees', 'By Employees'),
     ], string='Status', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False)
+    timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Timesheet Type")
     request_hour_from = fields.Selection([
         ('0', '12:00 AM'), ('0.5', '12:30 AM'),
         ('1', '1:00 AM'), ('1.5', '1:30 AM'),
@@ -77,6 +78,13 @@ class HrContractTypeInherit(models.Model):
         ('23', '11:00 PM'), ('23.5', '11:30 PM')], string='Hour to')
     show_button_approve = fields.Boolean(string="Check Button Approve", compute="_compute_show_button_approve")
     show_button_validate = fields.Boolean(string="Check Button Validate", compute="_compute_show_button_validate")
+    is_personalhub = fields.Boolean(string="Is Personal Hub")
+
+    @api.onchange("is_personalhub")
+    def onchange_user(self):
+        for rec in self:
+            if rec.is_personalhub:
+                rec.employee_id = rec.env.user.employee_id
 
     @api.depends("request_hour_from", "request_hour_to")
     def _compute_number_of_hour(self):

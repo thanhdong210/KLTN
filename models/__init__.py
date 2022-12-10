@@ -14,3 +14,4 @@ from . import hr_payroll
 from . import hr_payroll_run
 from . import hr_benefit
 from . import resource_calendar
+from . import hr_location

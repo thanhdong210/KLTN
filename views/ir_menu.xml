@@ -169,5 +169,45 @@
             sequence="50"
             parent="kltn.configuration_menu"
             groups="base.group_user"/>
+
+
+        <!-- Personal Hub -->
+        <menuitem id="addition_request_menu"
+            name="Addition Request"
+            sequence="10"
+            parent="kltn.personal_dashboard_menu"
+            groups="base.group_user"/>
+
+        <!-- Attendance Request -->
+        <menuitem id="attendance_request_personalhub_menu"
+            name="Attendance Request"
+            action="hr_attendance_request_personalhub_action"
+            sequence="20"
+            parent="kltn.addition_request_menu"
+            groups="base.group_user"/>
+
+        <!-- Leave Request -->
+        <menuitem id="leave_request_personalhub_menu"
+            name="Leave Request"
+            action="hr_leave_request_personalhub_action"
+            sequence="20"
+            parent="kltn.addition_request_menu"
+            groups="base.group_user"/>
+
+        <!-- Overtime Request -->
+        <menuitem id="overtime_request_personalhub_menu"
+            name="Overtime Request"
+            action="hr_overtime_request_personalhub_action"
+            sequence="20"
+            parent="kltn.addition_request_menu"
+            groups="base.group_user"/>
+
+        <!-- Business Trip -->
+        <menuitem id="business_trip_personalhub_menu"
+            name="Business Trip"
+            action="hr_businesstrip_personalhub_action"
+            sequence="20"
+            parent="kltn.addition_request_menu"
+            groups="base.group_user"/>
     </data>
 </odoo>
