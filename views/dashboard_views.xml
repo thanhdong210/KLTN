@@ -7,7 +7,7 @@
 
     <record id="attendance_data_view" model="ir.actions.client">
         <field name="name">Attendance Data</field>
-        <field name="tag">hr_attendance_data</field>
+        <field name="tag">hr_attendance</field>
     </record>
 
     <record id="chart_view" model="ir.actions.client">
@@ -17,13 +17,13 @@
 
     <menuitem id="employee_dashboard_menu"
         name="Human Resource"
-        web_icon="kltn,static/description/personal_hub.png"
+        web_icon="kltn,static/description/icon.png"
         action="employee_dashboard_view"
         groups="base.group_user" />
 
     <menuitem id="personal_dashboard_menu"
         name="Personal Hub"
-        web_icon="kltn,static/description/icon.png"
+        web_icon="kltn,static/description/personal_hub.png"
         action="employee_dashboard_view"
         groups="base.group_user" />
 </odoo>

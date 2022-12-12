@@ -1,4 +1,4 @@
-from odoo import api, fields, models, tools, _
+from odoo import api, fields, models, tools, _, exceptions
 from odoo.exceptions import UserError, ValidationError
 from datetime import datetime, date, timedelta
 import calendar
@@ -8,16 +8,39 @@ import math
 from pytz import timezone
 import pytz
 from odoo.addons.kltn.models import common
+from dateutil.relativedelta import relativedelta
 
 
 class HrEmployeeInherit(models.Model):
     _inherit = "hr.employee"
 
-    test_field = fields.Char("Total time")
-    total_leaves = fields.Float(string="Total Leaves", compute="_compute_total_leaves")
+    trigger_compute_total_leave = fields.Boolean("Triger Total Leave")
+    total_leaves = fields.Float(string="Total Leaves", compute="_compute_total_leaves", store=True)
     contract_type_id = fields.Many2one('hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
     leave_taken = fields.Float(string="Leave Taken")
     code = fields.Char(string="Code")
+
+    @api.depends("trigger_compute_total_leave")
+    def _compute_total_leaves(self):
+        for rec in self:
+            print("hhahdasjdbasdb")
+            leave_type_for_compute = rec.env['ir.config_parameter'].sudo(
+            ).get_param('leave_type_for_compute')
+            if leave_type_for_compute:
+                leave_type_for_compute = leave_type_for_compute.split(',')
+            total_leaves = rec.env['hr.leave.allocation.inherit'].search([
+                ('employee_id', '=', rec.id),
+                ('state', '=', 'validate'),
+                ('leave_type_code', 'in', leave_type_for_compute),
+                ('is_child', '=', True),
+            ])
+            
+            total = 0
+            for data in total_leaves:
+                total += data.number_of_day
+            rec.write({
+                'total_leaves': total
+            })
 
     def action_employee_test(self):
         mail_template = self.env.ref("kltn.mail_template_employee_test")
@@ -36,6 +59,9 @@ class HrEmployeeInherit(models.Model):
             ("check_in", "<=", date_to)
         ])
 
+        attendance_date = attendance_data.mapped("check_in_date")
+        attendance_date_data = list(dict.fromkeys(attendance_date))
+
         attendance_request_data = self.env['hr.attendance.request'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
@@ -43,18 +69,35 @@ class HrEmployeeInherit(models.Model):
             ("date_from", "<=", date_to)
         ])
 
+        businesstrip_data = self.env['hr.attendance.request'].search([
+            ("employee_id", "=", self.env.user.employee_id.id),
+            '&',
+            ("date_from", ">=", date_from),
+            ("date_from", "<=", date_to),
+            ("attendance_option", "=", 'business_trip'),
+            ("state", "=", 'validate')
+        ])
+
+        number_of_day_businesstrip = 0
+        for data in businesstrip_data:
+            number_of_day_businesstrip += data.number_of_days
+
         leave_data = self.env['hr.leave.inherit'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
             ("date_from", ">=", date_from),
-            ("date_from", "<=", date_to)
+            ("date_from", "<=", date_to),
+            ("state", "=", 'validated')
         ])
+
+        total_day = sum(leave_data.mapped("number_of_days"))
 
         overtime_data = self.env['hr.overtime.request'].search([
             ("employee_id", "=", self.env.user.employee_id.id),
             '&',
             ("date", ">=", date_from),
-            ("date", "<=", date_to)
+            ("date", "<=", date_to),
+            ("state", "=", 'validated')
         ])
 
         number_of_hour_overtime = 0
@@ -74,6 +117,14 @@ class HrEmployeeInherit(models.Model):
             ('target', '=', 'employee'),
             ('state', 'in', ['approve']),
             ('employee_id', 'in', member_ids),
+            ('attendance_option', '=', 'attendance_request'),
+        ]).ids
+
+        business_trip_to_approve = self.env['hr.attendance.request'].search([
+            ('target', '=', 'employee'),
+            ('state', 'in', ['approve']),
+            ('employee_id', 'in', member_ids),
+            ('attendance_option', '=', 'business_trip'),
         ]).ids
 
         leave_request_to_approve = self.env['hr.leave.inherit'].search([
@@ -90,40 +141,36 @@ class HrEmployeeInherit(models.Model):
 
         employee = self.search_read([('user_id', '=', self.env.user.id)], [
                                     'id', 'name', 'code', 'department_id', 'job_title', 'work_email', 'work_phone'], limit=1)
+
+        employee_id = self.search([
+            ('user_id', '=', self.env.user.id)
+        ])
+
+        base_worked_day = employee_id.compute_worked_day_data(fields.Date.today())
+
         data = {
-            "attendance_count": len(attendance_data),
+            'base_worked_day': base_worked_day.get("number_of_days", 0),
+            "attendance_count": len(attendance_date_data),
             "attendance_request_count": len(attendance_request_data),
-            "leave_count": len(leave_data),
+            "leave_count": total_day,
+            "total_leaves": employee_id.total_leaves,
             "overtime_count": len(overtime_data),
             "overtime_hour_count": number_of_hour_overtime,
+            "businesstrip_count": len(businesstrip_data),
+            "businesstrip_days_count": float(number_of_day_businesstrip),
             "team_member": result,
+            "member_ids": member_ids,
             "attendance_request_to_approve": len(attendance_request_to_approve),
+            "attendance_request_to_approve_ids": attendance_request_to_approve,
+            "business_trip_to_approve": len(business_trip_to_approve),
+            "business_trip_to_approve_ids": business_trip_to_approve,
             "leave_request_to_approve": len(leave_request_to_approve),
+            "leave_request_to_approve_ids": leave_request_to_approve,
             "overtime_request_to_approve": len(overtime_request_to_approve),
+            "overtime_request_to_approve_ids": overtime_request_to_approve,
             "employee": employee
         }
         return [data]
-
-    def _compute_total_leaves(self):
-        for rec in self:
-            leave_type_for_compute = rec.env['ir.config_parameter'].sudo(
-            ).get_param('leave_type_for_compute')
-            if leave_type_for_compute:
-                leave_type_for_compute = leave_type_for_compute.split(',')
-            total_leaves = rec.env['hr.leave.allocation.inherit'].search([
-                ('employee_id', '=', rec.id),
-                ('state', '=', 'validate'),
-                ('leave_type_code', 'in', leave_type_for_compute),
-                ('is_child', '=', True),
-            ])
-            
-            total = 0
-            for data in total_leaves:
-                total += data.number_of_day
-            rec.write({
-                'total_leaves': total
-            })
-            print("@@@@@@@@@", total)
 
     # def write(self, vals):
     #     for rec in self:
@@ -208,3 +255,28 @@ class HrEmployeeInherit(models.Model):
         })
 
         return data
+
+    def _attendance_action_change(self):
+        """ Check In/Check Out action
+            Check In: create a new attendance record
+            Check Out: modify check_out field of appropriate attendance record
+        """
+        self.ensure_one()
+        action_date = fields.Datetime.now()
+
+        timesheet_type_id = self.env['ir.model.data']._xmlid_to_res_id('kltn.work_day_rule_timesheet_type')
+
+        if self.attendance_state != 'checked_in':
+            vals = {
+                'employee_id': self.id,
+                'check_in': action_date,
+                'timesheet_type_id': timesheet_type_id
+            }
+            return self.env['hr.attendance'].create(vals)
+        attendance = self.env['hr.attendance'].search([('employee_id', '=', self.id), ('check_out', '=', False)], limit=1)
+        if attendance:
+            attendance.check_out = action_date
+        else:
+            raise exceptions.UserError(_('Cannot perform check out on %(empl_name)s, could not find corresponding check in. '
+                'Your attendances have probably been modified manually by human resources.') % {'empl_name': self.sudo().name, })
+        return attendance

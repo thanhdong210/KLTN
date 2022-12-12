@@ -7,12 +7,17 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="total_leaves"></field>
-                    <button name="get_detail_employee" type="object">Click me</button>
+                    <field name="total_leaves" invisible="1"></field>
+                    <button name="get_detail_employee" type="object" invisible="1">Click me</button>
                 </xpath>
 
                 <xpath expr="//field[@name='mobile_phone']" position="before">
-                    <field name="code"></field>
+                    <field name="code" required="1"></field>
+                    <field name="trigger_compute_total_leave" invisible="1"></field>
+                </xpath>
+
+                <xpath expr="//field[@name='birthday']" position="attributes">
+                    <attribute name="required">1</attribute>
                 </xpath>
             </field>
         </record>
@@ -22,10 +27,14 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hr.employee</field>
             <!-- <field name="view_type">form</field> --> <!-- Odoo 13 has removed this field -->
+            <field name="context">{
+                    'default_trigger_compute_total_leave': True
+                }
+            </field>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'kanban'}),
                 (0, 0, {'view_mode': 'tree'}),
-                (0, 0, {'view_mode': 'form', 'view_id': ref('employee_form_inherit')})]"/>
+                (0, 0, {'view_mode': 'form', 'view_id': ref('employee_form_inherit')})]"/>  
         </record>
     </data>
 </odoo>

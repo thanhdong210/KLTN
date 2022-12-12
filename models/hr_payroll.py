@@ -2,6 +2,8 @@ from odoo import fields, models, api, _, tools
 import babel
 from datetime import datetime, time
 from num2words import num2words
+import base64
+from odoo.tools.safe_eval import safe_eval
 
 class HrPayroll(models.Model):
     _name = "hr.payroll"
@@ -35,15 +37,17 @@ class HrPayroll(models.Model):
     total_benefit = fields.Monetary(string="Total benefit", compute="_compute_total_benefit", store=True)
     take_home_pay = fields.Monetary(string="Take-Home Pay", compute="_compute_take_home_pay", store=True)
     take_home_pay_word = fields.Char(string="Take-Home Pay Word", compute="_compute_take_home_pay")
+    attachment_id = fields.Binary(string="Attachment", attachment=True)
 
     @api.depends("real_wage", "total_benefit")
     def _compute_take_home_pay(self):
         for rec in self:
             if rec.real_wage and rec.total_benefit:
                 rec.take_home_pay = rec.real_wage + rec.total_benefit
-                rec.take_home_pay_word = num2words((rec.real_wage + rec.total_benefit), lang='vi_VN')
+                rec.take_home_pay_word = num2words((rec.real_wage + rec.total_benefit), lang='vi_VN') + " nghìn đồng"
             else:
                 rec.total_benefit = 0
+                rec.take_home_pay_word = ""
 
     @api.depends("benefit_ids")
     def _compute_total_benefit(self):
@@ -144,3 +148,27 @@ class HrPayroll(models.Model):
         if self.worked_line_ids:
             self.worked_line_ids.unlink()
         return super().unlink()
+
+    def action_test(self):
+        for rec in self:
+            file = self.env.ref('kltn.action_payroll_report')._render_qweb_pdf(rec.id)
+            # data_record = base64.b64encode(file[0])
+            data_record = file[0]
+            print("++++++++++++++++++", data_record)
+            Report = self.env["ir.actions.report"]
+            # data = file.get_data()
+            employee_pdf_pass = self.env['ir.config_parameter'].sudo().get_param('employee_pdf_password')
+            employee_pdf_pass_str = ""
+            if employee_pdf_pass:
+                employee_pdf_pass_str = safe_eval(employee_pdf_pass, {'emp': rec.employee_id, 'datetime': datetime}, mode="eval")
+            encrypted_data = Report.with_context(download_report=True)._encrypt_pdf(data_record, employee_pdf_pass_str)
+            # data_record.set_data(encrypted_data)
+            print("==================", encrypted_data)
+            ir_values = {
+                'name': "ID Card",
+                'type': 'binary',
+                'datas': encrypted_data,
+                'store_fname': encrypted_data,
+                'mimetype': 'application/pdf',
+            }
+            rec.attachment_id = ir_values['datas']

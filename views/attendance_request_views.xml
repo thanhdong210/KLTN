@@ -56,9 +56,9 @@
         <field name="arch" type="xml">
             <tree string="Attendance Request">
                 <field name="name"/>
-                <field name="date_from" widget='float_time'/>
+                <field name="date_from"/>
                 
-                <field name="date_to" widget='float_time'/>
+                <field name="date_to"/>
             </tree>
         </field>
     </record>
@@ -70,6 +70,29 @@
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_attendance_request_tree_view')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('hr_attendance_request_view_form')})]"/>
+        <field name="context">{
+            'default_is_personalhub': False,
+            'default_target': 'employee',
+            'default_attendance_option': 'attendance_request',
+        }
+        </field>
+        <field name="domain">[('attendance_option', '=', 'attendance_request')]</field>
+    </record>
+
+    <record id="hr_businesstrip_action" model="ir.actions.act_window">
+        <field name="name">Business Trip</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.attendance.request</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_attendance_request_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_attendance_request_view_form')})]"/>
+        <field name="context">{
+            'default_is_personalhub': False,
+            'default_target': 'employee',
+            'default_attendance_option': 'business_trip',
+        }
+        </field>
+        <field name="domain">[('attendance_option', '=', 'business_trip')]</field>
     </record>
 
     <record id="hr_attendance_request_personalhub_action" model="ir.actions.act_window">
@@ -85,6 +108,7 @@
             'default_attendance_option': 'attendance_request',
         }
         </field>
+        <field name="domain">[('attendance_option', '=', 'attendance_request'), ('employee_id.user_id', '=', uid)]</field>
     </record>
 
     <record id="hr_businesstrip_personalhub_action" model="ir.actions.act_window">
@@ -100,5 +124,6 @@
             'default_attendance_option': 'business_trip',
         }
         </field>
+        <field name="domain">[('attendance_option', '=', 'business_trip'), ('employee_id.user_id', '=', uid)]</field>
     </record>
 </odoo>

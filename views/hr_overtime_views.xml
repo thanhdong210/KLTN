@@ -17,12 +17,12 @@
                 </header>
                 <sheet>
                     <div>
-                        <field name="name"></field>
+                        <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}"></field>
                     </div>
                     <group>
                         <group name="col_left">
                             <field name="is_personalhub" invisible="1"/>
-                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}" domain="[('mode', '=', '')]"/>
                             <field name="date" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="request_hour_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="request_hour_to" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
@@ -52,9 +52,9 @@
         <field name="arch" type="xml">
             <tree string="Overtime Request">
                 <field name="name"/>
-                <field name="date" widget='float_time'/>
+                <field name="date"/>
                 
-                <field name="number_of_hours" widget='float_time'/>
+                <field name="number_of_hours"/>
             </tree>
         </field>
     </record>
@@ -80,5 +80,6 @@
             'default_target': 'employee',
         }
         </field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
     </record>
 </odoo>

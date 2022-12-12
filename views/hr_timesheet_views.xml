@@ -67,9 +67,9 @@
         <field name="arch" type="xml">
             <tree string="Timesheet">
                 <field name="name"/>
-                <field name="date_from" widget='float_time'/>
                 <field name="employee_id"/>
-                <field name="date_to" widget='float_time'/>
+                <field name="date_from"/>
+                <field name="date_to"/>
             </tree>
         </field>
     </record>

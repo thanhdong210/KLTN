@@ -66,6 +66,7 @@ class HrLeaveAllowcationInherit(models.Model):
             'is_child': True
         }
         self.create(data)
+        employee._compute_total_leaves()
 
     def unlink(self):
         for rec in self:
