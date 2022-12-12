@@ -63,50 +63,51 @@ class HrContractTypeInherit(models.Model):
             hour_from_interval = intervals.mapped("hour_from")
             hour_to_interval = intervals.mapped("hour_to")
 
-            if (data[1].get("hour_from", False).hour + 7) < min(hour_to_interval) and (data[1].get("hour_to", False).hour + 7) > max(hour_from_interval):
-                number_of_hour_morning = min(hour_to_interval) - (data[1].get("hour_from", False).hour + 7)
-                vals1 = {
-                    'date': data[1].get("date", False),
-                    'number_of_hours': number_of_hour_morning,
-                    'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
-                    'timesheet_id': self.id,
-                    'code': data[1].get("code", ""),
-                    'hour_from':  data[1].get("hour_from", False),
-                    'hour_to': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=min(hour_to_interval) - 7)).time()),
-                    'day_state': 'morning'
-                }
-                list_data.append(vals1)
-                number_of_hour_afternoon = (data[1].get("hour_to", False).hour + 7) - max(hour_from_interval)
-                vals2 = {
-                    'date': data[1].get("date", False),
-                    'number_of_hours': number_of_hour_afternoon,
-                    'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
-                    'timesheet_id': self.id,
-                    'code': data[1].get("code", ""),
-                    'hour_from': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=max(hour_from_interval) - 7)).time()),
-                    'hour_to':  data[1].get("hour_to", False),
-                    'day_state': 'afternoon'
-                }
-                list_data.append(vals2)
-            else: 
-                vals = {
-                    'date': data[1].get("date", False),
-                    'number_of_hours': data[1].get("number_of_hour", 0),
-                    'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
-                    'timesheet_id': self.id,
-                    'code': data[1].get("code", ""),
-                    'hour_from':  data[1].get("hour_from", False),
-                    'hour_to': data[1].get("hour_to", False),
-                }
-                if vals['hour_from'].hour + 7 <= 12:
-                    vals.update({
+            if hour_from_interval and hour_to_interval:
+                if (data[1].get("hour_from", False).hour + 7) < min(hour_to_interval) and (data[1].get("hour_to", False).hour + 7) > max(hour_from_interval):
+                    number_of_hour_morning = min(hour_to_interval) - (data[1].get("hour_from", False).hour + 7)
+                    vals1 = {
+                        'date': data[1].get("date", False),
+                        'number_of_hours': number_of_hour_morning,
+                        'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
+                        'timesheet_id': self.id,
+                        'code': data[1].get("code", ""),
+                        'hour_from':  data[1].get("hour_from", False),
+                        'hour_to': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=min(hour_to_interval) - 7)).time()),
                         'day_state': 'morning'
-                    })
-                elif vals['hour_from'].hour + 7 > 12:
-                    vals.update({
+                    }
+                    list_data.append(vals1)
+                    number_of_hour_afternoon = (data[1].get("hour_to", False).hour + 7) - max(hour_from_interval)
+                    vals2 = {
+                        'date': data[1].get("date", False),
+                        'number_of_hours': number_of_hour_afternoon,
+                        'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
+                        'timesheet_id': self.id,
+                        'code': data[1].get("code", ""),
+                        'hour_from': datetime.combine(data[1].get("hour_from", False).date(), (datetime.min + timedelta(hours=max(hour_from_interval) - 7)).time()),
+                        'hour_to':  data[1].get("hour_to", False),
                         'day_state': 'afternoon'
-                    })
-                list_data.append(vals)
+                    }
+                    list_data.append(vals2)
+                else: 
+                    vals = {
+                        'date': data[1].get("date", False),
+                        'number_of_hours': data[1].get("number_of_hour", 0),
+                        'timesheet_type_id': data[1].get("timesheet_type_id", False).id,
+                        'timesheet_id': self.id,
+                        'code': data[1].get("code", ""),
+                        'hour_from':  data[1].get("hour_from", False),
+                        'hour_to': data[1].get("hour_to", False),
+                    }
+                    if vals['hour_from'].hour + 7 <= 12:
+                        vals.update({
+                            'day_state': 'morning'
+                        })
+                    elif vals['hour_from'].hour + 7 > 12:
+                        vals.update({
+                            'day_state': 'afternoon'
+                        })
+                    list_data.append(vals)
 
         for data in datas_leave:
             list_data.append(data)
@@ -181,7 +182,7 @@ class HrContractTypeInherit(models.Model):
         })
 
     def create_attendance_data(self):
-        datas_attendance = self.env['hr.attendance.data'].search([
+        datas_attendance = self.env['hr.attendance'].search([
             ('employee_id', '=', self.employee_id.id),
             ('check_in_date', '>=', self.date_from),
             ('check_out_date', '<=', self.date_to)

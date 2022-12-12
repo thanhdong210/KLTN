@@ -6,9 +6,11 @@
         <field name="arch" type="xml">
             <form string="Timesheet Type">
                 <sheet>
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="mode"/>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="mode"/>
+                    </group>
                 </sheet>
             </form>
         </field>

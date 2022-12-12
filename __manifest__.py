@@ -46,6 +46,7 @@
         'views/resource_calendar_views.xml',
         'views/hr_timesheet_type_views.xml',
         'views/hr_benefit_views.xml',
+        'views/hr_location_views.xml',
         'views/ir_menu.xml',
     ],
     'installable': True,
@@ -54,6 +55,7 @@
         'web.assets_backend': [
             'kltn/static/src/js/dashboard_views.js',
             'kltn/static/src/js/attendance_data.js',
+            'kltn/static/src/js/attendance.js',
         ],
         'web.assets_qweb': [
             'kltn/static/src/xml/personal_hub_views.xml',

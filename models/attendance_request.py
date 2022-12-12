@@ -56,7 +56,6 @@ class HrAttendanceRequest(models.Model):
                     ('mode', '=', 'business_trip'),
                 ])
 
-
     @api.onchange("is_personalhub")
     def onchange_user(self):
         for rec in self:
@@ -196,11 +195,11 @@ class HrAttendanceRequest(models.Model):
                     'timesheet_type_id': self.timesheet_type_id.id,
                     'attendance_request_id': self.id
                 })
-                self.env['hr.attendance.data'].create(data)
+                self.env['hr.attendance'].create(data)
 
     def action_refuse(self):
         self.activitiy_update()
-        attendances_to_delete = self.env['hr.attendance.data'].search([
+        attendances_to_delete = self.env['hr.attendance'].search([
             ('attendance_request_id', '=', self.id)
         ])
         for attendance in attendances_to_delete:
@@ -227,7 +226,7 @@ class HrAttendanceRequest(models.Model):
         if data:
             raise UserError(_("This employee already have attendance request on this day."))
 
-        res = super(HrContractTypeInherit, self).create(vals)
+        res = super(HrAttendanceRequest, self).create(vals)
         for response in res:
             if response.create_uid.employee_id and not response.create_uid.employee_id.parent_id:
                 raise UserError(_("This user dont have manager"))

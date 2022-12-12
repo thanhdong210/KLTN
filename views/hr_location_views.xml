@@ -1,0 +1,38 @@
+<odoo>
+    <record id="hr_location_form_view" model="ir.ui.view">
+        <field name="name">hr.location.form.view</field>
+        <field name="model">hr.location</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Location">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="district"/>
+                        <field name="address"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_location_tree_view" model="ir.ui.view">
+        <field name="name">hr.location.tree.view</field>
+        <field name="model">hr.location</field>
+        <field name="arch" type="xml">
+            <tree string="Location">
+                <field name="name"/>
+                <field name="district"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_location_action" model="ir.actions.act_window">
+        <field name="name">Location</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.location</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_location_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_location_form_view')})]"/>
+    </record>
+</odoo>

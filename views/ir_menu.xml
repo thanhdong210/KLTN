@@ -43,6 +43,13 @@
             parent="kltn.attendances_menu"
             groups="base.group_user"/>
 
+        <menuitem id="businestrip_menu"
+            name="Business Trip"
+            action="kltn.hr_businesstrip_action"
+            sequence="60"
+            parent="kltn.attendances_menu"
+            groups="base.group_user"/>
+
         <menuitem id="attendance_data_menu"
             name="Attendance Data"
             action="kltn.attendance_data_view"
@@ -170,6 +177,13 @@
             parent="kltn.configuration_menu"
             groups="base.group_user"/>
 
+        <menuitem id="location_menu"
+            name="Location"
+            action="kltn.hr_location_action"
+            sequence="50"
+            parent="kltn.configuration_menu"
+            groups="base.group_user"/>
+
 
         <!-- Personal Hub -->
         <menuitem id="addition_request_menu"
@@ -208,6 +222,21 @@
             action="hr_businesstrip_personalhub_action"
             sequence="20"
             parent="kltn.addition_request_menu"
+            groups="base.group_user"/>
+
+        <!-- Timesheet -->
+        <menuitem id="timesheet_personalhub_menu"
+            name="Timesheet"
+            sequence="10"
+            parent="kltn.personal_dashboard_menu"
+            groups="base.group_user"/>
+
+        <!-- Attendance -->
+        <menuitem id="attendance_personalhub_menu"
+            name="Attendance"
+            action="attendance_data_view"
+            sequence="20"
+            parent="kltn.timesheet_personalhub_menu"
             groups="base.group_user"/>
     </data>
 </odoo>

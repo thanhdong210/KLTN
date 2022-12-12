@@ -1,14 +1,14 @@
 <odoo>
     <record id="hr_attendance_data_view_form" model="ir.ui.view">
         <field name="name">hr.attendance.data.view.form</field>
-        <field name="model">hr.attendance.data</field>
+        <field name="model">hr.attendance</field>
         <field name="priority">32</field>
         <field name="arch" type="xml">
             <form string="Attendance Data">
                 <group>
                     <field name="employee_id" required="1"/>
                     <field name="check_in" required="1"/>
-                    <field name="check_out" required="1"/>
+                    <field name="check_out"/>
                     <field name="timesheet_type_id" required="1"/>
                 </group>
             </form>
@@ -17,7 +17,7 @@
 
     <record id="hr_attendance_data_tree_view" model="ir.ui.view">
         <field name="name">hr.attendance.data.tree.view</field>
-        <field name="model">hr.attendance.data</field>
+        <field name="model">hr.attendance</field>
         <field name="arch" type="xml">
             <tree string="Attendance Data">
                 <field name="employee_id"/>
@@ -30,7 +30,7 @@
     <record id="hr_attendance_data_action" model="ir.actions.act_window">
         <field name="name">Attendance Data</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">hr.attendance.data</field>
+        <field name="res_model">hr.attendance</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_attendance_data_tree_view')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('hr_attendance_data_view_form')})]"/>

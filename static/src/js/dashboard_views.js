@@ -11,6 +11,10 @@ odoo.define('kltn.Dashboard', function (require) {
         template: "kltn.HrDashboardMain",
         events: {
             'click .display_attendance': 'display_attendance',
+            'click div.o_attendance_request': 'open_action_attendance_request',
+            'click div.o_business_trip': 'open_action_business_trip',
+            'click div.o_leave_request': 'open_action_leave_request',
+            'click div.o_overtime_request': 'open_action_overtime_request',
         },
 
         display_attendance: function (event) {
@@ -21,7 +25,9 @@ odoo.define('kltn.Dashboard', function (require) {
         init: function (parent, context) {
             this._super(parent, context);
             this.employee_login = false;
-            this.teammember_list = false;
+            this.employee_member = false;
+
+
         },
 
         willStart: function () {
@@ -40,7 +46,7 @@ odoo.define('kltn.Dashboard', function (require) {
             }).then(function (result) {
                 if (result && result.length) {
                     self.login_employee = result[0];
-                    // self.teammember_list = result[0]['team_member'];
+                    self.employee_member = result[0].team_member;
                 }
                 def1.resolve()
             });
@@ -62,14 +68,9 @@ odoo.define('kltn.Dashboard', function (require) {
 
         start: function () {
             var self = this;
-            
-            // for (let i = 0; i < self.login_employee['team_member'].length; i++) {
-            //     console.log("@@@@@@@", self.login_employee['team_member'][i].name);
-            // } 
-            // self.teammember_list = [1, 2, 3, 4, 5]
-            console.log("@@@@@@@", self.teammember_list)
             if (self.login_employee) {
                 self.$el.html(QWeb.render('kltn.HrDashboardMain', {
+                    the_widget: self,
                     widget: self.login_employee,
                     employee_name: self.login_employee['employee'][0]['name'],
                     employee_department: self.login_employee['employee'][0]['department_id'][1],
@@ -77,13 +78,82 @@ odoo.define('kltn.Dashboard', function (require) {
                     employee_job: self.login_employee['employee'][0]['job_title'],
                     employee_email: self.login_employee['employee'][0]['work_email'],
                     employee_phone: self.login_employee['employee'][0]['work_phone'],
-                    team_member: self.teammember_list,
+                    team_member: self.employee_member,
                 }));
             }
-            // console.log("@@@@@@@", self.teammember_list)
-        }
 
+            if (self.employee_member) {
+                self.$el.find('.o_hrms_team_member').html(QWeb.render('HrTeammember', { team_member: self.employee_member }));
+            }
+        },
 
+        open_action_attendance_request: function(event){
+            var self = this;
+            event.stopPropagation();
+            event.preventDefault();
+            this.do_action({
+                name: "Attendance Request",
+                type: 'ir.actions.act_window',
+                res_model: 'hr.attendance.request',
+                views: [[false, 'list'], [false, 'form']],
+                domain: [['attendance_option', '=', 'attendance_request'], ['id', 'in', this.login_employee['attendance_request_to_approve_ids']]],
+                context: {
+                    'create': false,
+                },
+                target: 'current'
+            })
+        },
+
+        open_action_business_trip: function(event){
+            var self = this;
+            event.stopPropagation();
+            event.preventDefault();
+            this.do_action({
+                name: "Business Trip",
+                type: 'ir.actions.act_window',
+                res_model: 'hr.attendance.request',
+                views: [[false, 'list'], [false, 'form']],
+                domain: [['attendance_option', '=', 'business_trip'], ['id', 'in', this.login_employee['business_trip_to_approve_ids']]],
+                context: {
+                    'create': false,
+                },
+                target: 'current'
+            })
+        },
+
+        open_action_leave_request: function(event){
+            var self = this;
+            event.stopPropagation();
+            event.preventDefault();
+            this.do_action({
+                name: "Leave Request",
+                type: 'ir.actions.act_window',
+                res_model: 'hr.leave.inherit',
+                views: [[false, 'list'], [false, 'form']],
+                domain: [['id', 'in', this.login_employee['leave_request_to_approve_ids']]],
+                context: {
+                    'create': false,
+                },
+                target: 'current'
+            })
+        },
+
+        open_action_overtime_request: function(event){
+            var self = this;
+            event.stopPropagation();
+            event.preventDefault();
+            this.do_action({
+                name: "Overtime Request",
+                type: 'ir.actions.act_window',
+                res_model: 'hr.overtime.request',
+                views: [[false, 'list'], [false, 'form']],
+                domain: [['id', 'in', this.login_employee['overtime_request_to_approve_ids']]],
+                context: {
+                    'create': false,
+                },
+                target: 'current'
+            })
+        },
 
     });
 

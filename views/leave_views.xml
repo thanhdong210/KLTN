@@ -77,5 +77,6 @@
             'default_target': 'employee',
         }
         </field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
     </record>
 </odoo>

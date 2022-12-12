@@ -77,7 +77,7 @@
                                                 <span class="home-function-item__quantity-total">
                                                     /
                                                     <t t-if="widget">
-                                                        <t t-esc="widget['attendance_request_count'] or 0" />
+                                                        <t t-esc="widget['base_worked_day'] or 0" />
                                                     </t>
                                                 </span>
                                             </span>
@@ -97,7 +97,7 @@
                                                         <t t-esc="widget['leave_count'] or 0" />
                                                     </t>
                                                 </span>
-                                                <span class="home-function-item__quantity-total">/0</span>
+                                                <span class="home-function-item__quantity-total">/<t t-esc="widget['total_leaves'] or 3" /></span>
                                             </span>
                                         </div>
                                     </div>
@@ -107,11 +107,11 @@
                                                 <i class="home-function-item__icon fa-solid fa-business-time"></i>
                                             </div>
                                             <div class="home-function-item-name">
-                                                <span class="home-function-item__name-text">My Business</span>
+                                                <span class="home-function-item__name-text">My Business Trip</span>
                                             </div>
                                             <span class="home-function-item__quantity">
-                                                <span class="home-function-item__quantity-current">0</span>
-                                                <span class="home-function-item__quantity-total">/0</span>
+                                                <span class="home-function-item__quantity-current"><t t-esc="widget['businesstrip_days_count'] or 0" /></span>
+                                                <span class="home-function-item__quantity-total">/<t t-esc="widget['businesstrip_count'] or 0" /></span>
                                             </span>
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@
                         <div class="home-function__items">
                             <div class="row">
                                 <div class="col l-3 c-6">
-                                    <div class="home-function-item">
+                                    <div class="home-function-item o_attendance_request">
                                         <div class="home-function-item__ico">
                                             <i class="home-function-item__icon fa-regular fa-calendar-check"></i>
                                         </div>
@@ -164,18 +164,20 @@
                                     </div>
                                 </div>
                                 <div class="col l-3 c-6">
-                                    <div class="home-function-item">
+                                    <div class="home-function-item o_business_trip">
                                         <div class="home-function-item__ico">
                                             <i class="home-function-item__icon fa-sharp fa-solid fa-plane-departure"></i>
                                         </div>
                                         <div class="home-function-item-name">
                                             <span class="home-function-item__name-text">Business Trips</span>
                                         </div>
-                                        <span class="home-function-item__quantity">0</span>
+                                        <span class="home-function-item__quantity">
+                                            <t t-esc="widget['business_trip_to_approve'] or 0" />
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col l-3 c-6">
-                                    <div class="home-function-item">
+                                    <div class="home-function-item o_leave_request">
                                         <div class="home-function-item__ico">
                                             <i class="home-function-item__icon fa-regular fa-calendar-xmark"></i>
                                         </div>
@@ -191,7 +193,7 @@
                                 </div>
                                 <div class="col l-3 c-6">
                                     <div class="home-function-item">
-                                        <div class="home-function-item__ico">
+                                        <div class="home-function-item__ico o_overtime_request">
                                             <i class="home-function-item__icon fa-solid fa-business-time"></i>
                                         </div>
                                         <div class="home-function-item-name">
@@ -213,44 +215,50 @@
                         <div class="home-function__title">
                             <span class="home-function__title-name">Subordinates</span>
                         </div>
+                        
                         <div class="home-function__items">
                             <div class="row">
-                                <!-- <t t-foreach="widget.team_member_id" t-as="team"> -->
-                                <div class="col l-3">
-                                    <div class="home-admin-info home-admin-info-staff">
-                                        <div class="home-admin-info__img home-admin-info__img-staff">
-                                            <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" alt="" t-attf-src="/web/image?model=hr.employee&amp;field=image_1920&amp;id=#{team_member_id}" />
-                                        </div>
-                                        <div class="home-admin-info__detail home-admin-info__detail-staff">
-                                            <div class="home-admin-info__name">
-                                                <span class="home-admin-info__name-code home-admin-info__name-code-staff">
-                                                    <t t-esc="team_member_name"></t>
-                                                </span>
+                                <div class="o_hrms_team_member ">
+                                </div>
+
+                                <!-- <t t-foreach="widget.team_member_id" t-as="team">
+                                    <div class="col l-3">
+                                        <div class="home-admin-info home-admin-info-staff">
+                                            <div class="home-admin-info__img home-admin-info__img-staff">
+                                                <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" alt="" t-attf-src="/web/image?model=hr.employee&amp;field=image_1920&amp;id=#{team_member_id}" />
                                             </div>
-                                            <span class="home-admin-info__position">
-                                                <t t-esc="team_member_job"></t>
-                                            </span>
-                                            <div class="home-admin-info__official">
-                                                <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
-                                                <span class="home-admin-info__official-name">
-                                                    <t t-esc="team_member_department"></t>
+                                            <div class="home-admin-info__detail home-admin-info__detail-staff">
+                                                <div class="home-admin-info__name">
+                                                    <span class="home-admin-info__name-code home-admin-info__name-code-staff">
+                                                        <t t-esc="team_member_name"></t>
+                                                    </span>
+                                                </div>
+                                                <span class="home-admin-info__position">
+                                                    <t t-esc="team_member_job"></t>
                                                 </span>
-                                            </div>
-                                            <div class="home-admin-info__email">
-                                                <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
-                                                <span class="home-admin-info__email-text home-admin-info__email-text-staff">
-                                                    <t t-esc="team_member_email"></t>
-                                                </span>
-                                            </div>
-                                            <div class="home-admin-info__phone">
-                                                <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
-                                                <span class="home-admin-info__phone-num">
-                                                    <t t-esc="team_member_phone"></t>
-                                                </span>
+                                                <div class="home-admin-info__official">
+                                                    <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                                                    <span class="home-admin-info__official-name">
+                                                        <t t-esc="team_member_department"></t>
+                                                    </span>
+                                                </div>
+                                                <div class="home-admin-info__email">
+                                                    <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                                                    <span class="home-admin-info__email-text home-admin-info__email-text-staff">
+                                                        <t t-esc="team_member_email"></t>
+                                                    </span>
+                                                </div>
+                                                <div class="home-admin-info__phone">
+                                                    <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                                                    <span class="home-admin-info__phone-num">
+                                                        <t t-esc="team_member_phone"></t>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </t> -->
+                                
                             </div>
                         </div>
                     </div>
@@ -268,4 +276,45 @@
             </xpath>
         </div>
     </t>
+
+    <t t-name="HrTeammember">
+        <t t-foreach="team_member" t-as="team">
+            <div class="col l-3">
+                <div class="home-admin-info home-admin-info-staff">
+                    <div class="home-admin-info__img home-admin-info__img-staff">
+                        <img class="home-admin-info__img-avatar home-admin-info__img-avatar-staff" alt="" t-attf-src="/web/image?model=hr.employee&amp;field=image_1920&amp;id=#{team.id}" />
+                    </div>
+                    <div class="home-admin-info__detail home-admin-info__detail-staff">
+                        <div class="home-admin-info__name">
+                            <span class="home-admin-info__name-code home-admin-info__name-code-staff">
+                                <t t-esc="team.name"></t>
+                            </span>
+                        </div>
+                        <span class="home-admin-info__position">
+                            <t t-esc="team.job_title"></t>
+                        </span>
+                        <div class="home-admin-info__official">
+                            <i class="home-admin-info__official-icon fa-solid fa-briefcase"></i>
+                            <span class="home-admin-info__official-name">
+                                <t t-esc="team.department_id"></t>
+                            </span>
+                        </div>
+                        <div class="home-admin-info__email">
+                            <i class="home-admin-info__email-icon fa-solid fa-envelope"></i>
+                            <span class="home-admin-info__email-text home-admin-info__email-text-staff">
+                                <t t-esc="team.work_email"></t>
+                            </span>
+                        </div>
+                        <div class="home-admin-info__phone">
+                            <i class="home-admin-info__phone-icon fa-solid fa-phone"></i>
+                            <span class="home-admin-info__phone-num">
+                                <t t-esc="team.work_phone"></t>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+
 </template>
