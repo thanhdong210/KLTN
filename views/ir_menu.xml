@@ -132,7 +132,7 @@
             name="Chart"
             sequence="40"
             parent="kltn.employee_dashboard_menu"
-            action="employee_dashboard_view"
+            action="chart_view"
             groups="base.group_user"/>
 
         <!-- Configuration -->
