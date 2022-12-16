@@ -39,7 +39,7 @@
 
 .home-admin-info {
     display: flex;
-    padding: 12px 12px 3px 12px;
+    padding: 6px 12px 3px 12px;
     margin-bottom: 8px;
     background-color: var(--white-color);
     border-radius: 2px;
@@ -106,7 +106,8 @@
 }
 
 .home-admin-info__official,
-.home-admin-info__email {
+.home-admin-info__email,
+.home-admin-info__phone {
     display: flex;
     align-items: center;
 }
@@ -115,7 +116,9 @@
 
 
 .home-admin-info__official-name,
-.home-admin-info__email-text {
+.home-admin-info__email-text,
+.home-admin-info__position,
+.home-admin-info__phone-num {
     --line-height: 2rem;
     padding-left: 4px;
     max-height: var(--line-height);
