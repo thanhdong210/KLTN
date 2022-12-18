@@ -41,6 +41,50 @@
                           </tr>
                         </table>
                     </div>
+
+
+                    <div class="page">
+                        <h3>Timesheet for <text t-field="o.employee_id.name"/></h3>
+                        <h5>Thời gian: <text t-field="o.date_from"></text> - <text t-field="o.date_to"></text></h5>
+                        <h5>Mã nhân viên: <text t-field="o.employee_id.code"/></h5>
+                        <h5>Họ và tên: <text t-field="o.employee_id.name"/></h5>
+                        <h5>Phòng ban: <text t-field="o.employee_id.job_id"/></h5>
+                        <h5>Chức vụ: <text t-field="o.employee_id.department_id"/></h5>
+                        <h5>Ngày làm việc thực tế: <text t-field="o.total_day"/></h5>
+                        <table>
+                          <tr>
+                            <t t-foreach="week_days" t-as="week_day">
+                              <td>
+                                  <span t-esc="week_day"/>
+                              </td>
+                            </t>
+                          </tr>
+                          
+                          <tr>
+                            <t t-foreach="num_days" t-as="day_line">
+                              <td>
+                                  <span t-esc="day_line + 1"/>
+                              </td>
+                            </t>
+                          </tr>
+                          
+                          <tr>
+                            <t t-foreach="data_for_morning" t-as="line_morning">
+                              <td>
+                                  <span t-esc="line_morning"/>
+                              </td>
+                            </t>
+                          </tr>
+
+                          <tr>
+                            <t t-foreach="data_for_afternoon" t-as="line_afternoon">
+                              <td>
+                                  <span t-esc="line_afternoon"/>
+                              </td>
+                            </t>
+                          </tr>
+                        </table>
+                    </div>
                 </t>
             </t>
         </t>

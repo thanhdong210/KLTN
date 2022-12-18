@@ -5,7 +5,115 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <h2>Payroll for </h2><span t-field="o.employee_id.name"/>
+                        <h3>Payroll for <text t-field="o.employee_id.name"/></h3>
+                        <h3>Thời gian: <text t-field="o.date_from"></text> - <text t-field="o.date_to"></text></h3>
+                        <h3>Company: <text t-field="o.employee_id.company_id.name"></text></h3>
+                        
+                        <table>  
+                          <tr>
+                            <th colspan="3">Mã nhân viên: <text t-field="o.employee_id.code"/></th>
+                          </tr>
+                          <tr>
+                            <th colspan="3">Họ và tên: <text t-field="o.employee_id.name"/></th>
+                          </tr>
+                          <tr>
+                            <th colspan="3">Phòng ban: <text t-field="o.employee_id.job_id"/></th>
+                          </tr>
+                          <tr>
+                            <th colspan="3">Chức vụ: <text t-field="o.employee_id.department_id"/></th>
+                          </tr>
+                          <tr>
+                            <th colspan="3">Mức lương: <text t-field="o.wage"/></th>
+                          </tr>
+                          <tr>
+                            <th colspan="3">Ngày làm việc cơ sở: <text t-field="o.base_worked_day"/></th>
+                          </tr>
+                          <tr>
+                            <th colspan="3">Ngày làm việc thực tế: <text t-field="o.real_worked_day"/></th>
+                          </tr>
+                          <tr>
+                            <th>STT</th>
+                            <th>Các khoản thu nhập</th>
+                            <th>Thành tiền</th>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>Lương chính</td>
+                            <td><text t-field="o.real_wage"/></td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Phụ cấp:</td>
+                            <td>.....</td>
+                          </tr>
+                          
+                          <t t-foreach="o.benefit_ids" t-as="benefit">
+                            <tr>
+                              <td>2.<text t-field="benefit.id"></text></td>
+                              <td><text t-field="benefit.name"></text></td>
+                              <td><text t-field="benefit.price"></text></td>
+                            </tr>
+                          </t>
+                          <tr>
+                            <td>3</td>
+                            <td>Lương trợ cấp</td>
+                            <td><text t-field="o.total_benefit"/></td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>Lương tăng ca</td>
+                            <td><text t-field="o.salary_overtime"/></td>
+                          </tr>
+                          <tr>
+                            <td>Tổng cộng:</td>
+                            <td></td>
+                            <td><text t-field="o.salary_worked_day"></text></td>
+                          </tr>
+                          <tr>
+                            <th>STT</th>
+                            <th>Các khoản trừ vào lương</th>
+                            <th>Thành tiền</th>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>Bảo hiểm bắt buộc</td>
+                            <td><text t-field="o.compulsory_insurance"></text></td>
+                          </tr>
+                          <tr>
+                            <td>1.1</td>
+                            <td>Bảo hiểm xã hội (8%)</td>
+                            <td><text t-field="o.social_insurance"></text></td>
+                          </tr>
+                          <tr>
+                            <td>1.2</td>
+                            <td>Bảo hiểm y tế (1.5%)</td>
+                            <td><text t-field="o.health_insurance"></text></td>
+                          </tr>
+                          <tr>
+                            <td>1.3</td>
+                            <td>Bảo hiểm thất nghiệp (1%)</td>
+                            <td><text t-field="o.unemployment_insurance"></text></td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>Thuế thu nhập cá nhân</td>
+                            <td><text t-field="o.personal_income"></text></td>
+                          </tr>
+                          <tr>
+                            <td>Tổng cộng:</td>
+                            <td></td>
+                            <td><text t-field="o.compulsory_insurance"></text></td>
+                          </tr>
+                          <tr>
+                            <td>Tổng số tiền lương thực nhận:</td>
+                            <td></td>
+                            <td><text t-field="o.take_home_pay"></text></td>
+                          </tr>
+                          <tr>
+                            <td>Bằng chữ:</td>
+                            <td  colspan="2"><span t-field="o.take_home_pay_word"></span></td>
+                          </tr>
+                        </table>
                     </div>
                 </t>
             </t>

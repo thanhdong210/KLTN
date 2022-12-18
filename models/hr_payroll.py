@@ -41,6 +41,7 @@ class HrPayroll(models.Model):
     attachment_id = fields.Binary(string="Attachment", attachment=True)
     overtime_hours = fields.Float(string="Overtime Hours")
     salary_overtime = fields.Monetary(string="Salary for overtime", compute="_compute_overtime_salary", store=True)
+    salary_worked_day = fields.Monetary(string="Salary for worked day", compute="_compute_take_home_pay", store=True)
 
     compulsory_insurance = fields.Monetary(string="Compulsory insurance", compute="_compute_compulsory_insurance", store=True)
     social_insurance = fields.Monetary(string="Social insurance", compute="_compute_compulsory_insurance", store=True)
@@ -78,9 +79,11 @@ class HrPayroll(models.Model):
 
     @api.depends("real_wage", "total_benefit", 'overtime_hours')
     def _compute_take_home_pay(self):
+        print('@@@@@@@@@@@@@@@', self.env.company.currency_id.name)
         for rec in self:
             if rec.real_wage or rec.total_benefit or rec.overtime_hours or rec.compulsory_insurance:
-                rec.take_home_pay = rec.real_wage + rec.total_benefit + rec.salary_overtime + rec.compulsory_insurance
+                rec.salary_worked_day = rec.real_wage + rec.total_benefit + rec.salary_overtime
+                rec.take_home_pay = rec.salary_worked_day
                 if rec.take_home_pay >= rec.compulsory_insurance:
                     rec.take_home_pay -= rec.compulsory_insurance
                 rec.take_home_pay_word = num2words((rec.take_home_pay), lang='vi_VN') + " nghìn đồng"
