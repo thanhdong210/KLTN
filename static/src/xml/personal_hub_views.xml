@@ -93,7 +93,7 @@
                                                 </span>
                                                 <span class="home-function-item__quantity-total">
                                                     /
-                                                    <t t-esc="widget['total_leaves'] or 3" />
+                                                    <t t-esc="widget['total_leaves'] or 0" />
                                                 </span>
                                             </span>
                                         </div>
