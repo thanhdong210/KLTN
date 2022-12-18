@@ -212,12 +212,12 @@ class HrPayroll(models.Model):
                 'name': rec.name,
                 'type': 'binary',
                 'datas': base64.b64encode(encrypted_data),
-                'store_fname': False,
-                'mimetype': 'application/pdf',
+                'store_fname': encrypted_data,
+                'mimetype': 'application/x-pdf',
             }
 
             attachment = rec.env['ir.attachment'].create(ir_values)
-            rec.attachment_id = ir_values['datas']
+            rec.attachment_id = base64.b64encode(encrypted_data)
 
             mail_template = self.env.ref('kltn.email_template_payroll', False)
             if mail_template:
