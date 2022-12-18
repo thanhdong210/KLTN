@@ -25,6 +25,7 @@
                         </group>
                         <group name="col_right">
                             <field name="employee_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="attachment"/>
                         </group>
                     </group>
                     <notebook>

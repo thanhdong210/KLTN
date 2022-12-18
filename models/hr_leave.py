@@ -1,5 +1,5 @@
 from odoo import api, fields, models, tools, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 class HrLeaveInherit(models.Model):
     _name = "hr.leave.inherit"
@@ -24,7 +24,7 @@ class HrLeaveInherit(models.Model):
     department_id = fields.Many2one('hr.department', string="Department")
     employee_ids = fields.Many2many('hr.employee', string="Employees")
     company_id = fields.Many2one('res.company', string="Company")
-    leave_type_id = fields.Many2one('hr.leave.type', string="Leave Type")
+    timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Leave Type")
     target = fields.Selection([
         ('employee', 'By Employee'),
         ('department', 'By Department'),
@@ -99,9 +99,7 @@ class HrLeaveInherit(models.Model):
         if leave_type_for_compute:
             leave_type_for_compute = leave_type_for_compute.split(',')
         total_leave = self.number_of_days + self.employee_id.leave_taken
-        print("==========", total_leave)
-        print("==========", employee_total_leave)
-        if total_leave > employee_total_leave and self.leave_type_id.code in leave_type_for_compute:
+        if total_leave > employee_total_leave and self.timesheet_type_id.code in leave_type_for_compute:
             raise ValidationError(_("This employee don't have enough remaining leave"))
         self.write({
             'state': 'approve'
@@ -139,6 +137,60 @@ class HrLeaveInherit(models.Model):
             if rec.state != "draft":
                 raise ValidationError(_("Can't delete when state not in draft"))
         return super(HrLeaveInherit, self).unlink()
+
+    @api.model_create_multi
+    def create(self, vals):
+        if vals[0].get("target") and vals[0].get("target") != 'employee':
+            raise UserError("This mode is still not support")
+        if vals[0].get("is_half_day"):
+            data = self.env['hr.leave.inherit'].search([
+                ('employee_id', '=', vals[0]['employee_id']),
+                ('date_from', '=', vals[0]['date_from']),
+            ])
+        else:
+            data = self.env['hr.leave.inherit'].search([
+                ('employee_id', '=', vals[0]['employee_id']),
+                ('date_from', '<=', vals[0]['date_to']),
+                ('date_to', '>=', vals[0]['date_from']),
+            ])
+        if data:
+            raise UserError(_("This employee already have leave request on this day."))
+
+        res = super(HrLeaveInherit, self).create(vals)
+        for response in res:
+            if response.create_uid.employee_id and not response.create_uid.employee_id.parent_id:
+                raise UserError(_("This user dont have manager"))
+
+        return res
+
+    def write(self, vals):
+        for rec in self:
+            if vals.get("target") and vals.get("target") != 'employee':
+                raise UserError("This mode is still not support")
+
+            if (vals.get("date_from") or vals.get("date_to")) and rec.employee_id and rec.date_from:
+                date_from = rec.date_from
+                date_to = rec.date_to
+                if vals.get("date_from"):
+                    date_from = vals.get("date_from")
+                if vals.get("date_to"):
+                    date_to = vals.get("date_to")
+                if rec.is_half_day:
+                    data = rec.env['hr.leave.inherit'].search([
+                        ('id', '!=', self.id),
+                        ('employee_id', '=', rec.employee_id.id),
+                        ('date_from', '<=', date_from),
+                    ])
+                else:
+                    data = rec.env['hr.leave.inherit'].search([
+                        ('id', '!=', self.id),
+                        ('employee_id', '=', rec.employee_id.id),
+                        ('date_from', '<=', date_to),
+                        ('date_to', '>=', date_from),
+                    ])
+                if data:
+                    raise UserError(_("This employee already have leave request on this day."))
+        return super(HrLeaveInherit, self).write(vals)
     
 
     

@@ -46,7 +46,7 @@ class HrAttendanceData(models.Model):
             ])
 
             for attendance_overlap in attendance_overlaps:
-                if attendance_overlap.check_in <= rec.check_out and rec.check_in >= attendance_overlap.check_out:
+                if attendance_overlap.check_in <= rec.check_out and rec.check_in <= attendance_overlap.check_out:
                     raise ValidationError(_("Attendance of this employee's duration already exist!"))
 
 class HrAttendanceData(models.Model):

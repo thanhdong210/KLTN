@@ -19,5 +19,71 @@
                 </div>
             </field>
         </record>
+
+        <record id="email_template_payroll" model="mail.template">
+            <field name="name">Employee Payroll</field>
+            <field name="model_id" ref="kltn.model_hr_payroll"/>
+            <field name="email_from">17110125@student.hcmute.edu.vn</field>
+            <field name="email_to">{{ object.employee_id.user_id.email }}</field>
+            <field name="subject">{{ object.employee_id.company_id.name }} Payroll for ({{ object.employee_id.name or 'n/a' }})</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-if="object.employee_id">
+            <t t-out="object.employee_id.name or ''"></t>,
+        </t>
+        <t t-else="">
+            Brandon Freeman,
+        </t>
+        <br /><br />
+        Here is your
+        <t t-if="object.name">
+            <strong t-out="object.name or ''"></strong>
+        </t>
+        <t t-else="">
+            payroll
+        </t>
+        <br /><br />
+        If you have any question, please tell us in "17110125@student.hcmute.edu.vn"
+    </p>
+</div>
+            </field>
+            <field name="lang">{{ object.employee_id.user_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <record id="email_template_timesheet" model="mail.template">
+            <field name="name">Employee Timesheet</field>
+            <field name="model_id" ref="kltn.model_hr_timesheet"/>
+            <field name="email_from">17110125@student.hcmute.edu.vn</field>
+            <field name="email_to">{{ object.employee_id.user_id.email }}</field>
+            <field name="subject">{{ object.employee_id.company_id.name }} Timesheet for ({{ object.employee_id.name or 'n/a' }})</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear
+        <t t-if="object.employee_id">
+            <t t-out="object.employee_id.name or ''"></t>,
+        </t>
+        <t t-else="">
+            False,
+        </t>
+        <br /><br />
+        Here is your
+        <t t-if="object.name">
+            <strong t-out="object.name or ''"></strong>
+        </t>
+        <t t-else="">
+            timesheet
+        </t>
+        <br /><br />
+        If you have any question, please tell us in "17110125@student.hcmute.edu.vn"
+    </p>
+</div>
+            </field>
+            <field name="lang">{{ object.employee_id.user_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
     </data>
 </odoo>

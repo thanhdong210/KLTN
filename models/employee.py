@@ -17,13 +17,13 @@ class HrEmployeeInherit(models.Model):
     trigger_compute_total_leave = fields.Boolean("Triger Total Leave")
     total_leaves = fields.Float(string="Total Leaves", compute="_compute_total_leaves", store=True)
     contract_type_id = fields.Many2one('hr.contract.type', related='contract_id.contract_type_id', string="Contract Type", store=True)
-    leave_taken = fields.Float(string="Leave Taken")
+    leave_taken = fields.Float(string="Leave Taken", default=0)
     code = fields.Char(string="Code")
 
     @api.depends("trigger_compute_total_leave")
     def _compute_total_leaves(self):
         for rec in self:
-            print("hhahdasjdbasdb")
+            print("=================hhahdasjdbasdb")
             leave_type_for_compute = rec.env['ir.config_parameter'].sudo(
             ).get_param('leave_type_for_compute')
             if leave_type_for_compute:
@@ -31,7 +31,7 @@ class HrEmployeeInherit(models.Model):
             total_leaves = rec.env['hr.leave.allocation.inherit'].search([
                 ('employee_id', '=', rec.id),
                 ('state', '=', 'validate'),
-                ('leave_type_code', 'in', leave_type_for_compute),
+                ('timesheet_code', 'in', leave_type_for_compute),
                 ('is_child', '=', True),
             ])
             

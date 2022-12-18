@@ -1,7 +1,7 @@
 from odoo import fields, api, models, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
-class HrContractTypeInherit(models.Model):
+class HrOvertime(models.Model):
     _name = "hr.overtime.request"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _mail_post_access = 'read'
@@ -167,9 +167,37 @@ class HrContractTypeInherit(models.Model):
             'state': 'draft'
         })
 
-    # @api.model
-    # def create(self, vals):
-    #     pass
+    @api.model_create_multi
+    def create(self, vals):
+        if vals[0].get("target") and vals[0].get("target") != 'employee':
+            raise UserError("This mode is still not support")
+        data = self.env['hr.overtime.request'].search([
+            ('employee_id', '=', vals[0]['employee_id']),
+            ('date', '=', vals[0]['date']),
+        ])
+        if data:
+            raise UserError(_("This employee already have overtime request on this day."))
+
+        res = super(HrOvertime, self).create(vals)
+        for response in res:
+            if response.create_uid.employee_id and not response.create_uid.employee_id.parent_id:
+                raise UserError(_("This user dont have manager"))
+
+        return res
+
+    def write(self, vals):
+        if vals.get("target") and vals.get("target") != 'employee':
+            raise UserError("This mode is still not support")
+
+        if vals.get("date") and self.employee_id and self.date:
+            data = self.env['hr.overtime.request'].search([
+                ('id', '!=', self.id),
+                ('employee_id', '=', self.employee_id.id),
+                ('date', '=', self.date),
+            ])
+            if data:
+                raise UserError(_("This employee already have overtime request on this day."))
+        return super(HrOvertime, self).write(vals)
     
     
 

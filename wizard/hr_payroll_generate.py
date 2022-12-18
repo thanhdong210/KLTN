@@ -42,7 +42,8 @@ class HrPayrollGenerate(models.TransientModel):
                 'timesheet_id': employee_timesheet.id or False,
                 'is_standard_line': False,
                 'real_worked_day': employee_timesheet.total_day,
-                'benefit_ids':employee.contract_id.benefit_ids
+                'benefit_ids':employee.contract_id.benefit_ids,
+                'overtime_hours': employee_timesheet.overtime_hours
             }
 
             payroll = self.env['hr.payroll'].create(data)

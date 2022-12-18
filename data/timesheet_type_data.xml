@@ -4,11 +4,31 @@
     	<record id="attendance_request_timesheet_type" model="hr.timesheet.type">
             <field name="name">Attendance Request</field>
             <field name="code">ATR</field>
+            <field name="mode">attendance_request</field>
         </record>
 
         <record id="work_day_rule_timesheet_type" model="hr.timesheet.type">
             <field name="name">Default Work Day</field>
             <field name="code">NCQD</field>
+            <field name="mode">attendance</field>
+        </record>
+
+        <record id="legal_leave_timesheet_type" model="hr.timesheet.type">
+            <field name="name">Legal Leave</field>
+            <field name="code">L</field>
+            <field name="mode">leave</field>
+        </record>
+
+        <record id="overtime_timesheet_type" model="hr.timesheet.type">
+            <field name="name">Overtime</field>
+            <field name="code">OT</field>
+            <field name="mode">overtime</field>
+        </record>
+
+        <record id="businesstrip_timesheet_type" model="hr.timesheet.type">
+            <field name="name">Business Trip</field>
+            <field name="code">BT</field>
+            <field name="mode">business_trip</field>
         </record>
     </data>
 </odoo>

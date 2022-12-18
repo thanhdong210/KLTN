@@ -26,11 +26,12 @@
                             <field name="date_to" attrs="{'invisible': [('is_half_day', '=', True)], 'required': [('is_half_day', '=', False)], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="is_half_day" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="is_half_selection" attrs="{'invisible': [('is_half_day', '=', False)], 'required': [('is_half_day', '=', True)], 'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="number_of_days" readonly="1"></field>
                         </group>
                         <group name="col_right">
-                            <field name="leave_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}" domain="[('mode', '=', 'leave')]"/>
                             <field name="target" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}"/>
-                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}" options="{'no_create_edit': True}"/>
+                            <field name="employee_id" attrs="{'required': [('target', '=', 'employee')], 'invisible': [('target', '!=', 'employee')], 'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}" options="{'no_create_edit': True}" force_save="1"/>
                             <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')], 'readonly': [('state', '!=', 'draft')]}"></field>
@@ -52,6 +53,8 @@
         <field name="arch" type="xml">
             <tree string="Leaves Request">
                 <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
             </tree>
         </field>
     </record>

@@ -1,0 +1,43 @@
+<odoo>
+    <record id="hr_payroll_sum_form_view" model="ir.ui.view">
+        <field name="name">hr.payroll.sum.form.view</field>
+        <field name="model">hr.payroll.sum</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Payroll Sum">
+                <header>
+                    <button string="Compute" name="compute_salary_by_year" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="amount" readonly="1"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="month" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_payroll_sum_tree_view" model="ir.ui.view">
+        <field name="name">hr.payroll.sum.tree.view</field>
+        <field name="model">hr.payroll.sum</field>
+        <field name="arch" type="xml">
+            <tree string="Payroll Sum">
+                <field name="amount" readonly="1"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_payroll_sum_action" model="ir.actions.act_window">
+        <field name="name">Payroll Sum</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.payroll.sum</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_payroll_sum_tree_view')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('hr_payroll_sum_form_view')})]"/>
+    </record>
+</odoo>

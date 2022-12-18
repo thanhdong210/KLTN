@@ -12,7 +12,6 @@
                             <field name="price"/>
                         </group>
                         <!-- <group name="col_right">
-                            <field name="leave_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="target" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
