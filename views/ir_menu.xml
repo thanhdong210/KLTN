@@ -22,6 +22,13 @@
             parent="kltn.human_resource_menu"
             groups="base.group_user"/>
 
+        <menuitem id="employee_departments_menu"
+            name="Department"
+            action="hr.hr_department_kanban_action"
+            sequence="30"
+            parent="kltn.human_resource_menu"
+            groups="base.group_user"/>
+
         <!-- Attendance -->
         <menuitem id="attendances_menu"
             name="Attendances"
@@ -126,14 +133,41 @@
             parent="kltn.payroll_menu"
             action="kltn.hr_payroll_run_action"
             groups="kltn.group_payroll_manager"/>
+
+        <menuitem id="employee_payroll_sum_menu"
+            name="Employee Payroll Sum"
+            sequence="50"
+            parent="kltn.payroll_menu"
+            action="kltn.hr_payroll_sum_action"
+            groups="kltn.group_payroll_manager"/>
         
         <!-- Chart -->
         <menuitem id="chart_menu"
             name="Chart"
             sequence="40"
             parent="kltn.employee_dashboard_menu"
-            action="chart_view"
-            groups="base.group_user"/>
+            groups="kltn.group_chart_manager"/>
+
+        <menuitem id="chart_employee_department_menu"
+            name="Employee Department"
+            sequence="40"
+            parent="kltn.chart_menu"
+            action="action_employee_department_report_view"
+            groups="kltn.group_chart_manager"/>
+
+        <menuitem id="chart_employee_contract_menu"
+            name="Employee Contract"
+            sequence="40"
+            parent="kltn.chart_menu"
+            action="action_employee_contract_report_view"
+            groups="kltn.group_chart_manager"/>
+
+        <menuitem id="chart_employee_payroll_menu"
+            name="Employee Payroll"
+            sequence="40"
+            parent="kltn.chart_menu"
+            action="action_employee_payroll_report_view"
+            groups="kltn.group_chart_manager"/>
 
         <!-- Configuration -->
         <menuitem id="configuration_menu"
@@ -152,13 +186,6 @@
         <menuitem id="working_time_menu"
             name="Working Times"
             action="resource.action_resource_calendar_form"
-            sequence="50"
-            parent="kltn.configuration_menu"
-            groups="base.group_user"/>
-
-        <menuitem id="leave_type_menu"
-            name="Leaves Type"
-            action="hr_holidays.open_view_holiday_status"
             sequence="50"
             parent="kltn.configuration_menu"
             groups="base.group_user"/>

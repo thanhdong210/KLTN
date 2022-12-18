@@ -16,7 +16,7 @@
                         <group>
                             <group name="col_left">
                                 <field name="name"></field>
-                                <field name="leave_type_id"></field>
+                                <field name="timesheet_type_id" domain="[('mode', '=', 'leave')]"></field>
                                 <field name="nextcall"></field>
                                 <field name="is_accrual"></field>
                                 <field name="number_of_day"></field>

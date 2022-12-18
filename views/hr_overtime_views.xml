@@ -22,7 +22,7 @@
                     <group>
                         <group name="col_left">
                             <field name="is_personalhub" invisible="1"/>
-                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}" domain="[('mode', '=', '')]"/>
+                            <field name="timesheet_type_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}" domain="[('mode', '=', 'overtime')]"/>
                             <field name="date" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="request_hour_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="request_hour_to" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
@@ -30,7 +30,7 @@
                         </group>
                         <group name="col_right">
                             <field name="target" required="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}"/>
-                            <field name="employee_id" attrs="{'invisible': [('target', '!=', 'employee')], 'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}"/>
+                            <field name="employee_id" force_save="1" attrs="{'required': [('target', '=', 'employee')], 'invisible': [('target', '!=', 'employee')], 'readonly': ['|', ('state', '!=', 'draft'), ('is_personalhub', '=', True)]}"/>
                             <field name="employee_ids" widget="many2many_tags" attrs="{'invisible': [('target', '!=', 'employees')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="department_id" attrs="{'invisible': [('target', '!=', 'department')], 'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="company_id" attrs="{'invisible': [('target', '!=', 'company')], 'readonly': [('state', '!=', 'draft')]}"></field>

@@ -54,11 +54,14 @@
                                 <group>
                                     <field name="base_worked_day" readonly="1"></field>
                                     <field name="real_worked_day" readonly="1"></field>
+                                    <field name="overtime_hours" readonly="1"></field>
                                 </group>
                                 <group>
                                     <field name="wage" readonly="1"></field>
                                     <field name="real_wage" readonly="1"></field>
                                     <field name="total_benefit" readonly="1"></field>
+                                    <field name="salary_overtime" readonly="1"></field>
+                                    <field name="compulsory_insurance" readonly="1"></field>
                                     <field name="take_home_pay" readonly="1"></field>
                                     <field name="take_home_pay_word" readonly="1"></field>
                                 </group>
@@ -67,6 +70,15 @@
                         <page string="Benefit" name="benefit">
                             <field name="benefit_ids" readonly="1" options="{'no_open': True, 'no_create': True}">
                             </field>
+                        </page>
+                        <page string="Insurance" name="insurance">
+                            <group>
+                                <field name="compulsory_insurance" readonly="1"></field>
+                                <field name="social_insurance" readonly="1"></field>
+                                <field name="health_insurance" readonly="1"></field>
+                                <field name="unemployment_insurance" readonly="1"></field>
+                                <field name="personal_income" readonly="1"></field>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>

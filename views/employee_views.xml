@@ -7,13 +7,13 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="total_leaves" invisible="1"></field>
                     <button name="get_detail_employee" type="object" invisible="1">Click me</button>
                 </xpath>
 
                 <xpath expr="//field[@name='mobile_phone']" position="before">
                     <field name="code" required="1"></field>
                     <field name="trigger_compute_total_leave" invisible="1"></field>
+                    <field name="total_leaves"></field>
                 </xpath>
 
                 <xpath expr="//field[@name='birthday']" position="attributes">

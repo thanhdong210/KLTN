@@ -1,5 +1,7 @@
 <template>
     <t t-name="kltn.ChartTemplate">
-        <h2>ajfaja</h2>
+        <h2>dasd</h2>
+        <canvas id="chart_example" height="400px" width="400px"/>
+        
     </t>
 </template>

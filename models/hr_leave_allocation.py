@@ -11,8 +11,10 @@ class HrLeaveAllowcationInherit(models.Model):
         ('refuse', 'Refused'),
         ('validate', 'Approved')
     ], string="Mode", store=True, copy=False, default='draft')
-    leave_type_id = fields.Many2one('hr.leave.type', string="Leave Type")
-    leave_type_code = fields.Char(related='leave_type_id.code', string="Leave Type Code", store=True, readonly=True)
+    # leave_type_id = fields.Many2one('hr.leave.type', string="Leave Type")
+    # leave_type_code = fields.Char(related='leave_type_id.code', string="Leave Type Code", store=True, readonly=True)
+    timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Leave Type")
+    timesheet_code = fields.Char(string="Timesheet code", related="timesheet_type_id.code")
     is_accrual = fields.Boolean(string="Accrual")
     number_of_day = fields.Float(string="Day(s) to allocate")
     type = fields.Selection([
@@ -61,7 +63,7 @@ class HrLeaveAllowcationInherit(models.Model):
             'state': 'validate',
             'number_of_day': self.number_of_day,
             'parent_id': self.id,
-            'leave_type_id': self.leave_type_id.id,
+            'timesheet_type_id': self.timesheet_type_id.id,
             'name': (_('Allocation leave for ') + employee.name),
             'is_child': True
         }
@@ -75,17 +77,20 @@ class HrLeaveAllowcationInherit(models.Model):
             return super(HrLeaveAllowcationInherit, rec).unlink()
 
     def action_refuse(self):
-        datas_to_delete = self.env['hr.leave.allocation.inherit'].search([
-            ('parent_id', '=', self.id)
-        ])
-        for data in datas_to_delete:
-            data.write({
-                'state': 'draft'
+        for rec in self:
+            datas_to_delete = rec.env['hr.leave.allocation.inherit'].search([
+                ('parent_id', '=', self.id)
+            ])
+            for data in datas_to_delete:
+                data.write({
+                    'state': 'draft'
+                })
+                data.employee_id._compute_total_leaves()
+                
+                data.unlink()
+            rec.write({
+                'state': 'refuse'
             })
-            data.unlink()
-        self.write({
-            'state': 'refuse'
-        })
 
     def action_draft(self):
         self.write({
@@ -94,6 +99,39 @@ class HrLeaveAllowcationInherit(models.Model):
 
     def _compute_is_half(self):
         pass
+
+    def update_allocation(self):
+        allocations = self.search([
+            ('state', '=', 'validate'),
+            ('is_accrual', '=', True),
+        ])
+        for allocation in allocations:
+            employees = False
+            if allocation.type == 'employee':
+                employees = allocation.employee_id
+            elif allocation.type == 'department':
+                employees = self.env['hr.employee'].search([
+                    ('department_id', '=', allocation.department_id.id)
+                ])
+            elif allocation.type == 'company':
+                employees = self.env['hr.employee'].search([
+                    ('active', '=', True)
+                ])
+            for employee in employees:
+                data = {
+                    'employee_id': employee.id,
+                    'state': 'validate',
+                    'number_of_day': allocation.number_of_day,
+                    'parent_id': allocation.id,
+                    'timesheet_type_id': allocation.timesheet_type_id.id,
+                    'name': (_('Allocation leave for %s in %s %s') % (employee.name, fields.Date.today().month, fields.Date.today().year)),
+                    'is_child': True
+                }
+                self.create(data)
+                employee._compute_total_leaves()
+            
+
+
 
     
     

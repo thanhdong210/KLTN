@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_leave_allocation" model="ir.cron">
+        <field name="name">Automatic Run Leave Allocation</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">99</field>
+        <field name="model_id" ref="model_hr_leave_allocation_inherit"/>
+        <field name="code">model.update_allocation()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

@@ -4,6 +4,7 @@ from datetime import timedelta, datetime, time
 from pytz import timezone, UTC
 from odoo.addons.kltn.models import common
 import math
+import base64
 
 class HrContractTypeInherit(models.Model):
     _name = "hr.timesheet"
@@ -22,6 +23,8 @@ class HrContractTypeInherit(models.Model):
     ], string='Status', store=True, tracking=True, copy=False, readonly=False, default="draft")
     show_button_confirm = fields.Boolean()
     total_day = fields.Float(string="Total Day", compute="_compute_total_day", store=True)
+    attachment = fields.Binary(string="Attachment", attachment=True)
+    overtime_hours = fields.Float(string="Overtime Hours")
 
     @api.depends("worked_line_ids")
     def _compute_total_day(self):
@@ -57,6 +60,7 @@ class HrContractTypeInherit(models.Model):
         datas_overtime = self.get_overtime_data()
         timesheet_line = self.env['hr.timesheet.line']
         list_data = []
+        # employee_intervals = self.employee_id.contract_id.resource_calendar_id.attendance_ids
         
         for data in datas_attendance.items():
             intervals = self.get_employee_intervals(self.employee_id, data[1].get("hour_from", False))
@@ -109,14 +113,25 @@ class HrContractTypeInherit(models.Model):
                         })
                     list_data.append(vals)
 
+            # if list_data:
+            #     for vals in list_data:
+            #         self.filter_timesheet_line(self.employee_id.contract_id.resource_calendar_id, intervals, vals)
+            #     timesheet_line.create(vals)
+                    
+
         for data in datas_leave:
             list_data.append(data)
 
+        overtime_hours = 0
         for data in datas_overtime:
+            overtime_hours += data.get("number_of_hours", 0)
             list_data.append(data)
+
+        self.overtime_hours = overtime_hours
 
         if list_data:
             for vals in list_data:
+                intervals = self.get_employee_intervals(self.employee_id, vals.get("hour_from", False))
                 self.filter_timesheet_line(self.employee_id.contract_id.resource_calendar_id, intervals, vals)
                 timesheet_line.create(vals)
         
@@ -133,6 +148,7 @@ class HrContractTypeInherit(models.Model):
                     calendar_date_start = from_datetime + relativedelta(hours=item.hour_from - 7 + (idx == 0 and calendar.hour_late or 0))
                     calendar_date_end = from_datetime + relativedelta(hours=item.hour_to - 7 - ((idx == len(intervals) -1) and calendar.hour_soon or 0))
                     in_sooner = vals.get("hour_from", False) <= calendar_date_start
+                    # print("hrhrhrhrhrh", in_sooner)
                     out_later = vals.get("hour_to", False) >= calendar_date_end
                     expect_hours_count += (item.hour_to - item.hour_from)
                     
@@ -140,6 +156,8 @@ class HrContractTypeInherit(models.Model):
                         reality_hours_count += (item.hour_to - item.hour_from)
                 number_of_days = 0
                 if reality_hours_count:
+                    print("hrhrhrhrhrh", reality_hours_count)
+                    print("hrhrhrhrhrh", expect_hours_count)
                     number_of_days += reality_hours_count/expect_hours_count
                 if number_of_days:
                     vals['number_of_days'] = number_of_days
@@ -220,8 +238,8 @@ class HrContractTypeInherit(models.Model):
                 leave_data = {
                     'timesheet_id': self.id,
                     'date': data.date_from,
-                    'timesheet_type_id': data.leave_type_id.timesheet_type_id.id,
-                    'code': data.leave_type_id.timesheet_type_id.code,
+                    'timesheet_type_id': data.timesheet_type_id.id,
+                    'code': data.timesheet_type_id.code,
                 }
                 if data.is_half_selection == 'morning':
                     interval_data = self.get_employee_intervals(data.employee_id, data.date_from)
@@ -259,8 +277,8 @@ class HrContractTypeInherit(models.Model):
                         leave_data = {
                             'timesheet_id': self.id,
                             'date': dt,
-                            'timesheet_type_id': data.leave_type_id.timesheet_type_id.id,
-                            'code': data.leave_type_id.timesheet_type_id.code,
+                            'timesheet_type_id': data.timesheet_type_id.id,
+                            'code': data.timesheet_type_id.code,
                             'hour_from': check_in,
                             'hour_to': check_out,
                             'number_of_hours': interval.hour_to - interval.hour_from,
@@ -320,6 +338,26 @@ class HrContractTypeInherit(models.Model):
             list_data.append(data_dict)
         
         return list_data
+
+    def action_send_timesheet(self):
+        for rec in self:
+            file = self.env.ref('kltn.action_timesheet_line_report')._render_qweb_pdf(rec.id)
+            data_record = file[0]
+            ir_values = {
+                'name': rec.name,
+                'type': 'binary',
+                'datas': base64.b64encode(data_record),
+                'store_fname': False,
+                'mimetype': 'application/pdf',
+            }
+
+            attachment = rec.env['ir.attachment'].create(ir_values)
+            rec.attachment = ir_values['datas']
+
+            mail_template = self.env.ref('kltn.email_template_timesheet', False)
+            if mail_template:
+                mail_template.attachment_ids = attachment
+                mail_template.send_mail(rec.id, force_send=True, raise_exception=True, email_values=False)
     
 
     

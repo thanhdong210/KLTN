@@ -32,7 +32,7 @@ class HrAttendanceRequest(models.Model):
         ('department', 'By Department'),
         ('employees', 'By Employees'),
         ('company', 'By Conpany'),
-    ], string='Mode', compute='_compute_state', store=True, tracking=True, copy=False, readonly=False)
+    ], string='Mode', store=True, tracking=True, copy=False, readonly=False)
     show_button_approve = fields.Boolean(string="Check Button Approve", compute="_compute_show_button_approve")
     show_button_validate = fields.Boolean(string="Check Button Validate", compute="_compute_show_button_validate")
     timesheet_type_id = fields.Many2one('hr.timesheet.type', string="Timesheet Type")
@@ -219,12 +219,24 @@ class HrAttendanceRequest(models.Model):
 
     @api.model_create_multi
     def create(self, vals):
-        data = self.env['hr.attendance.request'].search([
-            ('employee_id', '=', vals[0]['employee_id']),
-            ('date_from', '=', vals[0]['date_from']),
-        ])
+        if vals[0].get("target") and vals[0].get("target") != 'employee':
+            raise UserError("This mode is still not support")
+        if vals[0].get("is_half"):
+            data = self.env['hr.attendance.request'].search([
+                ('employee_id', '=', vals[0]['employee_id']),
+                ('date_from', '=', vals[0]['date_from']),
+            ])
+        else:
+            data = self.env['hr.attendance.request'].search([
+                ('employee_id', '=', vals[0]['employee_id']),
+                ('date_from', '<=', vals[0]['date_to']),
+                ('date_to', '>=', vals[0]['date_from']),
+            ])
         if data:
-            raise UserError(_("This employee already have attendance request on this day."))
+            if vals[0].get('attendance_option') and vals[0].get('attendance_option') == 'attendance_request':
+                raise UserError(_("This employee already have attendance request on this day."))
+            elif vals[0].get('attendance_option') and vals[0].get('attendance_option') == 'business_trip':
+                raise UserError(_("This employee already have business trip on this day."))
 
         res = super(HrAttendanceRequest, self).create(vals)
         for response in res:
@@ -233,9 +245,34 @@ class HrAttendanceRequest(models.Model):
 
         return res
 
-    # def write(self, vals):
-    #     self.activitiy_update()
-    #     return super(HrContractTypeInherit, self).write(vals)
+    def write(self, vals):
+        for rec in self:
+            if vals.get("target") and vals.get("target") != 'employee':
+                raise UserError("This mode is still not support")
+
+            if (vals.get("date_from") or vals.get("date_to")) and rec.employee_id and rec.date_from:
+                date_from = rec.date_from
+                date_to = rec.date_to
+                if vals.get("date_from"):
+                    date_from = vals.get("date_from")
+                if vals.get("date_to"):
+                    date_to = vals.get("date_to")
+                if rec.is_half:
+                    data = rec.env['hr.attendance.request'].search([
+                        ('id', '!=', self.id),
+                        ('employee_id', '=', rec.employee_id.id),
+                        ('date_from', '<=', date_from),
+                    ])
+                else:
+                    data = rec.env['hr.attendance.request'].search([
+                        ('id', '!=', self.id),
+                        ('employee_id', '=', rec.employee_id.id),
+                        ('date_from', '<=', date_to),
+                        ('date_to', '>=', date_from),
+                    ])
+                if data:
+                    raise UserError(_("This employee already have attendance request on this day."))
+        return super(HrAttendanceRequest, self).write(vals)
         
 
     

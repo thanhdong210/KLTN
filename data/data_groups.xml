@@ -1,14 +1,14 @@
 <odoo>
     <record id="group_hr_leaves_manager" model="res.groups">
         <field name="name">Leave Manager</field>
-        <field name="category_id" ref="base.module_category_human_resources_time_off"/>
-        <field name="implied_ids" eval="[(4, ref('hr_holidays.group_hr_holidays_user'))]"/>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
     <record id="group_hr_overtime_manager" model="res.groups">
         <field name="name">Overtime Manager</field>
-        <field name="category_id" ref="base.module_category_human_resources_time_off"/>
+        <field name="category_id" ref="base.module_category_hidden"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
@@ -27,6 +27,12 @@
 
     <record id="group_payroll_manager" model="res.groups">
         <field name="name">Payroll Manager</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_chart_manager" model="res.groups">
+        <field name="name">Chart Manager</field>
         <field name="category_id" ref="base.module_category_hidden"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
