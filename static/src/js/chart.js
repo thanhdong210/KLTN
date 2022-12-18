@@ -7,25 +7,16 @@ odoo.define('kltn.ChartTemplate', function (require) {
     var session = require('web.session');
     var QWeb = core.qweb;
 
+
+
     var ChartTemplate = AbstractAction.extend({
         template: "kltn.ChartTemplate",
 
-        // chart: Chart("chart_example", {
-        //     type: "line",
-        //     data: {
-        //         labels: [10, 20, 30, 40, 50],
-        //         datasets: [{
-        //             data: [10, 20, 30, 40, 50],
-        //             pointBackgroundColor: "black",
-        //         }]
-        //     },
-        //     option: {}
-        // }),
-
         start: function () {
             var self = this;
-            self.$el.html(QWeb.render('kltn.ChartTemplate', { widget: self.login_employee }));
+            self.$el.html(QWeb.render('kltn.ChartTemplate', { widget: self }));
         }
+
 
     });
 

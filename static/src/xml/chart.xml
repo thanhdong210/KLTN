@@ -1,7 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <template>
     <t t-name="kltn.ChartTemplate">
-        <h2>dasd</h2>
-        <canvas id="chart_example" height="400px" width="400px"/>
-        
+        <div class="app__container">
+            <div class="container">
+                <div>
+                    <canvas id="myChart" height="400px" width="400px" />
+                </div>
+                <script type="text/javascript" src="kltn/static/src/js/main.js"></script>
+            </div>
+
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"></script>
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" />
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+            </xpath>
+        </div>
     </t>
 </template>
