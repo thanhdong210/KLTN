@@ -9,12 +9,6 @@
         <div class="app__container">
             <div class="grid wide">
                 <nav class="header__nav">
-                    <button class="btn btn--light-primary header__view-btn">
-                        <span class="header__view-text">VIEW ALL EMPLOYEES</span>
-                    </button>
-                    <a class="header__refresh-btn">
-                        <i class="header__refresh-icon fa-solid fa-arrows-rotate"></i>
-                    </a>
                 </nav>
             </div>
             <div class="home-admin">
